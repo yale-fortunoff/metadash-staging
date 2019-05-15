@@ -5,16 +5,16 @@ body {
 
 .MetaDash {
     font-family: "Georgia";
-    font-size:22px;    
+    //font-size:12px;    
     display: grid;
     grid-template-rows: repeat(6,200px);
     grid-template-columns: repeat(4, 1fr);
 
     grid-template-areas:    //"overview  overview  overview  overview"
-                            "billboard birthyear birthyear programs"
+                            "billboard birthyear birthyear      interviewers"
                             "gender    birthyear birthyear      interviewers"
                             "languages  birthplace  birthplace  interviewers"
-                            "languages  birthplace  birthplace  interviewers"
+                            "languages  programs    programs    interviewers"
                             "subjects  subjects  subjects  subjects"
 
 }

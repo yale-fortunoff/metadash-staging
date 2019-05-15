@@ -1,7 +1,7 @@
 .Languages {
     overflow: scroll;
 }
-.Languages .list-item {
+.list-item {
     font-size: 12px;
     cursor: pointer;
     display: flex;
@@ -12,30 +12,32 @@
     // border-bottom: 1px solid lightgray;
 }
 
-.Languages .list-item-name{
+.list-item-name{
     font-weight: bold;
     text-align: right;
 }
-.Languages .list-item-value{
+.list-item-value{
     text-align: left;
 }
-.Languages .list-item-value,
-.Languages .list-item-name{
+.list-item-value,
+.list-item-name{
     flex: 1;
     padding: 0px 10px;
+    color: gray;
+
 }
 
-.Languages .pct-bar-container{
+.count-list .pct-bar-container{
     height: 3px;
     flex: 3;
     background: lightgray;
 }
 
-.Languages .pct-bar{
+.count-list .pct-bar{
     height: 100%;
     background-color: black;
 }
 
-.Languages .list-item:hover{
+.count-list .list-item:hover{
     background-color: lightgray;
 }

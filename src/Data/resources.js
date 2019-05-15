@@ -63,7 +63,7 @@ filters.getResources = options => {
         // TODO - in future, support multiple languages
         if (options.language 
             && options.language.length == 1 
-            && r.language !== options.language[0]){ return false}
+            && r.language !== options.language[0].id){ return false}
 
         // if it passes everything, return true
         return true;

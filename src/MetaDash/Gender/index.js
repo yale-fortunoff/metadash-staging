@@ -88,11 +88,11 @@ export default class extends React.Component {
                     <div
                         ref={(elem) => { this.menRef = elem; }}
                         // style={{ width: `${men * 100 / total}%` }} 
-                        className="men bar"></div>
+                        className="men gender-bar"></div>
                     <div
                         ref={(elem) => { this.womenRef = elem; }}
                         // style={{ width: `${women * 100 / total}%` }} 
-                        className="women bar"></div>
+                        className="women gender-bar"></div>
                 </div>
                 <div className="label-container">
                     <div className={"toggle-area men " + toggleState("Men")}

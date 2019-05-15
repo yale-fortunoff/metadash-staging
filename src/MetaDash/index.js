@@ -10,7 +10,7 @@ import BirthYear from "./BirthYear";
 import SubjectHeadings from "./SubjectHeadings";
 import Programs from "./Programs";
 import Interviewers from "./Interviewers";
-
+import { objectToArray } from "./Common";
 
 import "./style/main.scss";
 import { Subject } from 'rxjs';
@@ -73,10 +73,7 @@ export default class extends React.Component {
         })
         console.log("genderSubjects", genderSubjects)
 
-        function objectToArray(obj){
-            obj = obj || [];
-            return Object.keys(obj).map(k=>obj[k]);
-        }
+        
         return (
             <div className="MetaDash">
 
@@ -92,7 +89,7 @@ export default class extends React.Component {
 
                 <Languages
                     updateSelections={this.updateFilterFactory("language")}
-                    languages={objectToArray(this.state.summaryData.languages)}
+                    items={objectToArray(this.state.summaryData.languages)}
                 ></Languages>
 
                 <BirthYear
@@ -152,6 +149,7 @@ export default class extends React.Component {
                 </SubjectHeadings>
 
                 <Interviewers
+                    interviewers={ this.state.summaryData.interviewers}
                     updateSelections={this.updateFilterFactory("interviewers")}
                     selections={this.state.filters.interviewers}
                     allItems={this.state.summaryData.interviewers}
