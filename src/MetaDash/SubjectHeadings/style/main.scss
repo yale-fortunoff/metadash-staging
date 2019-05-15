@@ -1,0 +1,8 @@
+.SubjectHeadings {
+    grid-row-start: subjects-start;
+    grid-row-end: subjects-end;
+    grid-column-start:    subjects-start;
+    grid-column-end:      subjects-end;
+
+    overflow: scroll;
+}

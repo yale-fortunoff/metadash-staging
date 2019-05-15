@@ -1,37 +1,42 @@
 import React from 'react';
-import { TagFilter } from '../Inputs';
-import {BarChart} from "../Viz";
-import {replaceKeys} from "../Sanitization";
-import numeral from "numeral";
+
+import { TagFilter, RangeSlider } from '../Inputs';
+import { BarChart, DonutChart } from "../Viz";
+
+import OverviewBillboard from "./OverviewBillboard";
+import Gender from "./Gender";
+import Languages from "./Languages";
+import BirthYear from "./BirthYear";
+import SubjectHeadings from "./SubjectHeadings";
+import Programs from "./Programs";
+import Interviewers from "./Interviewers";
+
+
 import "./style/main.scss";
+import { Subject } from 'rxjs';
 
-
-// remove this...
-var { filterSubjectsOld, getData, subjects, resources } = require("../Data");
-// in favor of this. using dot notation will allow for 
-// a more intuitive data API
 const data = require("../Data");
-
 
 export default class extends React.Component {
 
     constructor(props) {
         super(props);
 
-        const { resources, _, summaryData } = getData();
+        // const { resources, _, summaryData } = data.getData();
 
         this.state = {
-            resources: data.resources.all,
-            summaryData: summaryData,
+            ...data.getData(),
+            // resources: data.resources.query(),
+            // summaryData: summaryData,
             filters: {
-                "gender": [],
+                "gender": ["Men","Women"],
                 "birthYear": [],
                 "birthCountry": [],
                 "language": [],
                 "yearRecorded": [],
-                "subjectIDs": [],
-                "interviewerIDs": [],
-                "programIDs": [],
+                "subjects": [],
+                "interviewers": [],
+                "programs": [],
             },
         }
 
@@ -42,7 +47,7 @@ export default class extends React.Component {
         return val => {
             var filters = { ...this.state.filters }
             filters[key] = val;
-            const { resources, subjects, summaryData } = getData(filters);
+            const { resources, subjects, summaryData } = data.getData(filters);
 
             this.setState({
                 filters: filters,
@@ -54,42 +59,113 @@ export default class extends React.Component {
     }
 
     render() {
+
+        /** remove items (such as subject headings) that are common to all resources (videos) */
+        // const dropUniversal = s => (s.count < this.state.resources.length) || (this.state.resources.length === 1)
+
         console.log("MetaDash.render state", this.state);
-        const allSubjects = Object.keys(this.state.summaryData.subjects || {});
-        var subjectChartData = Object.keys(allSubjects || {}).map(i=>{
-            const k = allSubjects[i];
-            return {
-                ...subjects.byID[k],
-                value:this.state.summaryData.subjects[k]
+        let genderSubjects = [];
+        Object.keys(this.state.summaryData.subjects).filter(s => {
+
+            if (["Men","Women"].indexOf(this.state.summaryData.subjects[s].label) >= 0){
+                genderSubjects.push(this.state.summaryData.subjects[s]);
             }
         })
-        .filter(s=>(s.value < this.state.resources.length) || (this.state.resources.length === 1))
+        console.log("genderSubjects", genderSubjects)
 
-
+        function objectToArray(obj){
+            obj = obj || [];
+            return Object.keys(obj).map(k=>obj[k]);
+        }
         return (
             <div className="MetaDash">
-                <div>
-                    {numeral((this.state.resources ||[]).length).format("0,0")} 
-                     {this.state.resources.length > 1 ? " testimonies" : " tesimony"}
-                </div>
-                <BarChart
+
+                <OverviewBillboard
+                    testimonyCount={this.state.resources.length}
+                ></OverviewBillboard>
+
+                <Gender
+                    updateSelections={this.updateFilterFactory("gender")}
+                    men={this.state.summaryData.gender.men.count}
+                    women={this.state.summaryData.gender.women.count}
+                ></Gender>
+
+                <Languages
+                    updateSelections={this.updateFilterFactory("language")}
+                    languages={objectToArray(this.state.summaryData.languages)}
+                ></Languages>
+
+                <BirthYear
+                    height={200}
+                    minYear={1890}
+                    maxYear={1950}
+                    data={Object.keys(
+                        this.state.summaryData.birthYears)
+                        .map(k => this.state.summaryData.birthYears[k])
+                        .filter(yrs => yrs.label >= 1890 && yrs.label < 1950)
+                    }
+                ></BirthYear>
+
+                {/* <BarChart
                     maxItems={35}
-                    data={subjectChartData}></BarChart>
+                    valueField="count"
+                    data={Object.keys(this.state.summaryData.subjects)
+                        .map(k => {
+                            return {
+                                ...this.state.summaryData.subjects[k],
+                            }
+                        })
+                        .filter(dropUniversal)}></BarChart>
+
+                <DonutChart
+                    maxItems={5}
+                    valueField="count"
+                    data={Object.keys(this.state.summaryData.languages).map(k => {
+                        return {
+                            ...this.state.summaryData.languages[k],
+                        }
+                    })}></DonutChart>
+
+                <DonutChart
+                    maxItems={5}
+                    valueField="count"
+                    // data={subjectChartData}
+                    data={Object.keys(this.state.summaryData.programs)
+                        .map(k => {
+                            return {
+                                ...this.state.summaryData.programs[k],
+                                // value: this.state.summaryData.programs[k].count
+                            }
+                        })
+                        .filter(dropUniversal)}></DonutChart>
+ */}
+
                 {/* subject picker allows you to choose subjects,
                 which narrows down the subjects list and the testimonies list
                  */}
-                <div className="tag-"></div>
-                <TagFilter
-                    updateSelections={this.updateFilterFactory("subjectIDs")}
-                    selections={subjects.expandSubjectIDs(this.state.filters.subjectIDs)}
-                    // updateTerms={(terms=>{})}
-                    // items={subjects.expandSubjectIDs(Object.keys(this.state.summaryData.subjects))}
-                    allItems={allSubjects}
+                <SubjectHeadings
+                    updateSelections={this.updateFilterFactory("subjects")}
+                    selections={this.state.filters.subjects}
+                    allItems={this.state.summaryData.subjects}
                     filterItems={data.subjects.search}
-                    getItems={(_, terms) => subjects.filteredSubjectList(this.state.resources, terms)}
-                    //getItems={filterSubjectsOld}
                     placeholder="Begin searching subjects...">
-                </TagFilter>
+                </SubjectHeadings>
+
+                <Interviewers
+                    updateSelections={this.updateFilterFactory("interviewers")}
+                    selections={this.state.filters.interviewers}
+                    allItems={this.state.summaryData.interviewers}
+                    filterItems={data.interviewers.search}
+                    placeholder="Begin searching interviewers...">
+                </Interviewers>
+
+                <Programs
+                    updateSelections={this.updateFilterFactory("programs")}
+                    selections={this.state.filters.programs}
+                    allItems={this.state.summaryData.programs}
+                    filterItems={data.programs.search}
+                    placeholder="Begin searching programs...">
+                </Programs>
             </div >
         );
     }

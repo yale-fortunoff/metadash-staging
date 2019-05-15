@@ -1,0 +1,16 @@
+.Viz svg {
+    width: 100%;
+    height: 200px;
+}
+
+rect.enter {
+    fill: green;
+}
+
+rect.update{
+    fill: orange;
+}
+
+rect.exit {
+    fill: red;
+}

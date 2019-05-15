@@ -1,78 +1,85 @@
 
-import { filterSubjectsOld, listSubjectsInResources } from "./subjects"
 import * as resources from "./resources";
 import * as subjects from "./subjects";
+import * as interviewers from "./interviewers";
+import * as programs from "./programs";
+import { MEN_SUBJECT, WOMEN_SUBJECT } from "./static";
 
- /**
-  * 
-  * getData - given a set of filtering options,
-  *           return the counts of specified meta
-  *           field values
-  * 
-  */
+/**
+ * 
+ * getData - given an options object,
+ *           return the counts of specified meta
+ *           field values
+ * 
+ */
 function getData(options) {
 
-    console.log("Getting data with filters", options)
-    
     let ret = {
         // implemented
-        "subjects":{},
-        "languages":{},
+        "subjects": {},
+        "languages": {},
 
         // not implemented
-        "birth_years":{},
-        "recording_years":{},
-        "interviewers":{},
-        "programs":{},
-        "sexes":{}
+        "birthYears": {},
+        "recordingYears": {},
+        "interviewers": {},
+        "programs": {},
+        "gender": {}
     }
 
-    let subj = [];
+    // let subj = [];
 
-    function incr(retKey, itemKey){
-        if(!(itemKey in ret[retKey])){ ret[retKey][itemKey] = 0; }
-        ret[retKey][itemKey] += 1;
+    function incr(retKey, item) {
+        if (!(item.id in ret[retKey])) {
+            ret[retKey][item.id] = { ...item, count: 0 };
+        }
+        ret[retKey][item.id].count += 1;
     }
 
     const res = resources.query(options || {});
-    // const res = resources.all;
 
-    
-    res.forEach(r=>{
+    res.forEach(r => {
 
         // count occurrences of each subject
-        r.subject_refs.forEach(s=>{
-            incr("subjects",s)
-        });
+        r.subject_refs.forEach(s => { incr("subjects", subjects.byID(s)) });
 
         // count occurrences of each birth year
+        if (r.birth_years && r.birth_years.length === 1) {
+            incr("birthYears", { label: r.birth_years[0], id: r.birth_years[0] })
+        }
 
         // count occurrences of each language
-        incr("languages", r.language || "missing");
+        incr("languages", { label: r.language, id: r.language });
 
         // count occurrences of each birth country
 
         // count occurrences of each recording year
 
         // count occurrences of each affiliate program
+        (r.programs || []).forEach(i => { incr("programs", programs.byID(i)) });
 
         // count occurences of each interviewer
-        (r.interviewers || []).forEach(i=>{ incr("interviewers",i)})
+        (r.interviewers || []).forEach(i => { incr("interviewers", interviewers.byID(i)) })
 
     });
 
+    ret.gender.men = ret.subjects[MEN_SUBJECT] || 0;
+    ret.gender.women = ret.subjects[WOMEN_SUBJECT] || 0;
 
-    const returnValue = {"resources":res, subjects:subj, "summaryData":ret};
-    console.log("return from getData",returnValue); 
+    const returnValue = {
+        "resources": res,
+        subjects: undefined,
+        "summaryData": ret
+    };
+
     return returnValue;
 
 }
 
-
 export {
-    filterSubjectsOld,
-
-    getData, 
+    getData,
+    resources,
+    interviewers,
     subjects,
-    resources
+    programs
 };

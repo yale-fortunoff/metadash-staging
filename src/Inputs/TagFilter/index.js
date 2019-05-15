@@ -13,9 +13,6 @@ export default class extends GenericInput {
 
         this.state = {
             searchTerm: '',
-            // selections: props.selections,
-            //items:props.getItems(props.selections,[])
-            // poolItems:this.props.getItems() || []
         }
 
         this.updateSearchTerm = this.updateSearchTerm.bind(this);
@@ -25,23 +22,15 @@ export default class extends GenericInput {
         this.updateSelections = this.updateSelections.bind(this);
     }
 
-    updateSelections(newSelections){//}, searchTerm) {
-        this.props.updateSelections(newSelections.map(s=>s.id));
-        
-        // this.setState({
-        //     searchTerm: searchTerm, // clear the search field so all the available tags show
-        //     // selections: newSelections,
-        //     // items: this.props.getItems(newSelections, searchTerm.split(" "))
-        //     // poolItems: this.props.getItems(newSelections, newSelections)
-        // });
+    updateSelections(newSelections){
+        this.props.updateSelections(newSelections);
+        this.setState({searchTerm:""})
     }
 
     updateSearchTerm(t) {
-        console.log(t)
         this.setState({
-            searchTerm: t, // clear the search field so all the available tags show
+            searchTerm: t, 
         });
-        // this.updateSelections(this.props.selections, t);
     }
 
     addSelection(selectionItem) {
@@ -71,10 +60,11 @@ export default class extends GenericInput {
     render() {
         //const items = this.props.getItems(this.props.selections, this.state.searchTerm.split(""))
         const items = this.props.filterItems(this.state.searchTerm.split(" "))
-        .filter(i=>this.props.allItems.indexOf(i.id) >= 0)
+        .filter(i=>i.id in this.props.allItems)
+        // .filter(i=>Object.keysthis.props.allItems.indexOf(i.id) >= 0)
 
-        console.log("TagFilter.render items:", this.state.searchTerm.split(" "), items )
-        console.log("TagFilter.render allItems: ", this.props.allItems)
+        // console.log("TagFilter.render items:", this.state.searchTerm.split(" "), items )
+        console.log("TagFilter.render allItems: ", this.props.placeholder, this.props.allItems)
 
         return (
             <div className="TagFilter">

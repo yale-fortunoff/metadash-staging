@@ -7,14 +7,14 @@
  * @param {*} obj 
  * @param {*} maxItems 
  */
-export default function (obj, maxItems){
+export default function (obj, maxItems, valueField){
 
     console.log("Preprocessing", obj)
 
     var keys = Object.keys(obj)
 
     keys = keys.sort(function(key1, key2){ 
-        return obj[key1].value < obj[key2].value ? 1 : -1;
+        return obj[key1][valueField] < obj[key2][valueField]? 1 : -1;
     })
 
     return keys.map((v, i, arr)=>{

@@ -1,0 +1,67 @@
+.split-bar-container{
+    width: 100%;
+    height: 1em;
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label-container {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.label-container .big {
+    font-size: 30px;
+}
+
+.bar{
+    height: 100%;
+}
+.bar.men{
+    background-color: #666;
+}
+
+.bar.women{
+    background-color: black;
+}
+
+.toggle-area {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+
+.toggle-area.off {
+    opacity: 0.65;
+}
+
+.toggle-light {
+    border: 1px solid black;
+    height: 0.5em;
+    width: 0.5em;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.toggle-area:hover{
+     background-color: lightcoral;
+
+}
+
+.toggle-area:hover .toggle-light {
+    box-shadow: 1px 1px 1px black;
+}
+
+.women.on .toggle-light{
+    background-color: black;
+}
+
+.men.on .toggle-light{
+    background-color: #666
+}
+
+.off .toggle-light{
+    background-color: white;
+}

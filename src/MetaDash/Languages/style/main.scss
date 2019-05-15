@@ -1,0 +1,41 @@
+.Languages {
+    overflow: scroll;
+}
+.Languages .list-item {
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height: 1.25em;
+    padding: 1px;
+    // border-bottom: 1px solid lightgray;
+}
+
+.Languages .list-item-name{
+    font-weight: bold;
+    text-align: right;
+}
+.Languages .list-item-value{
+    text-align: left;
+}
+.Languages .list-item-value,
+.Languages .list-item-name{
+    flex: 1;
+    padding: 0px 10px;
+}
+
+.Languages .pct-bar-container{
+    height: 3px;
+    flex: 3;
+    background: lightgray;
+}
+
+.Languages .pct-bar{
+    height: 100%;
+    background-color: black;
+}
+
+.Languages .list-item:hover{
+    background-color: lightgray;
+}

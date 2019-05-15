@@ -1,0 +1,8 @@
+.Interviewers {
+    grid-row-start: interviewers-start;
+    grid-row-end: interviewers-end;
+    grid-column-start:    interviewers-start;
+    grid-column-end:      interviewers-end;
+
+    overflow: scroll;
+}
