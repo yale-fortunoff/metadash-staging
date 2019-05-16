@@ -78,8 +78,8 @@ export default class extends React.Component {
         const toggleState = label => this.state[label] ? "on" : "off";
         
         return (
-            <div className="Gender">
-                <h3>Gender</h3>
+            <div className="Gender module-box">
+                <h3 className="title">Gender</h3>
                 <div className="label-container">
                     <div className="big">{numeral(men).format("0,0")}</div>
                     <div className="big">{numeral(women).format("0,0")}</div>

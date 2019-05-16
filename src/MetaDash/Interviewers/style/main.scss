@@ -4,5 +4,6 @@
     grid-column-start:    interviewers-start;
     grid-column-end:      interviewers-end;
 
-    overflow: scroll;
+    overflow: hidden;
+    max-height: 100%;
 }

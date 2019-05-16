@@ -2,7 +2,7 @@ import React from 'react';
 import GenericInput from "../GenericInput";
 import TextInput from "../TextInput";
 
-import SelectionPool from "./SelectionPool";
+import SelectionPool from "../SelectionPool";
 import TagPool from "./TagPool";
 
 export default class extends GenericInput {

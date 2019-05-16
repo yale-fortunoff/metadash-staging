@@ -1,6 +1,7 @@
 .Languages {
-    overflow: scroll;
+    overflow: hidden;
 }
+
 .list-item {
     font-size: 12px;
     cursor: pointer;
@@ -12,24 +13,42 @@
     // border-bottom: 1px solid lightgray;
 }
 
-.list-item-name{
+.Languages .list-item {
+    display: flex;
+}
+
+.list-item-name {
+    //
     font-weight: bold;
+}
+.Languages .list-item-name{
+    text-align: right;
+    flex: 1;
+}
+
+.list-item-value{
     text-align: right;
 }
-.list-item-value{
+.Languages .list-item-value{
     text-align: left;
+    flex: 1
 }
+
 .list-item-value,
 .list-item-name{
-    flex: 1;
+    flex: auto;
     padding: 0px 10px;
     color: gray;
 
 }
 
+.count-list {
+    overflow: scroll;
+    max-height: 100%;    
+}
 .count-list .pct-bar-container{
     height: 3px;
-    flex: 3;
+    flex: 1;
     background: lightgray;
 }
 

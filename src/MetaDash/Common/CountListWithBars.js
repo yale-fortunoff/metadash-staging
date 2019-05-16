@@ -7,22 +7,42 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            item: false
-        }
+        // this.state = {
+        //     // item: false,
+        // }
 
-        this.toggleItem = this.toggleItem.bind(this);
+        // this.toggleItem = this.toggleItem.bind(this);
+        // this.addItem = this.addItem.bind(this);
     }
 
-    toggleItem(item) {
-        if (!this.state.item) {
-            this.setState({ item });
-            this.props.updateSelections([item]);
-        } else {
-            this.setState({ item: false });
-            this.props.updateSelections([]);
-        }
-    }
+    /**
+     * 
+     * addItem - add an item to the selection list.
+     *         - by default, only allow one item to be
+     *           selected at a time
+     *         - if this.allowMultipleSelections
+     * 
+     * @param {item object} item 
+     */
+    // addItem(item){
+
+    //     // const items = this.props.items.concat([item]);
+    //     this.props.updateSelections(items);
+
+    // }
+
+    // toggleItem(item) {
+
+    //     if (this.props.allowMultipleSelections === true){ this.addItem(item); return;}
+
+    //     if (this.state.items.length) {
+    //         this.setState({ item });
+    //         this.props.updateSelections([item]);
+    //     } else {
+    //         this.setState({ item: false });
+    //         this.props.updateSelections([]);
+    //     }
+    // }
 
     renderBar(width) {
         if (!this.props.showBars) { return }
@@ -47,7 +67,7 @@ export default class extends React.Component {
                     .filter(a => a.label && a.label.length > 0)
                     .map((item, i) => {
                         return (
-                            <div onClick={() => this.toggleItem(item)} key={i}
+                            <div onClick={() => (this.props.handleItemClick||(()=>{}))(item)} key={i}
                                 className="list-item">
 
                                 <div className="list-item-name">

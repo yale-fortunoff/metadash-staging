@@ -14,7 +14,8 @@ export default class extends React.Component {
                 bottom: 20
             }};
         return (
-            <div className="BirthYear">
+            <div className="BirthYear module-box">
+            <h3 className="title">Dates</h3>
                 <Histogram
                 {...itemProps}></Histogram>
             </div>

@@ -29,7 +29,7 @@ export default class extends React.Component {
             // resources: data.resources.query(),
             // summaryData: summaryData,
             filters: {
-                "gender": ["Men","Women"],
+                "gender": ["Men", "Women"],
                 "birthYear": [],
                 "birthCountry": [],
                 "language": [],
@@ -67,20 +67,19 @@ export default class extends React.Component {
         let genderSubjects = [];
         Object.keys(this.state.summaryData.subjects).filter(s => {
 
-            if (["Men","Women"].indexOf(this.state.summaryData.subjects[s].label) >= 0){
+            if (["Men", "Women"].indexOf(this.state.summaryData.subjects[s].label) >= 0) {
                 genderSubjects.push(this.state.summaryData.subjects[s]);
             }
         })
         console.log("genderSubjects", genderSubjects)
 
-        
+
         return (
             <div className="MetaDash">
-
+                
                 <OverviewBillboard
                     testimonyCount={this.state.resources.length}
                 ></OverviewBillboard>
-
                 <Gender
                     updateSelections={this.updateFilterFactory("gender")}
                     men={this.state.summaryData.gender.men.count}
@@ -89,6 +88,7 @@ export default class extends React.Component {
 
                 <Languages
                     updateSelections={this.updateFilterFactory("language")}
+                    selections={this.state.filters.language}
                     items={objectToArray(this.state.summaryData.languages)}
                 ></Languages>
 
@@ -149,18 +149,23 @@ export default class extends React.Component {
                 </SubjectHeadings>
 
                 <Interviewers
-                    interviewers={ this.state.summaryData.interviewers}
+                    interviewers={this.state.summaryData.interviewers}
                     updateSelections={this.updateFilterFactory("interviewers")}
                     selections={this.state.filters.interviewers}
-                    allItems={this.state.summaryData.interviewers}
-                    filterItems={data.interviewers.search}
-                    placeholder="Begin searching interviewers...">
-                </Interviewers>
+                    filterItems={t => {
+                        const results = data.interviewers.search((t||"").split(" "));
+                        console.log("interviewer results", results, Object.keys(this.state.summaryData.interviewers).length)
+                        return results
+                        .filter(i=>i.id in this.state.summaryData.interviewers)
+                        .map(i=>{ return { ...i, count: this.state.summaryData.interviewers[i.id].count}})
+                    }}
+                ></Interviewers>
 
                 <Programs
                     updateSelections={this.updateFilterFactory("programs")}
                     selections={this.state.filters.programs}
                     allItems={this.state.summaryData.programs}
+                    programs={this.state.summaryData.programs}
                     filterItems={data.programs.search}
                     placeholder="Begin searching programs...">
                 </Programs>

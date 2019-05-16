@@ -3,26 +3,41 @@ body {
     margin: 0px;
 }
 
+.module-box{
+    border-radius: 8px;
+    box-shadow: 1px 1px 6px gray;
+    box-sizing: border-box;
+    padding: 0px 15px 15px 15px;
+}
+
+.module-box .title {
+    text-align: center;
+}
+
+
 .MetaDash {
+    padding: 10px;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+
     font-family: "Georgia";
     //font-size:12px;    
     display: grid;
-    grid-template-rows: repeat(6,200px);
-    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+
+    grid-template-rows: repeat(8,180px);
+    // grid-template-rows: repeat(6,minmax(1fr, 300px));
+    grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
 
     grid-template-areas:    //"overview  overview  overview  overview"
-                            "billboard birthyear birthyear      interviewers"
-                            "gender    birthyear birthyear      interviewers"
+                            "billboard birthyear birthyear      birthyear"
+                            "gender    birthyear birthyear      birthyear "
                             "languages  birthplace  birthplace  interviewers"
+                            "languages  birthplace  birthplace    interviewers"
+                            "languages  programs    programs    interviewers"
                             "languages  programs    programs    interviewers"
                             "subjects  subjects  subjects  subjects"
-
-}
-
-.MetaDash input {
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
 
 }
 
@@ -43,3 +58,26 @@ body {
     grid-area: languages-start / languages-start / languages-end / languages-end;
 }
 
+
+
+
+@media only screen and (max-width:500px){
+    .MetaDash {
+
+    display: block;
+    // grid-gap: 10px;
+
+    grid-template-rows: repeat(8,180px);
+    grid-template-columns: 1fr;
+    // // grid-template-rows: repeat(6,minmax(1fr, 300px));
+    // grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
+
+
+    grid-template-areas:    //"overview  overview  overview  overview"
+                            "billboard"
+                            "gender"
+                            "birthyear"
+                            "subjects"
+                            "programs"
+    }
+}

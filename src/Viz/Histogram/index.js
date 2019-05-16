@@ -11,13 +11,13 @@ export default class extends D3Component {
 
         this.initializeChart = this.initializeChart.bind(this);
         this.updateChart = this.updateChart.bind(this);
-        this.setRange = this.setRange.bind(this);
+        // this.setRange = this.setRange.bind(this);
     }
 
-    setRange(start, stop) {
-        // TODO - implement this!
-        console.log("Updating filter values", start, stop)
-    }
+    // setRange(start, stop) {
+    //     // TODO - implement this!
+    //     console.log("Updating filter values", start, stop)
+    // }
 
     initializeChart() {
         console.log("Chart - setting up chart with data", this.props.data);
@@ -88,31 +88,31 @@ export default class extends D3Component {
             .attr("transform", `translate(${margin.left},${0})`)
             .call(yAxis)
 
-        const t = svg.transition()
+        const t = i => svg.transition()
             .duration(1000)
             .ease(d3.easeCubic)
 
         this.barG.selectAll(".bar")
             .data(data)
             .join(
-                enter => enter.append("rect")
+                (enter, i) => enter.append("rect")
                     .classed("bar", true)
                     .attr("x", d => xScale(d.label))
                     .attr("y", d => yScale(0))
                     .attr("width", xScale.bandwidth)
-                    .call(enter => enter.transition(null)
+                    .call(enter => enter.transition(t(i))
                         .attr("x", d => xScale(d.label))
-                        .attr("y", d => yScale(d.count))
+                        .attr("y", d => yScale(d.count || 0))
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                         .attr("width", xScale.bandwidth)
                     )
                 ,
                 update => update
-                    .call(update => update.transition(t)
+                    .call(update => update.transition(t(100))
                         .attr("y", d => yScale(d.count))
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                     ),
-                exit => exit.call(exit => exit.transition(t)
+                exit => exit.call(exit => exit.transition(t(100))
                     .attr("height", 0)
                     .attr("y", yScale(0))
                 )

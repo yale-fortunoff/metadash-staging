@@ -1,5 +1,6 @@
 import React from 'react';
 import GenericInput from "../GenericInput";
+import "./style/main.scss";
 
 export default class extends GenericInput {
 

@@ -36,10 +36,16 @@ export default class extends React.Component {
     // }
 
     render() {
-        const listProps = {...this.props,showBars:true}
+        const listProps = {
+            ...this.props,
+            handleItemClick: item => {
+                if (this.props.selections.length < 1){ this.props.updateSelections([item]);}
+                else { this.props.updateSelections([])}
+            },
+            showBars:true}
         return (
-            <div className="Languages">
-                <h3>Languages</h3>
+            <div className="Languages module-box">
+                <h3 className="title">Languages</h3>
                 <CountListWithBars
                 {...listProps}
                 ></CountListWithBars>

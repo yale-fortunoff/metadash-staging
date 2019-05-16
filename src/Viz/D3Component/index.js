@@ -9,7 +9,6 @@ export default class extends React.Component {
         this.initializeChart = this.initializeChart.bind(this);
         this.updateChart = this.updateChart.bind(this);
         this.redrawChart = this.redrawChart.bind(this);
-        this.setRange = this.setRange.bind(this);
     }
 
     componentDidUpdate() { 
