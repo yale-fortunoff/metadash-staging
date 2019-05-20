@@ -6,10 +6,11 @@ import { BarChart, DonutChart } from "../Viz";
 import OverviewBillboard from "./OverviewBillboard";
 import Gender from "./Gender";
 import Languages from "./Languages";
-import BirthYear from "./BirthYear";
+import BirthAndRecordingYear from "./BirthAndRecordingYears";
 import SubjectHeadings from "./SubjectHeadings";
 import Programs from "./Programs";
 import Interviewers from "./Interviewers";
+import BirthPlaces from "./BirthPlaces";
 import { objectToArray } from "./Common";
 
 import "./style/main.scss";
@@ -64,6 +65,10 @@ export default class extends React.Component {
         // const dropUniversal = s => (s.count < this.state.resources.length) || (this.state.resources.length === 1)
 
         console.log("MetaDash.render state", this.state);
+        console.log("MetaDash sum of recording years", 
+        (objectToArray(this.state.summaryData.recordingYears)
+        .reduce((start, next)=>start+next.count, 0)));
+
         let genderSubjects = [];
         Object.keys(this.state.summaryData.subjects).filter(s => {
 
@@ -71,15 +76,14 @@ export default class extends React.Component {
                 genderSubjects.push(this.state.summaryData.subjects[s]);
             }
         })
-        console.log("genderSubjects", genderSubjects)
-
 
         return (
             <div className="MetaDash">
-                
+
                 <OverviewBillboard
                     testimonyCount={this.state.resources.length}
                 ></OverviewBillboard>
+
                 <Gender
                     updateSelections={this.updateFilterFactory("gender")}
                     men={this.state.summaryData.gender.men.count}
@@ -92,54 +96,24 @@ export default class extends React.Component {
                     items={objectToArray(this.state.summaryData.languages)}
                 ></Languages>
 
-                <BirthYear
-                    height={200}
+                <BirthAndRecordingYear
+                    // height={200}
                     minYear={1890}
-                    maxYear={1950}
-                    data={Object.keys(
-                        this.state.summaryData.birthYears)
-                        .map(k => this.state.summaryData.birthYears[k])
-                        .filter(yrs => yrs.label >= 1890 && yrs.label < 1950)
+                    maxYear={2022}
+                    data={
+                        Object.keys(this.state.summaryData.birthYears)
+                            .map(k => this.state.summaryData.birthYears[k])
+                            .filter(yrs => yrs.label >= 1890 && yrs.label < 1950)
+                            .map(a => { return { ...a, barClass: "birth" } })
+                            .concat(
+                                Object.keys(this.state.summaryData.recordingYears)
+                                .map(k => this.state.summaryData.recordingYears[k])
+                                .filter(yrs => yrs.label >= 1960 && yrs.label < 2030)
+                                .map(a => { return { ...a,barClass: "recording" } })
+                            )
                     }
-                ></BirthYear>
+                ></BirthAndRecordingYear>
 
-                {/* <BarChart
-                    maxItems={35}
-                    valueField="count"
-                    data={Object.keys(this.state.summaryData.subjects)
-                        .map(k => {
-                            return {
-                                ...this.state.summaryData.subjects[k],
-                            }
-                        })
-                        .filter(dropUniversal)}></BarChart>
-
-                <DonutChart
-                    maxItems={5}
-                    valueField="count"
-                    data={Object.keys(this.state.summaryData.languages).map(k => {
-                        return {
-                            ...this.state.summaryData.languages[k],
-                        }
-                    })}></DonutChart>
-
-                <DonutChart
-                    maxItems={5}
-                    valueField="count"
-                    // data={subjectChartData}
-                    data={Object.keys(this.state.summaryData.programs)
-                        .map(k => {
-                            return {
-                                ...this.state.summaryData.programs[k],
-                                // value: this.state.summaryData.programs[k].count
-                            }
-                        })
-                        .filter(dropUniversal)}></DonutChart>
- */}
-
-                {/* subject picker allows you to choose subjects,
-                which narrows down the subjects list and the testimonies list
-                 */}
                 <SubjectHeadings
                     updateSelections={this.updateFilterFactory("subjects")}
                     selections={this.state.filters.subjects}
@@ -148,16 +122,22 @@ export default class extends React.Component {
                     placeholder="Begin searching subjects...">
                 </SubjectHeadings>
 
+                <BirthPlaces
+                    updateSelections={this.updateFilterFactory("birthplaces")}
+                    selections={this.state.filters.birthplaces}
+                    birthPlaces={this.state.summaryData.birthPlaces}
+                    placeholder="Search for a city..."
+                ></BirthPlaces>
+
                 <Interviewers
                     interviewers={this.state.summaryData.interviewers}
                     updateSelections={this.updateFilterFactory("interviewers")}
                     selections={this.state.filters.interviewers}
                     filterItems={t => {
-                        const results = data.interviewers.search((t||"").split(" "));
-                        console.log("interviewer results", results, Object.keys(this.state.summaryData.interviewers).length)
+                        const results = data.interviewers.search((t || "").split(" "));
                         return results
-                        .filter(i=>i.id in this.state.summaryData.interviewers)
-                        .map(i=>{ return { ...i, count: this.state.summaryData.interviewers[i.id].count}})
+                            .filter(i => i.id in this.state.summaryData.interviewers)
+                            .map(i => { return { ...i, count: this.state.summaryData.interviewers[i.id].count } })
                     }}
                 ></Interviewers>
 

@@ -12,6 +12,9 @@
     flex-direction: column;
 }
 
-.OverviewBillboard .big-number-value {
-    font-size: 50px;
+.OverviewBillboard 
+{
+    .big-number-value {
+        font-size: 50px;
+    }
 }

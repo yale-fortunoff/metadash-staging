@@ -27,8 +27,6 @@ export default class extends React.Component {
 
     handleClick(item) {
 
-        console.log("received click", item.data)
-
         // if (this.props.selections[0] && item.data.id === this.props.selections[0].id) {
         //     this.props.updateSelections([])
         // } else {
@@ -53,9 +51,12 @@ export default class extends React.Component {
                 <TreeMap
                     height={200}
                     items={objectToArray(this.props.programs)}
+                    itemDict={this.props.programs}
+
                     mouseInCallback={this.handleMouseIn}
                     mouseOutCallback={this.handleMouseOut}
                     selections={this.props.selections}
+
                     clickCallback={this.handleClick}
                 ></TreeMap>
 

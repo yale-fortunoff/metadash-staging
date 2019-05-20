@@ -1,4 +1,5 @@
 import React from 'react';
+
 import "./style/main.scss";
 // import numeral from "numeral";
 import {CountListWithBars} from "../Common";

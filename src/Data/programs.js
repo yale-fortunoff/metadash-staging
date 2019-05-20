@@ -1,6 +1,6 @@
 const createReferenceInterface = require("./createReferenceInterface");
 
-const data = require("./programs.min.json")
+const data = require("./json/programs.min.json")
     .map(i => {
 
         if (i.display_names.length > 1){ throw("Program with multiple names")}

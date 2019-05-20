@@ -1,0 +1,47 @@
+.count-list {
+    overflow: scroll;
+    max-height: 100%;
+  }
+
+.count-list {
+  .list-item {
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+      sans-serif;
+    height: 1.25em;
+    padding: 1px;
+  }
+  .list-item-name {
+    //
+    font-weight: bold;
+  }
+
+  .list-item-value,
+  .list-item-name {
+    flex: auto;
+    padding: 0px 10px;
+    color: gray;
+  }
+
+  .list-item-value {
+    text-align: right;
+  }
+
+  .pct-bar-container {
+    height: 3px;
+    flex: 1;
+    background: lightgray;
+  }
+
+  .pct-bar {
+    height: 100%;
+    background-color: black;
+  }
+
+  .list-item:hover {
+    background-color: lightgray;
+  }
+}

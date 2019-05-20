@@ -1,67 +1,67 @@
-.split-bar-container{
+.Gender {
+  .split-bar-container {
     width: 100%;
     height: 1em;
     background-color: lightgray;
     display: flex;
     justify-content: space-between;
-}
+  }
 
-.label-container {
+  .label-container {
     display: flex;
     justify-content: space-between;
+  }
 
-}
-
-.label-container .big {
+  .label-container .big {
     font-size: 30px;
-}
+  }
 
-.gender-bar{
+  .gender-bar {
     height: 100%;
-}
-.gender-bar.men{
+  }
+  .gender-bar.men {
     background-color: #666;
-}
+  }
 
-.gender-bar.women{
+  .gender-bar.women {
     background-color: black;
-}
+  }
 
-.toggle-area {
+  .toggle-area {
     display: flex;
     cursor: pointer;
     align-items: center;
-}
+  }
 
-.toggle-area.off {
+  .toggle-area.off {
     opacity: 0.65;
-}
+  }
 
-.toggle-light {
+  .toggle-light {
     border: 1px solid black;
     height: 0.5em;
     width: 0.5em;
     margin-right: 10px;
     border-radius: 50%;
-}
+  }
 
-.toggle-area:hover{
-     background-color: lightcoral;
+  .toggle-area:hover {
+    background-color: lightcoral;
+  }
 
-}
-
-.toggle-area:hover .toggle-light {
+  .toggle-area:hover .toggle-light {
     box-shadow: 1px 1px 1px black;
-}
+  }
 
-.women.on .toggle-light{
+  .women.on .toggle-light {
     background-color: black;
-}
+  }
 
-.men.on .toggle-light{
-    background-color: #666
-}
+  .men.on .toggle-light {
+    background-color: #666;
+  }
 
-.off .toggle-light{
+  .off .toggle-light {
     background-color: white;
+  }
 }

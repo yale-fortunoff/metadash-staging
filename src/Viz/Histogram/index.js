@@ -20,8 +20,6 @@ export default class extends D3Component {
     // }
 
     initializeChart() {
-        console.log("Chart - setting up chart with data", this.props.data);
-
         const svg = d3.select(this.svg).html("");
 
         this.xAxisG = svg.append("g")
@@ -37,7 +35,7 @@ export default class extends D3Component {
 
     updateChart(data) {
 
-        console.log("Chart - updating chart with data", this.props.data);
+        console.log("Chart - updating histogram chart with data", this.props.data);
 
         data = data || this.props.data;
         const svg = d3.select(this.svg);
@@ -51,7 +49,7 @@ export default class extends D3Component {
 
         // const yearRange = d3.extent(this.props.data.map(x => x.label))
         const yearRange = [this.props.minYear, this.props.maxYear]
-        const countRange = [0, d3.max(data.map(x => x.count))]
+        const countRange = [0, d3.max(data.map(x => x.count)) || 1]
 
         // console.log("ranges", yearRange, countRange, width, height)
         const margin = this.props.margin ||  {
@@ -62,11 +60,8 @@ export default class extends D3Component {
         }
 
         // add axes
-        console.log("d3range-domain", d3.range(yearRange[0], yearRange[1]))
-        console.log("d3range-range", d3.range(margin.left, (width - margin.right)))
-
         const xScale = d3.scaleBand()
-            .domain(d3.range(yearRange[0], yearRange[1]))
+            .domain(d3.range(...yearRange))
             .rangeRound([margin.left, width - margin.right])
 
         const xAxis = d3.axisBottom(xScale)
@@ -81,7 +76,7 @@ export default class extends D3Component {
             .domain(countRange)
             .rangeRound([height - margin.bottom, margin.top])
 
-        const yAxis = d3.axisLeft(yScale)
+        const yAxis = d3.axisLeft(yScale).tickSizeOuter(0)
         .tickFormat( e => Math.floor(e) === e ? e : undefined);
 
         this.yAxisG
@@ -96,25 +91,39 @@ export default class extends D3Component {
             .data(data)
             .join(
                 (enter, i) => enter.append("rect")
+                    .attr("class",d=>d.barClass)
                     .classed("bar", true)
-                    .attr("x", d => xScale(d.label))
+                    .attr("data-enter-value", d=>d.count)
+                    .attr("data-label", d=>d.label)
                     .attr("y", d => yScale(0))
                     .attr("width", xScale.bandwidth)
+                    .attr("x", d => xScale(d.label))
+
                     .call(enter => enter.transition(t(i))
-                        .attr("x", d => xScale(d.label))
-                        .attr("y", d => yScale(d.count || 0))
+                        .attr("y", d => {
+                            return yScale(d.count || 0)
+                        })
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                         .attr("width", xScale.bandwidth)
-                    )
-                ,
+                    ), 
                 update => update
+                    .attr("data-update-value", d=>d.count)
+                    .attr("class",d=>d.barClass)
+                    .classed("bar", true)
+                    .each((d,i)=>console.log("Updating", d))
+                    .attr("x", d => xScale(d.label))
                     .call(update => update.transition(t(100))
-                        .attr("y", d => yScale(d.count))
+                        .attr("y", d => yScale(d.count || 0))
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                     ),
-                exit => exit.call(exit => exit.transition(t(100))
+                exit => exit
+                .attr("data-exit-value", d=>d.count)
+                // .attr("class",d=>d.barClass)
+                .each(d=>console.log("updating(exiting)", d))
+                .attr("x", d => xScale(d.label))
+                .call(exit => exit.transition(t(100))
                     .attr("height", 0)
-                    .attr("y", yScale(0))
+                    .attr("y", () =>  yScale(0))
                 )
             )
 

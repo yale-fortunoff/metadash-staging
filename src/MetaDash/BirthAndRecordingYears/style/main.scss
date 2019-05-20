@@ -3,6 +3,14 @@
     grid-row-end:      birthyear-end;
     grid-column-start:    birthyear-start;
     grid-column-end:      birthyear-end;
+}
 
+.BirthYear{
+    .birth.bar{
+        fill: gray;
+    }
 
+    .recording.bar{
+        fill: lightgreen;
+    }
 }

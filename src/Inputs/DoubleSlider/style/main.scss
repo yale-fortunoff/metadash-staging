@@ -1,0 +1,17 @@
+.DoubleSlider{
+    .Viz svg {
+        height: 30px;
+    }
+
+    rect.handle{
+        cursor: pointer;
+    }
+
+    rect.handle.active{
+        fill: gray;
+    }
+
+    rect.track{
+        fill:gray;
+    }
+}

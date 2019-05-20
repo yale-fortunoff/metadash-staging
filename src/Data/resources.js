@@ -1,3 +1,4 @@
+const {normalizeString} = require("../Common");
 const { MEN_SUBJECT, WOMEN_SUBJECT } = require("./static");
 /**
  * all - return an array containing all records.
@@ -5,46 +6,46 @@ const { MEN_SUBJECT, WOMEN_SUBJECT } = require("./static");
  *       without any parameters
  *         
  */
-const all = () => require("./index.2.min.json");
+const all = () => require("./json/index.2.min.json");
 
 let filters = {};
 
 filters.resourceContainsAllItems = (itemField, itemFilters) => {
     return r => {
-        for(let i = 0; i < itemFilters.length; i++){
+        for (let i = 0; i < itemFilters.length; i++) {
             let item = itemFilters[i];
-            if( r[itemField].indexOf(item.id) < 0) return false;
+            if (r[itemField].indexOf(item.id) < 0) return false;
         }
         return true;
     }
 
 }
 
-filters.resourceContainsAllSubjects = subjects => { return filters.resourceContainsAllItems ("subject_refs", subjects) }
+filters.resourceContainsAllSubjects = subjects => { return filters.resourceContainsAllItems("subject_refs", subjects) }
 
-filters.resourceContainsAllInterviewers = interviewers => { return filters.resourceContainsAllItems("interviewers", interviewers)}
+filters.resourceContainsAllInterviewers = interviewers => { return filters.resourceContainsAllItems("interviewers", interviewers) }
 
-filters.resourceContainsAllPrograms = programs => { return filters.resourceContainsAllItems("programs", programs)}
+filters.resourceContainsAllPrograms = programs => { return filters.resourceContainsAllItems("programs", programs) }
 
 filters.getResources = options => {
 
     // just skip the iteration if no args are passed
-    if (!options) {return all;}
+    if (!options) { return all; }
 
     return r => {
 
         // filter by selected subject
-        if (!filters.resourceContainsAllSubjects(options.subjects||[])(r)){ return false }
+        if (!filters.resourceContainsAllSubjects(options.subjects || [])(r)) { return false }
 
         // TODO - filter by gender
-        if ((options.gender||[]).length == 1 && options.gender[0] === "Men"){
+        if ((options.gender || []).length == 1 && options.gender[0] === "Men") {
             console.log("Filtering to only men", MEN_SUBJECT)
-            if (!filters.resourceContainsAllSubjects([{id:MEN_SUBJECT}])(r)){ return false }
+            if (!filters.resourceContainsAllSubjects([{ id: MEN_SUBJECT }])(r)) { return false }
         }
-        if ((options.gender||[]).length == 1 && options.gender[0] === "Women"){
+        if ((options.gender || []).length == 1 && options.gender[0] === "Women") {
             console.log("Filtering to only women", WOMEN_SUBJECT)
 
-            if (!filters.resourceContainsAllSubjects([{id:WOMEN_SUBJECT}])(r)){ return false }
+            if (!filters.resourceContainsAllSubjects([{ id: WOMEN_SUBJECT }])(r)) { return false }
         }
 
 
@@ -54,16 +55,32 @@ filters.getResources = options => {
 
         // TODO - filter by place of birth
 
+        if ((options.birthplaces || []).length > 0) {
+            let place = options.birthplaces[0];
+
+            // console.log("Looking for place", place);
+
+            for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
+
+                if ((r.birth_place_cities||[]).length !== (r.birth_place_countries||[]).length){ return false}
+                let city = r.birth_place_cities[j],
+                    country = r.birth_place_countries[j];
+
+                if (normalizeString(country) !== normalizeString(place.country)) return false;
+                if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
+            }
+        }
+
         // TODO - filter by affiliate program
-        if (!filters.resourceContainsAllPrograms(options.programs||[])(r)){ return false }
+        if (!filters.resourceContainsAllPrograms(options.programs || [])(r)) { return false }
 
         // TODO - filter by interviewer
-        if (!filters.resourceContainsAllInterviewers(options.interviewers||[])(r)){ return false }
+        if (!filters.resourceContainsAllInterviewers(options.interviewers || [])(r)) { return false }
 
         // TODO - in future, support multiple languages
-        if (options.language 
-            && options.language.length == 1 
-            && r.language !== options.language[0].id){ return false}
+        if (options.language
+            && options.language.length == 1
+            && r.language !== options.language[0].id) { return false }
 
         // if it passes everything, return true
         return true;

@@ -30,7 +30,8 @@ export default class extends React.Component {
                 <div className={buttonClass} onClick={this.clearSelection}>
                     {clearButtonText}
                 </div>
-                <select onChange={this.handleSelection}>
+                <select 
+                onChange={this.handleSelection}>
                     <option
                         onClick={this.clearSelection}
                         value="all"

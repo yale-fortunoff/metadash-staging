@@ -1,6 +1,7 @@
-import BarChart from "./BarChart";
-import DonutChart from "./DonutChart";
+// import BarChart from "./BarChart";
+// import DonutChart from "./DonutChart";
 import Histogram from "./Histogram";
-import TreeMap from "./TreeMap"
+import TreeMap from "./TreeMap";
+import Cluster from "./Cluster";
 
-export { BarChart, DonutChart, Histogram, TreeMap };
+export { Histogram, TreeMap, Cluster };

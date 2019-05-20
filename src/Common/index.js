@@ -1,7 +1,7 @@
 var unidecode = require('unidecode');
 
 function normalizeString(term) {
-    return unidecode(term.toLowerCase().trim());
+    return unidecode((term||"").toLowerCase().trim());
 }
 
 // replace the keys in a dictionary with something else

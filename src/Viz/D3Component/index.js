@@ -9,6 +9,13 @@ export default class extends React.Component {
         this.initializeChart = this.initializeChart.bind(this);
         this.updateChart = this.updateChart.bind(this);
         this.redrawChart = this.redrawChart.bind(this);
+
+        this.margin = props.margin || {
+            top:0,
+            left:0,
+            right:0,
+            bottom:0
+        }
     }
 
     componentDidUpdate() { 

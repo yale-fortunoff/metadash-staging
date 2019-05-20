@@ -1,4 +1,3 @@
-
 body {
     margin: 0px;
 }
@@ -14,10 +13,9 @@ body {
     text-align: center;
 }
 
-
 .MetaDash {
     padding: 10px;
-    max-width: 1200px;
+    max-width: 1280px;
     margin-right: auto;
     margin-left: auto;
 
@@ -31,10 +29,10 @@ body {
     grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
 
     grid-template-areas:    //"overview  overview  overview  overview"
-                            "billboard birthyear birthyear      birthyear"
-                            "gender    birthyear birthyear      birthyear "
-                            "languages  birthplace  birthplace  interviewers"
-                            "languages  birthplace  birthplace    interviewers"
+                            "billboard birthyear birthyear      interviewers"
+                            "gender    birthyear birthyear      interviewers "
+                            "languages  birthplaces  birthplaces  interviewers"
+                            "languages  birthplaces  birthplaces    interviewers"
                             "languages  programs    programs    interviewers"
                             "languages  programs    programs    interviewers"
                             "subjects  subjects  subjects  subjects"
@@ -58,26 +56,29 @@ body {
     grid-area: languages-start / languages-start / languages-end / languages-end;
 }
 
-
-
+.BirthPlaces {
+    grid-area: birthplaces-start / birthplaces-start / birthplaces-end / birthplaces-end;
+}
 
 @media only screen and (max-width:500px){
     .MetaDash {
 
-    display: block;
+    display: grid;
     // grid-gap: 10px;
 
-    grid-template-rows: repeat(8,180px);
+    grid-template-rows: repeat(10,180px);
     grid-template-columns: 1fr;
     // // grid-template-rows: repeat(6,minmax(1fr, 300px));
     // grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
-
-
     grid-template-areas:    //"overview  overview  overview  overview"
                             "billboard"
                             "gender"
                             "birthyear"
-                            "subjects"
+                            "birthplace"
+                            "interviewers"
+                            "languages"
                             "programs"
+                            "subjects"
+
     }
 }

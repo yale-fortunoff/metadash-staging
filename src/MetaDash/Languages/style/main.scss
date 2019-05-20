@@ -1,62 +1,21 @@
+@import 'countlist';
+
 .Languages {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-.list-item {
-    font-size: 12px;
-    cursor: pointer;
+.Languages {
+  .list-item {
     display: flex;
-    align-items: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    height: 1.25em;
-    padding: 1px;
-    // border-bottom: 1px solid lightgray;
-}
+  }
 
-.Languages .list-item {
-    display: flex;
-}
-
-.list-item-name {
-    //
-    font-weight: bold;
-}
-.Languages .list-item-name{
+  .list-item-name {
     text-align: right;
     flex: 1;
-}
+  }
 
-.list-item-value{
-    text-align: right;
-}
-.Languages .list-item-value{
+  .list-item-value {
     text-align: left;
-    flex: 1
-}
-
-.list-item-value,
-.list-item-name{
-    flex: auto;
-    padding: 0px 10px;
-    color: gray;
-
-}
-
-.count-list {
-    overflow: scroll;
-    max-height: 100%;    
-}
-.count-list .pct-bar-container{
-    height: 3px;
     flex: 1;
-    background: lightgray;
-}
-
-.count-list .pct-bar{
-    height: 100%;
-    background-color: black;
-}
-
-.count-list .list-item:hover{
-    background-color: lightgray;
+  }
 }

@@ -13,7 +13,7 @@ export default class extends D3Component {
         this.updateChart = this.updateChart.bind(this);
     }
 
-    updateChart() {
+    initializeChart() {
         const svg = d3.select(this.svg).html("");
 
         const width = svg.node().getBoundingClientRect().width,
@@ -40,13 +40,13 @@ export default class extends D3Component {
             return false
         }
         const t = svg.transition()
-        .duration(1000)
-        .ease(d3.easeCubic)
+            .duration(1000)
+            .ease(d3.easeCubic)
 
         var cell = svg.selectAll("rect")
             .data(h.leaves())
             .join(
-                enter=>enter
+                enter => enter
                     .append("rect")
                     .classed("highlighted", isHighlighted)
                     .attr("id", function (d) { return d.id; })
@@ -54,22 +54,7 @@ export default class extends D3Component {
                     .attr("y", d => d.y0)
                     .attr("width", function (d) { return d.x1 - d.x0; })
                     .attr("height", function (d) { return d.y1 - d.y0; }),
-                update=>update
-                    .call(update=>update.transition(t)
-                        .attr("x", d => d.x0)
-                        .attr("y", d => d.y0)
-                        .attr("width", function (d) { return d.x1 - d.x0; })
-                        .attr("height", function (d) { return d.y1 - d.y0; })
-                    ),
-                // exit=>exit.call(exit=>exit.transition(t)
-                //     .attr("x", d => d.x0)
-                //     .attr("y", d => d.y0)
-                //     .attr("width", 0)
-                //     .attr("height", 0)
-                // )
-
-                    // .attr("fill", (_, i) => color(i)),
-                )
+            )
 
 
         svg.selectAll("rect")
@@ -83,8 +68,12 @@ export default class extends D3Component {
 
     }
 
-    initializeChart() {
+    updateChart() {
 
+        const svg = d3.select(this.svg);
+        svg.selectAll("rect")
+        .classed("highlighted", d=>{
+            return d.data.id in this.props.itemDict})
 
     }
 
