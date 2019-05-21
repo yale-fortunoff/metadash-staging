@@ -8,7 +8,6 @@ export default class extends React.Component {
 
     render() {
         const data = preprocess(this.props.data, this.props.maxItems, "count");
-        console.log("BarChart processed data", data, this.props.data)
 
         const frameProps = {
             /* --- Data --- */

@@ -49,7 +49,6 @@ export default class extends React.Component {
                 </div>
 
                 <TreeMap
-                    height={200}
                     items={objectToArray(this.props.programs)}
                     itemDict={this.props.programs}
 

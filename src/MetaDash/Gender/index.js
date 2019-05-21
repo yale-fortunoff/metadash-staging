@@ -38,9 +38,6 @@ export default class extends React.Component {
         if (newState.Men) selections.push("Men");
         if (newState.Women) selections.push("Women");
 
-        console.log("Updating state", gender, newState, this.state, selections)
-
-
         this.props.updateSelections(selections);
 
     }

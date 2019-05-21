@@ -53,7 +53,6 @@ export default class extends GenericInput {
 
         var selections = this.state.selections.slice();
         if (method === "click" || method === "enter") { selections.push(newValue)}
-        console.log("selections", selections, method);
 
         this.setState({
             value: newValue,

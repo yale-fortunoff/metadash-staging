@@ -9,8 +9,6 @@
  */
 export default function (obj, maxItems, valueField){
 
-    console.log("Preprocessing", obj)
-
     var keys = Object.keys(obj)
 
     keys = keys.sort(function(key1, key2){ 

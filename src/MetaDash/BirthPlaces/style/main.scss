@@ -1,6 +1,15 @@
 .BirthPlaces {
+
+  .Viz {
+    height: 300px;
+  }
+
   svg {
     height: 100%;
+  }
+
+  circle:hover{
+    fill: red;
   }
 
   input {
@@ -10,7 +19,10 @@
 
   .hover-text {
     text-align: center;
-    min-height: 1em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    min-height: 2em;
+    color: gray;
   }
 
   .react-autosuggest__suggestions-container {
@@ -45,4 +57,6 @@
     background-color: lightgray;
     cursor: pointer;
   }
+
+
 }

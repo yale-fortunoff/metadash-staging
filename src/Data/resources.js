@@ -1,3 +1,4 @@
+const {getRecordingYear }= require("./getRecordingYear");
 const {normalizeString} = require("../Common");
 const { MEN_SUBJECT, WOMEN_SUBJECT } = require("./static");
 /**
@@ -32,6 +33,17 @@ filters.getResources = options => {
     // just skip the iteration if no args are passed
     if (!options) { return all; }
 
+    function validRecordingYear(r){
+        const yr = getRecordingYear(r);
+        if (!options.filters){ return true}
+        if (!options.filters.dateRanges){ return true}
+        if (!options.filters.dateRanges.recording){ return true}
+        if (yr < options.filters.dateRanges[0]){ return false}
+        if (yr > options.filters.dateRanges[1]){ return false}
+        return true;
+
+    }
+
     return r => {
 
         // filter by selected subject
@@ -39,26 +51,35 @@ filters.getResources = options => {
 
         // TODO - filter by gender
         if ((options.gender || []).length == 1 && options.gender[0] === "Men") {
-            console.log("Filtering to only men", MEN_SUBJECT)
             if (!filters.resourceContainsAllSubjects([{ id: MEN_SUBJECT }])(r)) { return false }
         }
         if ((options.gender || []).length == 1 && options.gender[0] === "Women") {
-            console.log("Filtering to only women", WOMEN_SUBJECT)
 
             if (!filters.resourceContainsAllSubjects([{ id: WOMEN_SUBJECT }])(r)) { return false }
         }
 
 
-        // TODO - filter by year of recordingd
+        // TODO - filter by year of recording
+        const recordingYear = getRecordingYear(r);
+        if (options.dateRanges 
+           && options.dateRanges.recording 
+           && (recordingYear < options.dateRanges.recording[0] || recordingYear > options.dateRanges.recording[1] || !recordingYear)){ return false }
 
         // TODO - filter by year of birth
+        const birthYears = r.birth_years || [];
+        if (!birthYears.reduce((curr, next)=>{ 
+            if (!curr){ return false}
+            if (!options){ return true};
+            if (!options.dateRanges){ return true};
+            if (!options.dateRanges.birth){ return true}
+            if (next < options.dateRanges.birth[0] || next > options.dateRanges.birth[1]){ return false}
+            return true;
+        }, true)) { return false}
 
         // TODO - filter by place of birth
 
         if ((options.birthplaces || []).length > 0) {
             let place = options.birthplaces[0];
-
-            // console.log("Looking for place", place);
 
             for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
 

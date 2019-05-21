@@ -21,6 +21,8 @@ export default class extends D3Component {
 
         const width = svg.node().getBoundingClientRect().width,
             height = this.props.height || svg.node().getBoundingClientRect().height;
+        
+            //svg.attr("height", height + "px");
 
         d3.select(window).on("resize", this.redrawChart)
 
@@ -29,6 +31,7 @@ export default class extends D3Component {
         .parentId(d=>d.label.split("|")[1])(items)
 
         var packLayout = d3.pack()
+        .padding(0.725)
         .size([width, height]);
 
         root.sum(d=>d.count);
@@ -57,21 +60,24 @@ export default class extends D3Component {
         .classed("highlighted", d=>{
             return d.data.label in this.props.itemDict
         })
+        .transition().duration(1500).ease(d3.easeQuad)
+        .style("opacity",d=>d.data.label in this.props.itemDict ? 1 : 0.25 )
 
-        // resize to show only the appropriate area
-        // represented by the subset items
-        .transition(d3.transition().duration(3000))
-        .attr('r', d =>{
-            if (!(d.data.id in this.props.itemDict)) return d.r;
+
+        // // resize to show only the appropriate area
+        // // represented by the subset items
+        // .transition(d3.transition().duration(3000))
+        // .attr('r', d =>{
+        //     if (!(d.data.id in this.props.itemDict)) return d.r;
         
-            // resize in place
-            const oldCount = d.data.count,
-            newCount = this.props.itemDict[d.data.id].count,
-            ratio = newCount / oldCount,
-            newRadius = d.r * ratio;
+        //     // resize in place
+        //     const oldCount = d.data.count,
+        //     newCount = this.props.itemDict[d.data.id].count,
+        //     ratio = newCount / oldCount,
+        //     newRadius = d.r * ratio;
 
-            return newRadius
-        })
+        //     return newRadius
+        // })
 
     }
 

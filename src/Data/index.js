@@ -4,13 +4,7 @@ import * as subjects from "./subjects";
 import * as interviewers from "./interviewers";
 import * as programs from "./programs";
 import { MEN_SUBJECT, WOMEN_SUBJECT } from "./static";
-
-function getRecordingYear(record) {
-    return (record.recording_dates || [])
-        .filter(a => a)
-        .map(a => Number(a.slice(0, 4)))
-        .sort()[0]
-}
+import {getRecordingYear} from "./getRecordingYear";
 
 /**
  * 

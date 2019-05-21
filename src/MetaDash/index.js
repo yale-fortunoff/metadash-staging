@@ -38,6 +38,7 @@ export default class extends React.Component {
                 "subjects": [],
                 "interviewers": [],
                 "programs": [],
+                "dateRanges":{}
             },
         }
 
@@ -59,19 +60,13 @@ export default class extends React.Component {
         }
     }
 
+
     render() {
 
-        /** remove items (such as subject headings) that are common to all resources (videos) */
-        // const dropUniversal = s => (s.count < this.state.resources.length) || (this.state.resources.length === 1)
-
         console.log("MetaDash.render state", this.state);
-        console.log("MetaDash sum of recording years", 
-        (objectToArray(this.state.summaryData.recordingYears)
-        .reduce((start, next)=>start+next.count, 0)));
 
         let genderSubjects = [];
         Object.keys(this.state.summaryData.subjects).filter(s => {
-
             if (["Men", "Women"].indexOf(this.state.summaryData.subjects[s].label) >= 0) {
                 genderSubjects.push(this.state.summaryData.subjects[s]);
             }
@@ -100,6 +95,8 @@ export default class extends React.Component {
                     // height={200}
                     minYear={1890}
                     maxYear={2022}
+                    updateSelections={this.updateFilterFactory("dateRanges")}
+                    selections={this.state.filters.dateRanges}
                     data={
                         Object.keys(this.state.summaryData.birthYears)
                             .map(k => this.state.summaryData.birthYears[k])

@@ -63,9 +63,6 @@ export default class extends GenericInput {
         .filter(i=>i.id in this.props.allItems)
         // .filter(i=>Object.keysthis.props.allItems.indexOf(i.id) >= 0)
 
-        // console.log("TagFilter.render items:", this.state.searchTerm.split(" "), items )
-        console.log("TagFilter.render allItems: ", this.props.placeholder, this.props.allItems)
-
         return (
             <div className="TagFilter">
                 <TextInput

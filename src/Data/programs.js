@@ -11,6 +11,5 @@ const data = require("./json/programs.min.json")
 
     });
 
-console.log("programs data", data)
 
 module.exports = createReferenceInterface(data, "programs" );

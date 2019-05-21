@@ -71,20 +71,17 @@ export default class extends React.Component {
 
     getSuggestions = value => {
         const all = this.cleanClusterData();
-        console.log("birthPlaces getsuggestions", all)
         return all.filter(x => normalizeString(x.label).indexOf(normalizeString(value)) >= 0)
         // return [{label: value + " and a hot plate!"}]
     }
 
     onChange(event, { newValue }) {
-        console.log("birthplaces changed", newValue)
         this.setState({
             searchTerm: newValue
         });
     }
 
     onSuggestionsFetchRequested = ({ value }) => {
-        console.log("birthplaces fetched", value)
         this.setState({
             suggestions: this.getSuggestions(value)
         });

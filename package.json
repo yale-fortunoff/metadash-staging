@@ -2,8 +2,10 @@
   "name": "metadash",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jakekara.github.io/fortunoff-metadash",
   "dependencies": {
     "d3": "^5.9.2",
+    "gh-pages": "^2.0.1",
     "node-sass": "^4.12.0",
     "numeral": "^2.0.6",
     "react": "^16.8.6",
@@ -19,7 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "document": "jsdoc src/Data --destination ./book/data-api"
+    "document": "jsdoc src/Data --destination ./book/data-api",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

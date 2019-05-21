@@ -9,7 +9,6 @@ export default class extends React.Component {
 
 
         const data = preprocess(this.props.data, this.props.maxItems);
-        console.log("DonutChart data", this.props.data, data);
 
         const frameProps = {
             /* --- Data --- */

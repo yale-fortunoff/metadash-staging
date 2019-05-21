@@ -13,4 +13,15 @@
     .recording.bar{
         fill: lightgreen;
     }
+
+    .slider-container{
+        display:flex;
+        justify-content: space-around;
+    }
+    .half { 
+        box-sizing: border-box;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+    }
 }

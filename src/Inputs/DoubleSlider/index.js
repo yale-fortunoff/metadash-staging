@@ -9,7 +9,9 @@ export default class extends D3Component {
         super(props);
 
         this.state = {
-            handles: []
+            handles: [],
+            range: [{ value: props.min }, { value: props.max }],
+            labels: [{ value: props.min }, { value: props.max }]
         }
 
         this.scale = this.scale.bind(this);
@@ -17,6 +19,8 @@ export default class extends D3Component {
         this.xToValue = this.xToValue.bind(this);
         this.limitValue = this.limitValue.bind(this);
         this.limitX = this.limitX.bind(this);
+        this.getHandleRange = this.getHandleRange.bind(this);
+        this.updateLabels = this.updateLabels.bind(this);
         this.updateRange = this.updateRange.bind(this);
 
     }
@@ -43,27 +47,25 @@ export default class extends D3Component {
         return this.valueToX(this.limitValue(Math.round(this.xToValue(x))));
     }
 
-    updateRange() {
-
+    getHandleRange(){
         let range = [];
-        // const xToValue = this.xToValue.bind(this);
-        // const valueToX = this.valueToX.bind(this);
-
-        // const limits = {
-        //     min: this.props.min,
-        //     max: this.props.max
-        // }
-
-        // const limitValue = this.limitValue;
         d3.select(this.svg)
             .select(".handle-layer")
             .selectAll("rect")
-            .each(d => range.push(d.value))
+            .each(d => range.push(d))
 
+        range = range.sort((a, b) => { return a.value < b.value ? -1 : 1 })
+        return range;
+    }
 
-        range = range.sort((a, b)=>{ return a < b ? -1 : 1 })
-        console.log(this.props.min, this.props.max)
-        console.log("new range", range)
+    updateLabels(){
+        this.setState({labels:this.getHandleRange()});
+    }
+
+    updateRange() {
+
+        let range = this.getHandleRange();
+        this.props.updateSelections(range.map(x => x.value))
         this.setState({ range })
     }
 
@@ -97,29 +99,24 @@ export default class extends D3Component {
         }
 
         const limitX = this.limitX,
-        xToValue = this.xToValue;
+            xToValue = this.xToValue,
+            updateLabels = this.updateLabels;
         function dragged(d) {
             d3.select(this).attr("x", limitX(d3.event.x));
             d3.select(this).attr("data-value", d.value = xToValue(limitX(d3.event.x)));
-
+            updateLabels();
         }
 
-        const updateRange = this.updateRange
-
+        const updateRange = this.updateRange;
         function dragended(d) {
             d3.select(this).classed("active", false);
             updateRange();
         }
 
-
-        const range = [{ value: this.props.min }, { value: this.props.max }]
-
-        this.setState({ range });
-
         this.setState({
             handles: svg.append("g").classed("handle-layer", true)
                 .selectAll("rect")
-                .data(range)
+                .data(this.state.range)
                 .enter()
                 .append("rect")
                 .classed("handle", true)
@@ -145,6 +142,13 @@ export default class extends D3Component {
     }
 
     render() {
-        return (<div className="DoubleSlider">{D3Component.prototype.render.call(this)}</div>)
+        return (
+            <div className="DoubleSlider">
+                {D3Component.prototype.render.call(this)}
+                <div className="label-container">
+                    <div className="label min">{this.state.labels[0].value}</div>
+                    <div className="label max">{this.state.labels[1].value}</div>
+                </div>
+            </div>)
     }
 }

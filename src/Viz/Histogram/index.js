@@ -14,11 +14,6 @@ export default class extends D3Component {
         // this.setRange = this.setRange.bind(this);
     }
 
-    // setRange(start, stop) {
-    //     // TODO - implement this!
-    //     console.log("Updating filter values", start, stop)
-    // }
-
     initializeChart() {
         const svg = d3.select(this.svg).html("");
 
@@ -35,8 +30,6 @@ export default class extends D3Component {
 
     updateChart(data) {
 
-        console.log("Chart - updating histogram chart with data", this.props.data);
-
         data = data || this.props.data;
         const svg = d3.select(this.svg);
 
@@ -51,7 +44,6 @@ export default class extends D3Component {
         const yearRange = [this.props.minYear, this.props.maxYear]
         const countRange = [0, d3.max(data.map(x => x.count)) || 1]
 
-        // console.log("ranges", yearRange, countRange, width, height)
         const margin = this.props.margin ||  {
             bottom: 30,
             top: 20,
@@ -81,6 +73,7 @@ export default class extends D3Component {
 
         this.yAxisG
             .attr("transform", `translate(${margin.left},${0})`)
+            .transition().duration(1000).ease(d3.easeQuadIn)
             .call(yAxis)
 
         const t = i => svg.transition()
@@ -110,7 +103,6 @@ export default class extends D3Component {
                     .attr("data-update-value", d=>d.count)
                     .attr("class",d=>d.barClass)
                     .classed("bar", true)
-                    .each((d,i)=>console.log("Updating", d))
                     .attr("x", d => xScale(d.label))
                     .call(update => update.transition(t(100))
                         .attr("y", d => yScale(d.count || 0))
@@ -119,7 +111,6 @@ export default class extends D3Component {
                 exit => exit
                 .attr("data-exit-value", d=>d.count)
                 // .attr("class",d=>d.barClass)
-                .each(d=>console.log("updating(exiting)", d))
                 .attr("x", d => xScale(d.label))
                 .call(exit => exit.transition(t(100))
                     .attr("height", 0)

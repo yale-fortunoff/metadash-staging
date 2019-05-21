@@ -1,7 +1,16 @@
-.BirthPlaces circle {
-    fill: #ccc;
-}
+.BirthPlaces {
+    // svg {
+    //     height: 400px;
+    // }
+    circle {
+        // fill: #ccc;
+    }
 
-.BirthPlaces circle.highlighted {
-    fill: black;
+    circle:hover,
+    circle.highlighted {
+        cursor: pointer;
+        fill: black;
+    }
+    
 }
+   
