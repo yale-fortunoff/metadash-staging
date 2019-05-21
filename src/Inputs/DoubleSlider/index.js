@@ -95,7 +95,13 @@ export default class extends D3Component {
 
 
         function dragstarted(d) {
-            d3.select(this).raise().classed("active", true);
+            d3.select(this).raise().classed("active", true)
+            .transition().duration(250)//.ease(d3.easeQuadIn)
+            // .attr("transform","skewX(10)")
+            .attr("height",handleHeight * 0.7)
+            .attr("y", yCenter - handleHeight * 0.7 / 2)
+            // .attr("width",handleWidth * 0.7);
+
         }
 
         const limitX = this.limitX,
@@ -108,9 +114,17 @@ export default class extends D3Component {
         }
 
         const updateRange = this.updateRange;
+
         function dragended(d) {
-            d3.select(this).classed("active", false);
+            d3.select(this).classed("active", false)
+            // .transition().duration(250)//.ease(d3.easeQuadOut)
+            // .attr("transform","skewX(0)")
+            .attr("y", yCenter - handleHeight / 2)
+            .attr("height",handleHeight)
+            // .attr("width",handleWidth)
+
             updateRange();
+
         }
 
         this.setState({

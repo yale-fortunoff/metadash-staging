@@ -83,6 +83,7 @@ export default class extends React.Component {
                     updateSelections={this.updateFilterFactory("gender")}
                     men={this.state.summaryData.gender.men.count}
                     women={this.state.summaryData.gender.women.count}
+                    both={this.state.summaryData.gender.both.count}
                 ></Gender>
 
                 <Languages

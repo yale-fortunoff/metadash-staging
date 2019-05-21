@@ -21,7 +21,7 @@ function getData(options) {
         "languages": {},
         "birthYears": {},
         "interviewers": {},
-        "gender": {},
+        "gender": {both:{label:"Both",count:0}},
         "programs": {},
 
         // not implemented
@@ -63,6 +63,9 @@ function getData(options) {
         // count occurrences of each subject
         r.subject_refs.forEach(s => { incr("subjects", subjects.byID(s)) });
 
+        // count the number of records with both men and women
+        if (r.subject_refs.indexOf(MEN_SUBJECT) >= 0 && r.subject_refs.indexOf(WOMEN_SUBJECT) >= 0){ ret.gender.both.count += 1 }
+
         // count occurrences of each birth year
         if (r.birth_years && r.birth_years.length === 1) {
             incr("birthYears", { label: r.birth_years[0], id: r.birth_years[0] })
@@ -91,8 +94,11 @@ function getData(options) {
 
     });
 
-    ret.gender.men = ret.subjects[MEN_SUBJECT] || 0;
-    ret.gender.women = ret.subjects[WOMEN_SUBJECT] || 0;
+    ret.gender.men = (ret.subjects[MEN_SUBJECT] || 0) 
+    ret.gender.women = (ret.subjects[WOMEN_SUBJECT] || 0 )
+    ret.gender.men.count -= ret.gender.both.count;
+    ret.gender.women.count -= ret.gender.both.count;
+    
 
     const returnValue = {
         "resources": res,

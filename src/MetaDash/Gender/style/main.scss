@@ -8,23 +8,51 @@
   }
 
   .label-container {
+    font-size: 12px;
     display: flex;
     justify-content: space-between;
   }
 
+  .label-container {
+    .label-area {
+      color: gray;
+      margin-top: 1em;
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+        sans-serif;
+      flex: 1 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .label-area.men{
+      align-items: flex-start;
+    }
+    .label-area.women{
+      align-items: flex-end;
+    }
+  }
+
   .label-container .big {
-    font-size: 30px;
+    font-size: 20px;
+    margin-bottom: 9px;
   }
 
   .gender-bar {
     height: 100%;
+    border: 1px solid white;
   }
   .gender-bar.men {
-    background-color: #666;
+    background-color: teal;
+  }
+
+  .gender-bar.both {
+    background-color: goldenrod;
   }
 
   .gender-bar.women {
-    background-color: black;
+    background-color: maroon;
   }
 
   .toggle-area {
