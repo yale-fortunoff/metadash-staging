@@ -14,8 +14,13 @@
   }
 
   .label-container {
-    .label-area {
+    .label-area.off {
       color: gray;
+    }
+
+    .label-area {
+      cursor: pointer;
+      color: black;
       margin-top: 1em;
       font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
         sans-serif;
@@ -26,10 +31,10 @@
       justify-content: center;
     }
 
-    .label-area.men{
+    .label-area.men {
       align-items: flex-start;
     }
-    .label-area.women{
+    .label-area.women {
       align-items: flex-end;
     }
   }
@@ -41,8 +46,33 @@
 
   .gender-bar {
     height: 100%;
-    border: 1px solid white;
+    border-right: 1px solid white;
   }
+
+  .label-area.off {
+    opacity: 90%;
+    }
+
+  .label-area.men,
+  .label-area.men.off:hover{
+    // border-left: 3px solid teal;
+    color: teal;
+  }
+  .label-area.both,
+  .label-area.both.off:hover{
+
+    color: goldenrod;
+    // border-left: 3px solid goldenrod;
+  }
+  .label-area.women,
+  .label-area.women.off:hover{
+
+    // border-left: 3px solid maroon;
+    color: maroon;
+  }
+
+
+
   .gender-bar.men {
     background-color: teal;
   }
@@ -59,6 +89,8 @@
     display: flex;
     cursor: pointer;
     align-items: center;
+    border-top: 3px solid white;
+
   }
 
   .toggle-area.off {

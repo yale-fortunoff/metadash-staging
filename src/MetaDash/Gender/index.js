@@ -24,12 +24,28 @@ export default class extends React.Component {
 
     genderToggle(gender) {
 
-
         let val = this.state[gender],
             newVal = !val,
-            otherVal = gender === "Men" ? this.state.Women : this.state.Men
+            // newVal = true,
+            otherVal = false;
 
-        // prevent turning off both genders
+    
+        // prevent turning off all genders
+        switch (gender) {
+            case "Men":
+                otherVal = this.state.Women || this.state.Both;
+                break;
+            case "Women":
+                otherVal = this.state.Men || this.state.Both;
+                break;
+            case "Both":
+                otherVal = this.state.Men || this.state.Women;
+                break;
+            default:
+                throw (`Error: Invalid gender ${gender}`)
+
+        }
+
         if (!otherVal && !newVal) { return }
 
         const newState = { ...this.state }
@@ -39,6 +55,7 @@ export default class extends React.Component {
         let selections = [];
         if (newState.Men) selections.push("Men");
         if (newState.Women) selections.push("Women");
+        if (newState.Both) selections.push("Both");
 
         this.props.updateSelections(selections);
 
@@ -83,7 +100,7 @@ export default class extends React.Component {
                 <h3 className="title">Gender</h3>
                 <div className="label-container">
                     <div className="big">{numeral(men / total).format("0%")}</div>
-                    <div className="big">{numeral(both/ total).format("0%")}</div>
+                    <div className="big">{numeral(both / total).format("0%")}</div>
 
                     <div className="big">{numeral(women / total).format("0%")}</div>
 
@@ -92,43 +109,48 @@ export default class extends React.Component {
                 </div>
                 <div className="split-bar-container">
                     <div
+                        onClick={() => this.genderToggle("Men")}
+
                         ref={(elem) => { this.menRef = elem; }}
                         // style={{ width: `${men * 100 / total}%` }} 
-                        className="men gender-bar"></div>
+                        className={`men gender-bar ${toggleState("Men")}`}></div>
                     <div
+                        onClick={() => this.genderToggle("Both")}
+
                         ref={(elem) => { this.bothRef = elem; }}
                         // style={{ width: `${women * 100 / total}%` }} 
-                        className="both gender-bar"></div>
+                        className={`both gender-bar ${toggleState("Both")}`}></div>
                     <div
+                        onClick={() => this.genderToggle("Women")}
+
                         ref={(elem) => { this.womenRef = elem; }}
                         // style={{ width: `${women * 100 / total}%` }} 
-                        className="women gender-bar"></div>
+                        className={`women gender-bar ${toggleState("Women")}`}></div>
                 </div>
                 <div className="label-container">
-                    <div className="label-area men"
-                    // className={"toggle-area men " + toggleState("Men")}
-                    //     onClick={() => this.genderToggle("Men")}
-                        >
+                    <div
+                        className={"label-area men " + toggleState("Men")}
+                        onClick={() => this.genderToggle("Men")}
+                    >
                         {/* <div className={"toggle-light"}></div> */}
                         <div>Men</div>
                         <div>{numeral(men).format("0,0")}</div>
 
                     </div>
-                    <div 
-                    className="label-area both"
-                    // className={"toggle-area both " + toggleState("Both")}
-                        // onClick={() => this.genderToggle("Both")}
-                        >
+                    <div
+                        className={"label-area both " + toggleState("Both")}
+                        onClick={() => this.genderToggle("Both")}
+                    >
                         {/* <div className={"toggle-light"}></div> */}
                         <div>Both</div>
                         <div>{numeral(both).format("0,0")}</div>
 
                     </div>
 
-                    <div className="label-area women"
-                        // onClick={() => this.genderToggle("Women")}
-                        // className={"toggle-area women " + toggleState("Women")}
-                        >
+                    <div
+                        onClick={() => this.genderToggle("Women")}
+                        className={"label-area women " + toggleState("Women")}
+                    >
                         {/* <div className={"toggle-light"}></div> */}
                         <div>Women</div>
                         <div>{numeral(women).format("0,0")}</div>

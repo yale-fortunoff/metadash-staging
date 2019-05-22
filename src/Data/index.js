@@ -5,6 +5,7 @@ import * as interviewers from "./interviewers";
 import * as programs from "./programs";
 import { MEN_SUBJECT, WOMEN_SUBJECT } from "./static";
 import {getRecordingYear} from "./getRecordingYear";
+import {getGender} from "./getGender";
 
 /**
  * 
@@ -21,7 +22,10 @@ function getData(options) {
         "languages": {},
         "birthYears": {},
         "interviewers": {},
-        "gender": {both:{label:"Both",count:0}},
+        "gender": {
+            men:{label:"Men",count:0},
+            women:{label:"Women",count:0},
+            both:{label:"Both",count:0}},
         "programs": {},
 
         // not implemented
@@ -64,7 +68,10 @@ function getData(options) {
         r.subject_refs.forEach(s => { incr("subjects", subjects.byID(s)) });
 
         // count the number of records with both men and women
-        if (r.subject_refs.indexOf(MEN_SUBJECT) >= 0 && r.subject_refs.indexOf(WOMEN_SUBJECT) >= 0){ ret.gender.both.count += 1 }
+        const genderItem = {id:getGender(r).toLowerCase()};
+        // console.log("gender", genderItem)
+        incr("gender", genderItem);
+        // if (r.subject_refs.indexOf(MEN_SUBJECT) >= 0 && r.subject_refs.indexOf(WOMEN_SUBJECT) >= 0){ ret.gender.both.count += 1 }
 
         // count occurrences of each birth year
         if (r.birth_years && r.birth_years.length === 1) {
@@ -94,10 +101,10 @@ function getData(options) {
 
     });
 
-    ret.gender.men = (ret.subjects[MEN_SUBJECT] || 0) 
-    ret.gender.women = (ret.subjects[WOMEN_SUBJECT] || 0 )
-    ret.gender.men.count -= ret.gender.both.count;
-    ret.gender.women.count -= ret.gender.both.count;
+    // ret.gender.men = (ret.subjects[MEN_SUBJECT] || 0) 
+    // ret.gender.women = (ret.subjects[WOMEN_SUBJECT] || 0 )
+    // ret.gender.men.count -= ret.gender.both.count || 0 ;
+    // ret.gender.women.count -= ret.gender.both.count;
     
 
     const returnValue = {

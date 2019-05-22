@@ -1,6 +1,7 @@
 const {getRecordingYear }= require("./getRecordingYear");
 const {normalizeString} = require("../Common");
 const { MEN_SUBJECT, WOMEN_SUBJECT } = require("./static");
+const { getGender } = require("./getGender");
 /**
  * all - return an array containing all records.
  *       This can be accomplished by calling .query
@@ -50,14 +51,9 @@ filters.getResources = options => {
         if (!filters.resourceContainsAllSubjects(options.subjects || [])(r)) { return false }
 
         // TODO - filter by gender
-        if ((options.gender || []).length == 1 && options.gender[0] === "Men") {
-            if (!filters.resourceContainsAllSubjects([{ id: MEN_SUBJECT }])(r)) { return false }
+        if ((options.gender || []).length > 0 && (options.gender || []).length < 3){
+            if (options.gender.indexOf(getGender(r)) < 0){ return }
         }
-        if ((options.gender || []).length == 1 && options.gender[0] === "Women") {
-
-            if (!filters.resourceContainsAllSubjects([{ id: WOMEN_SUBJECT }])(r)) { return false }
-        }
-
 
         // TODO - filter by year of recording
         const recordingYear = getRecordingYear(r);

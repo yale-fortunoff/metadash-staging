@@ -6,12 +6,16 @@
 }
 
 .BirthYear{
+    .bar{
+        stroke: white;
+        stroke-width: 1;
+    }
     .birth.bar{
-        fill: gray;
+        fill: maroon;
     }
 
     .recording.bar{
-        fill: lightgreen;
+        fill: teal;
     }
 
     .slider-container{
