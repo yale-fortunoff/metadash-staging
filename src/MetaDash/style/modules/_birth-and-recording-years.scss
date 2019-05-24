@@ -1,0 +1,60 @@
+.BirthYear {
+  grid-row-start: birthyear-start;
+  grid-row-end: birthyear-end;
+  grid-column-start: birthyear-start;
+  grid-column-end: birthyear-end;
+}
+.BirthYear.subset-mode .bar {
+    fill: $color-robinegg;
+  }
+
+.BirthYear {
+  // .bar{
+  //     // stroke: green;
+  //     // stroke-width: 1;
+  // }
+  // .birth.bar{
+  //     fill: $color-marigold;
+  // }
+
+  // .recording.bar{
+  //     fill: $color-teal;
+  // }
+
+  .bar {
+    transition: fill 0.5s ease;
+    fill: $color-fortunoff;
+  }
+
+  .Histogram {
+    margin: 0px 30px;
+    max-width: 2000px;
+  }
+
+  .slider-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 30px;
+
+    .half {
+      box-sizing: border-box;
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+
+      .DoubleSlider {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        max-width: 350px;
+
+        .handle rect {
+          fill: white;
+          stroke-width: 0.75;
+          stroke: $color-darkgray;
+        }
+      }
+    }
+  }
+}

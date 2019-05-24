@@ -38,13 +38,13 @@ export default class extends D3Component {
             height = this.props.height || svg.node().getBoundingClientRect().height;
 
         // svg.attr("height", height + "px")
-            // .attr("width", width + "px");
+        // .attr("width", width + "px");
 
         // const yearRange = d3.extent(this.props.data.map(x => x.label))
         const yearRange = [this.props.minYear, this.props.maxYear]
         const countRange = [0, d3.max(data.map(x => x.count)) || 1]
 
-        const margin = this.props.margin ||  {
+        const margin = this.props.margin || {
             bottom: 30,
             top: 20,
             left: 20,
@@ -54,11 +54,12 @@ export default class extends D3Component {
         // add axes
         const xScale = d3.scaleBand()
             .domain(d3.range(...yearRange))
+            .padding(0.5)
             .rangeRound([margin.left, width - margin.right])
 
         const xAxis = d3.axisBottom(xScale)
-        .tickFormat(e => numeral(e).format("0"))
-        .tickValues(d3.range(this.props.minYear, this.props.maxYear, 10))
+            .tickFormat(e => numeral(e).format("0"))
+            .tickValues(d3.range(this.props.minYear, this.props.maxYear, 10))
 
         this.xAxisG
             .attr("transform", `translate(${0},${height - margin.bottom})`)
@@ -69,7 +70,7 @@ export default class extends D3Component {
             .rangeRound([height - margin.bottom, margin.top])
 
         const yAxis = d3.axisLeft(yScale).tickSizeOuter(0)
-        .tickFormat( e => Math.floor(e) === e ? e : undefined);
+            .tickFormat(e => Math.floor(e) === e ? e : undefined);
 
         this.yAxisG
             .attr("transform", `translate(${margin.left},${0})`)
@@ -84,24 +85,21 @@ export default class extends D3Component {
             .data(data)
             .join(
                 (enter, i) => enter.append("rect")
-                    .attr("class",d=>d.barClass)
+                    .attr("class", d => d.barClass)
                     .classed("bar", true)
-                    .attr("data-enter-value", d=>d.count)
-                    .attr("data-label", d=>d.label)
+                    .attr("data-enter-value", d => d.count)
+                    .attr("data-label", d => d.label)
                     .attr("y", d => yScale(0))
                     .attr("width", xScale.bandwidth)
                     .attr("x", d => xScale(d.label))
-
                     .call(enter => enter.transition(t(i))
-                        .attr("y", d => {
-                            return yScale(d.count || 0)
-                        })
+                        .attr("y", d => yScale(d.count || 0))
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                         .attr("width", xScale.bandwidth)
-                    ), 
+                    ),
                 update => update
-                    .attr("data-update-value", d=>d.count)
-                    .attr("class",d=>d.barClass)
+                    .attr("data-update-value", d => d.count)
+                    .attr("class", d => d.barClass)
                     .classed("bar", true)
                     .attr("x", d => xScale(d.label))
                     .call(update => update.transition(t(100))
@@ -109,16 +107,16 @@ export default class extends D3Component {
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                     ),
                 exit => exit
-                .attr("data-exit-value", d=>d.count)
-                // .attr("class",d=>d.barClass)
-                .attr("x", d => xScale(d.label))
-                .call(exit => exit.transition(t(100))
-                    .attr("height", 0)
-                    .attr("y", () =>  yScale(0))
-                )
+                    .attr("data-exit-value", d => d.count)
+                    // .attr("class",d=>d.barClass)
+                    .attr("x", d => xScale(d.label))
+                    .call(exit => exit.transition(t(100))
+                        .attr("height", 0)
+                        .attr("y", () => yScale(0))
+                    )
             )
 
-       d3.select(window).on("resize",this.redrawChart)
+        d3.select(window).on("resize", this.redrawChart)
     }
 
 }

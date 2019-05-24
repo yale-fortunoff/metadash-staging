@@ -30,8 +30,8 @@ function getData(options) {
 
         // not implemented
         "recordingYears": {},
-        "birthCities": {},
-        "birthCountries": {},
+        // "birthCities": {},
+        // "birthCountries": {},
         "birthPlaces": {},
     }
 
@@ -55,7 +55,6 @@ function getData(options) {
             const city = r.birth_place_cities[i] || "",
                 country = r.birth_place_countries[i] || "";
             ret.push(`${city},${country}|${country}`);
-
         }
         return ret;
     }
@@ -108,9 +107,9 @@ function getData(options) {
     
 
     const returnValue = {
-        "resources": res,
+        resources: res,
         subjects: undefined,
-        "summaryData": ret
+        summaryData: ret
     };
 
     return returnValue;

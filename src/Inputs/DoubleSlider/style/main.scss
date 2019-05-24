@@ -1,6 +1,6 @@
 .DoubleSlider{
     .Viz svg {
-        height: 30px;
+        height: 50px;
     }
 
     rect.handle{
@@ -17,8 +17,6 @@
 
     .label-container{
         display: flex;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        font-size: 14px;
         justify-content: space-between;
         padding: 0px 20px;
     }

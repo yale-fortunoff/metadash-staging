@@ -1,0 +1,12 @@
+.BirthPlaces{
+        svg{
+            circle{
+                fill: $color-haas;
+                cursor: pointer;
+            }
+            circle:hover{
+                fill: $color-teal;
+            }
+
+        }
+}

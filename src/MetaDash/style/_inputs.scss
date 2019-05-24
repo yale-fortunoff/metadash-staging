@@ -1,0 +1,39 @@
+.react-autosuggest__input,
+input,
+select {
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: $font-serif;
+    background-color: $color-backgroundgray;
+    color: $color-textgray;
+    font-size: 18px;
+    border: 1px solid $color-inputborder;
+    // padding: 10px 15px;
+    height: 36px;
+    padding:0px 4px;
+}
+
+.TextInput input,
+.react-autosuggest__input {
+    padding-left: 10px;
+    background: url(icons/spy-glass.svg) no-repeat scroll 7px 7px;
+    background-origin: content-box;
+    background-position: center right;
+    background-size: 21px;
+    background-color: $color-backgroundgray;
+
+}
+
+
+// input[type="text"]{
+//     text-align: left;
+//     box-sizing: border-box;
+//     width: 100%;
+//     font-family: $font-serif;
+//     background-color: #efefef;
+//     color: #666;
+//     font-size: 18px;
+//     border: none;
+//     padding: 10px 15px;
+// }

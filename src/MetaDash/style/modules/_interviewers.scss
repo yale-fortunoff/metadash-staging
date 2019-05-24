@@ -1,0 +1,29 @@
+.Interviewers{
+    grid-row-start: interviewers-start;
+    grid-row-end: interviewers-end;
+    grid-column-start: interviewers-start;
+    grid-column-end: interviewers-end;
+
+    overflow: hidden;
+    max-height: 100%;
+
+    padding-left: 0px;
+    padding-right: 0px;
+
+    box-sizing: border-box;
+
+    .input-wrapper{
+        padding: 0 30px 30px 30px;
+    }
+
+    .list-item:hover{
+        background-color: $color-mist;
+    }
+
+    .list-item{
+        .list-item-value{
+            margin-right: 30px;
+        }
+    }
+
+}

@@ -34,18 +34,37 @@ export default class extends React.Component {
         this.renderSuggestion = this.renderSuggestion.bind(this);
         this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
 
+        this.cleanClusterData();
+
     }
+
+    shouldComponentUpdate(nextProps, nextState){
+        const shouldUpdate = (nextProps !== this.props) 
+        || (nextState !== this.state);
+
+        return (shouldUpdate);
+    }
+
 
     // the data needs to be reformatted a little bit 
     // in order to work with a cluster pack layout.
     // we want to create a hierarchy of countries and cities
     cleanClusterData() {
-        if (this.state.cleanClusterData) { return this.state.cleanClusterData }
+        // if (this.state.cleanClusterData) { return this.state.cleanClusterData }
         let addedCountries = []
-        let clusterData = objectToArray(this.props.birthPlaces)
+        let clusterData = objectToArray(this.props.allBirthPlaces)
             .filter(
                 place => place.label.split("|").filter(x => x.length > 0).length == 2
-            );
+            )
+            .map(item=>{
+                let ret = {...item};
+                // console.log("item",item, item.id in this.props.birthPlaces)
+                if (!(item.id in this.props.birthPlaces)){ 
+                    // console.log("removing", item);
+                    ret.count = 0
+                }
+                return ret
+            });
 
         // add an item for each country
         clusterData.forEach(element => {
@@ -59,8 +78,7 @@ export default class extends React.Component {
 
         clusterData.push({ label: "root|", id: "root|" })
 
-        this.setState({ cleanClusterData: clusterData });
-
+        // this.setState({ cleanClusterData: clusterData });
         return clusterData;
 
     }
@@ -110,13 +128,12 @@ export default class extends React.Component {
         this.props.updateSelections([])
     }
 
-    onMouseOver(e) {
-        this.setState({ hoverText: e.label.split("|")[0].split(",")[0] + " " + e.country })
+    onMouseOver(d) {
+        this.setState({ hoverText: d.label.split("|")[0].split(",")[0] + " " + d.country })
     }
 
     onMouseOut() {
         this.setState({ hoverText: " " })
-
     }
 
     render() {
@@ -126,8 +143,6 @@ export default class extends React.Component {
             value: this.state.searchTerm,
             onChange: this.onChange
         };
-
-        const hoverText = "";
 
         return (
             <div className="BirthPlaces module-box">
@@ -144,9 +159,11 @@ export default class extends React.Component {
 
                 <Cluster
                     items={this.cleanClusterData()}
+                    allItems={this.props.allBirthPlaces}
                     itemDict={this.props.birthPlaces}
                     onMouseOver={this.onMouseOver}
                     onMouseOut={this.onMouseOut}
+                    updateSelections={this.props.updateSelections}
                 ></Cluster>
 
                 <Autosuggest

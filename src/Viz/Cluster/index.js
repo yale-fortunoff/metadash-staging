@@ -3,6 +3,7 @@ import "./style/main.scss";
 import D3Component from "../D3Component";
 import numeral from "numeral";
 import * as d3 from "d3";
+import { objectToArray } from '../../MetaDash/Common';
 
 export default class extends D3Component {
 
@@ -14,70 +15,99 @@ export default class extends D3Component {
     }
 
     initializeChart() {
-
         const items = this.props.items
 
         const svg = d3.select(this.svg).html("");
 
         const width = svg.node().getBoundingClientRect().width,
             height = this.props.height || svg.node().getBoundingClientRect().height;
-        
-            //svg.attr("height", height + "px");
 
-        d3.select(window).on("resize", this.redrawChart)
+        svg.attr("height", height + "px");
 
-        const root = d3.stratify()
-        .id(d=>d.label.split("|")[0])
-        .parentId(d=>d.label.split("|")[1])(items)
-
-        var packLayout = d3.pack()
-        .padding(0.725)
-        .size([width, height]);
-
-        root.sum(d=>d.count);
-
-        packLayout(root);
-
-        let nodes = svg.append("g")
-        .selectAll('circle')
-        .data(root.descendants().filter(d=>d.data.label.indexOf("root")<0))
-        .enter()
-        .append('circle')
-        .attr("data-city", d=>d.data.label)
-        .attr('cx', function(d) { return d.x; })
-        .attr('cy', function(d) { return d.y; })
-        .attr('r', function(d) { return d.r; })
-        .on("mouseover", d=>this.props.onMouseOver(d.data))
-        .on("mouseout", d=>this.props.onMouseOut(d.data))
+        svg.on("resize", this.redrawChart)
 
     }
 
-    updateChart() {
+    componentDidUpdate(prevProps, prevState) {
+        this.updateChart(prevProps, prevState);
+    }
 
-        // highlight the selected subset
-        const svg = d3.select(this.svg);
-        svg.selectAll("circle")
-        .classed("highlighted", d=>{
-            return d.data.label in this.props.itemDict
-        })
-        .transition().duration(1500).ease(d3.easeQuad)
-        .style("opacity",d=>d.data.label in this.props.itemDict ? 1 : 0.25 )
+    updateChart(prevProps, prevState) {
 
+        const svg = d3.select(this.svg)
 
-        // // resize to show only the appropriate area
-        // // represented by the subset items
-        // .transition(d3.transition().duration(3000))
-        // .attr('r', d =>{
-        //     if (!(d.data.id in this.props.itemDict)) return d.r;
-        
-        //     // resize in place
-        //     const oldCount = d.data.count,
-        //     newCount = this.props.itemDict[d.data.id].count,
-        //     ratio = newCount / oldCount,
-        //     newRadius = d.r * ratio;
+        const width = svg.node().getBoundingClientRect().width,
+            height = this.props.height || svg.node().getBoundingClientRect().height;
 
-        //     return newRadius
-        // })
+        const items = this.props.items;
+        let allItems = this.props.allItems;
+
+        function allItemsMatch(arr1, arr2){
+            if( arr1.length !== arr2.length ){ return false }
+            for (let i = 0; i < arr1.length; i++){
+                if (arr1[i].id !== arr2[i].id){ return false}
+                if (arr1[i].count !== arr2[i].count){ return false}
+            }
+            return true;
+        }
+
+        // FIXME - this is a really naive improvement that prevents reanimating when
+        // the length of the properties hasn't changed. There could be cases when
+        // it should redraw but won't. really I should check that each item/count is unchanged
+        // if (Object.keys((prevProps||{}).itemDict||{}).length ===  Object.keys(this.props.itemDict).length){ return }
+        // this should be better
+        if (allItemsMatch(
+            objectToArray((prevProps||{}).itemDict||{}), 
+            objectToArray(this.props.itemDict))){ 
+                return
+            }
+
+        console.log("re-rendering!")
+
+        const root = d3.stratify()
+            .id(d => d.label.split("|")[0])
+            .parentId(d => d.label.split("|")[1])(items);
+
+        var packLayout = d3.pack()
+            .padding(0.725)
+            .size([width, height]);
+
+        root.sum(d => d.count);
+
+        const data = root.descendants().filter(d => d.data.label.indexOf("root") < 0);
+        packLayout(root);
+        svg.selectAll("circle.city").transition();
+
+        const t = d3.transition().duration(1400)//.ease(d3.easeQuad);
+        this.allowInteraction = data.length;
+
+        let nodes = svg
+            .selectAll('circle.city')
+            .data(data)
+            .join(
+                enter => enter
+                    .append('circle')
+                    .classed("city", true)
+                    .on("mouseover", d => this.props.onMouseOver(d.data))
+                    .on("mouseout", d => this.props.onMouseOut(d.data))
+                    .on("click", d => this.props.updateSelections([d.data]))
+                    .attr('cx', function (d) { return d.x; })
+                    .attr('cy', function (d) { return d.y; })
+                    .attr('r', function (d) { return d.r; }),
+                update => update
+                    .call(update =>
+                        update.transition(t)
+                            .attr("data-city", d => d.data.label)
+                            .attr('cx', d=>d.x)
+                            .attr('cy',d=>d.y)
+                            .attr('r',d=>d.r)
+                    ),
+                // exit=>exit
+                // .call(exit=>
+                //     exit.transition().duration(1000)
+                //     .attr('r', 0)
+                // )
+            )
 
     }
 

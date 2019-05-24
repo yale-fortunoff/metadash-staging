@@ -61,7 +61,10 @@ export default class extends D3Component {
         svg.selectAll("rect")
             .on("mouseover", this.props.mouseInCallback || (() => { console.log("Default handler") }))
             .on("mouseout", this.props.mouseOutCallback || (() => { }))
-            .on("click", this.props.clickCallback || (() => { }));
+            .on("click", item => {
+                console.log("initial click");
+                return this.props.clickCallback(item)
+            });
 
 
         d3.select(window).on("resize", this.redrawChart)
@@ -75,6 +78,12 @@ export default class extends D3Component {
         svg.selectAll("rect")
         .classed("highlighted", d=>{
             return d.data.id in this.props.itemDict})
+        .on("click", d=>{
+            console.log("update click")
+            if (d.data.id in this.props.itemDict){ 
+                return this.props.clickCallback(d)
+            }
+        })
 
     }
 

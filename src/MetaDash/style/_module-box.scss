@@ -1,0 +1,14 @@
+.module-box {
+  border-radius: 8px;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.16);
+  box-sizing: border-box;
+  padding: 0px 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+
+  .title {
+    @include typography-module-box-title;
+    text-align: center;
+  }
+}

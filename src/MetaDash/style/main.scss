@@ -1,84 +1,28 @@
+@import "./colors";
+@import "./typography";
+@import "./module-area";
+@import "./inputs";
+@import "./layout";
+
+
+@import "./modules/gender";
+@import "./modules/countlist";
+@import "./modules/languages";
+@import "./modules/interviewers";
+@import "./modules/birth-and-recording-years";
+@import "./modules/viz";
+@import "./modules/birth-places";
+
 body {
-    margin: 0px;
-}
+  @include typography-body;
+  background: $color-backgroundgray;
 
-.module-box{
-    border-radius: 8px;
-    box-shadow: 1px 1px 6px gray;
-    box-sizing: border-box;
-    padding: 0px 15px 15px 15px;
-}
-
-.module-box .title {
-    text-align: center;
+  margin: 0px;
+  padding: 0px;
 }
 
 .MetaDash {
-    padding: 10px;
-    max-width: 1280px;
-    margin-right: auto;
-    margin-left: auto;
-
-    font-family: "Georgia";
-    //font-size:12px;    
-    display: grid;
-    grid-gap: 10px;
-
-    grid-template-rows: repeat(8,180px);
-    // grid-template-rows: repeat(6,minmax(1fr, 300px));
-    grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
-
-    grid-template-areas:    //"overview  overview  overview  overview"
-                            "billboard birthyear birthyear      interviewers"
-                            "gender    birthyear birthyear      interviewers "
-                            "languages  birthplaces    programs interviewers"
-                            "languages  birthplaces      programs interviewers"
-                            "languages  birthplaces    programs    interviewers"
-                            //"languages  birthplaces    programs    interviewers"
-                            "subjects  subjects  subjects  subjects"
-
-}
-
-.MetaDash .tagfilter-collection {
-    display: flex;
-}
-
-.OverviewBillboard { 
-    grid-row-start:    billboard-start;
-    grid-row-end:      billboard-end;
-}
-
-.Gender {
-    grid-area: gender-start / gender-start / gender-end / gender-end;
-}
-
-.Languages {
-    grid-area: languages-start / languages-start / languages-end / languages-end;
-}
-
-.BirthPlaces {
-    grid-area: birthplaces-start / birthplaces-start / birthplaces-end / birthplaces-end;
-}
-
-@media only screen and (max-width:500px){
-    .MetaDash {
-
-    display: grid;
-    // grid-gap: 10px;
-
-    grid-template-rows: repeat(10,180px);
-    grid-template-columns: 1fr;
-    // // grid-template-rows: repeat(6,minmax(1fr, 300px));
-    // grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
-    grid-template-areas:    //"overview  overview  overview  overview"
-                            "billboard"
-                            "gender"
-                            "birthyear"
-                            "birthplace"
-                            "interviewers"
-                            "languages"
-                            "programs"
-                            "subjects"
-
-    }
+  section {
+    margin-top: 50px;
+  }
 }

@@ -1,13 +1,15 @@
 import React from 'react';
 import "./style/main.scss";
 // import TagFilter from "../../Inputs/TagFilter";
-import { CountListWithBars, objectToArray } from "../Common";
+import { arrayToObject, objectToArray } from "../Common";
+import CountListWithBars from "../CountListWithBars";
+
 import { TextInput, SelectionPool } from "../../Inputs";
 
 
 export default class extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             searchTerm: '',
@@ -19,37 +21,52 @@ export default class extends React.Component {
 
     }
 
-    dropSelection(item){
-        this.props.updateSelections(this.props.selections.filter(i=>i.id !== item.id))
+    dropSelection(item) {
+        this.props.updateSelections(this.props.selections.filter(i => i.id !== item.id))
     }
 
-    updateSearchTerm(searchTerm){
+    updateSearchTerm(searchTerm) {
 
         this.setState({
             searchTerm,
             // filteredItems: this.props.filterItems(searchTerm)
         })
-        
+
     }
 
-    updateSelections(){
+    updateSelections() {
 
-        this.updateSearchTerm(this.state.searchTerm);
+        // this.updateSearchTerm(this.state.searchTerm);
+        this.updateSearchTerm("");
         this.props.updateSelections.apply(null, arguments);
-        
+
     }
 
-    handleItemClick(item){
-        this.updateSelections(this.props.selections.filter(i=>i.id !== item.id).concat([item]))
+    handleItemClick(item) {
+        // if you click an item that's already selected, unselect it.
+        // otherwise, select it
+        const selections = arrayToObject(this.props.selections);
+        const selectionsWithoutCurrentItem = this.props.selections.filter(i => i.id !== item.id);
+
+        if (item.id in selections) { this.updateSelections(selectionsWithoutCurrentItem) }
+        else { this.updateSelections(selectionsWithoutCurrentItem.concat([item])) }
+
+        // this.updateSelections(this.props.selections.filter(i=>i.id !== item.id).concat([item]))
     }
 
     render() {
 
+        const items = this.props.filterItems(this.state.searchTerm);
+
         const listProps = {
             showBars: this.props.showBars,
             updateSelections: this.updateSelections,
-            items: this.props.filterItems(this.state.searchTerm),
-            handleItemClick: this.handleItemClick
+            items: items,
+            allItems: this.props.allInterviewers,
+            showAll: false,
+            itemDict: arrayToObject(items),
+            handleItemClick: this.handleItemClick,
+            selections: arrayToObject(this.props.selections)
             //allowMultipleSelections: true,
             // items: this.state.filteredItems
             // items: objectToArray(this.props.interviewers)
@@ -58,19 +75,19 @@ export default class extends React.Component {
         return (
             <div className="Interviewers module-box">
                 <h3 className="title">Interviewers</h3>
-                <div>
+                <div className="input-wrapper">
                     <TextInput
-                    placeholder="Search by name"
-                    callback={this.updateSearchTerm}
-                    value={this.state.searchTerm}>
-                    ></TextInput>
+                        placeholder="Search by name"
+                        callback={this.updateSearchTerm}
+                        value={this.state.searchTerm}>
+                        ></TextInput>
                 </div>
-                <div>
+                {/* <div>
                     <SelectionPool
                     callback={(this.dropSelection)}
                     items={this.props.selections}></SelectionPool>
-                </div>
-                    <CountListWithBars {...listProps}></CountListWithBars>
+                </div> */}
+                <CountListWithBars {...listProps}></CountListWithBars>
             </div>);
 
     }

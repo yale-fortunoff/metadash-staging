@@ -1,7 +1,9 @@
 .CheckboxInput {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.CheckboxInput.checked {
+.CheckboxInput {
+  .checked {
     background-color: lightskyblue;
+  }
 }

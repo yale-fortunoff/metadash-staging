@@ -19,30 +19,45 @@ export default class extends React.Component {
     }
 
     render() {
+
         const total = this.props.items.reduce((subtotal, nextItem) => subtotal + nextItem.count, 0);
         const width = val => `${val * 100 / total}%`
 
-        console.log("CountListWithBars.props", this.props)
+        console.log("CountListWithBars.props", this.props);
+        const items = this.props.showAll ? this.props.allItems : this.props.items;
         return (
             <div className="count-list">
-                {(this.props.allItems || [])
+                {(items || [])
                     .sort((a, b) => a.count < b.count ? 1 : -1)
                     .filter(a => a.label && a.label.length > 0)
                     .map((item, i) => {
 
-                        let barWidth = width(item.count);
-                        let className="list-item on"
-                        if (!(item.id in this.props.itemDict)){
-                            barWidth = 0;
-                            className="list-item off"
+                        let itemCount,
+                            barWidth,
+                            className
+
+
+                        if (item.id in this.props.itemDict) {
+                            className = "list-item";
+                            itemCount = numeral(this.props.itemDict[item.id].count).format("0,0");
+                            barWidth = width(this.props.itemDict[item.id].count);
+
                         } else {
+                            className = "list-item disabled";
+                            barWidth = 0;
+                            itemCount = "--"
                         }
 
+                        if (item.id in this.props.selections) {
+                            className = "list-item selected";
+                        }
+
+
                         return (
-                            <div onClick={() => (this.props.handleItemClick||(()=>{}))(item)} key={i}
+                            <div onClick={() => (this.props.handleItemClick || (() => { }))(item)} key={i}
                                 className={className}>
 
-                                <div className="off-icon">x</div>
+                                <div className="x-icon">x</div>
 
                                 <div className="list-item-name">
                                     {item.label}
@@ -51,7 +66,7 @@ export default class extends React.Component {
                                 {this.renderBar(barWidth)}
 
                                 <div className="list-item-value">
-                                    {numeral(item.count).format("0,0")}
+                                    {itemCount}
                                 </div>
                             </div>
                         )

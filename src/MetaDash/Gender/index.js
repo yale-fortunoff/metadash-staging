@@ -99,10 +99,10 @@ export default class extends React.Component {
             <div className="Gender module-box">
                 <h3 className="title">Gender</h3>
                 <div className="label-container">
-                    <div className="big">{numeral(men / total).format("0%")}</div>
-                    <div className="big">{numeral(both / total).format("0%")}</div>
+                    <div className="big-label">{numeral(men / total).format("0%")}</div>
+                    <div className="big-label">{numeral(both / total).format("0%")}</div>
 
-                    <div className="big">{numeral(women / total).format("0%")}</div>
+                    <div className="big-label">{numeral(women / total).format("0%")}</div>
 
                     {/* <div className="big">{numeral(men).format("0,0")}</div>
                     <div className="big">{numeral(women).format("0,0")}</div> */}
@@ -129,31 +129,31 @@ export default class extends React.Component {
                 </div>
                 <div className="label-container">
                     <div
-                        className={"label-area men " + toggleState("Men")}
+                        className={"label-area men small-label " + toggleState("Men")}
                         onClick={() => this.genderToggle("Men")}
                     >
                         {/* <div className={"toggle-light"}></div> */}
                         <div>Men</div>
-                        <div>{numeral(men).format("0,0")}</div>
+                        <div className="subtext">{numeral(men).format("0,0")}</div>
 
                     </div>
                     <div
-                        className={"label-area both " + toggleState("Both")}
+                        className={"label-area both small-label " + toggleState("Both")}
                         onClick={() => this.genderToggle("Both")}
                     >
                         {/* <div className={"toggle-light"}></div> */}
                         <div>Both</div>
-                        <div>{numeral(both).format("0,0")}</div>
+                        <div className="subtext">{numeral(both).format("0,0")}</div>
 
                     </div>
 
                     <div
                         onClick={() => this.genderToggle("Women")}
-                        className={"label-area women " + toggleState("Women")}
+                        className={"label-area women small-label " + toggleState("Women")}
                     >
                         {/* <div className={"toggle-light"}></div> */}
                         <div>Women</div>
-                        <div>{numeral(women).format("0,0")}</div>
+                        <div className="subtext">{numeral(women).format("0,0")}</div>
 
                     </div>
                 </div>

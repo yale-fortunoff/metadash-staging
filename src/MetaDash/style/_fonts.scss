@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "YaleNew";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Yale"), 
+  local("YaleNew"), 
+  url(./fonts/YaleNew-Roman.otf) format("otf");
+}
+
+@font-face {
+  font-family: "YaleNew";
+  font-style: bold;
+  font-weight: 700;
+  src: local("Yale"), 
+  local("YaleNew-bold"), 
+  url(./fonts/YaleNew-Bold.otf) format("otf")
+}
+
+@font-face {
+  font-family: "Proxima";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Proxima"), 
+      url("./fonts/ProximaNova-Reg.otf") format("otf"),
+      url("./fonts/ProximaNova-Reg.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Proxima";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Proxima"), 
+      url("./fonts/ProximaNova-Sbold.otf") format("otf"),
+      url("./fonts/ProximaNova-Sbold.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Proxima";
+  font-style: bold;
+  font-weight: 700;
+  src: local("Proxima"), 
+      url("./fonts/ProximaNova-Bold.otf") format("otf"),
+      url("./fonts/ProximaNova-Bold.ttf") format("truetype")
+}
+
+
+$font-serif: "YaleNew";
+$font-sans: "Proxima";

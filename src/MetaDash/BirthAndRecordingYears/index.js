@@ -35,29 +35,36 @@ export default class extends React.Component {
                 bottom: 20
             }
         };
+        const modeClass = this.props.subsetMode ? "subset-mode" : "full-mode";
+
         return (
-            <div className="BirthYear module-box">
+            <div className={"BirthYear module-box " + modeClass}>
                 <h3 className="title">Dates</h3>
-                <Histogram
-                    {...itemProps}
-                ></Histogram>
+                <div className="Histogram">
+                    <Histogram
+                        {...itemProps}
+                    ></Histogram>
+                </div>
+
 
                 <div className="slider-container">
                     <div className="half">
                         <DoubleSlider
+                        label="Birth year"
                             updateSelections={this.updateRangeFactory("birth")}
                             min={1890}
                             max={1945}
-                            margin={{ top: 2, bottom: 2, left: 20, right: 20 }}
+                            margin={{ top: 2, bottom: 10, left: 20, right: 40 }}
                         ></DoubleSlider>
 
                     </div>
                     <div className="half">
                         <DoubleSlider
+                            label="Recording year"
                             updateSelections={this.updateRangeFactory("recording")}
                             min={1969}
                             max={2020}
-                            margin={{ top: 2, bottom: 2, left: 20, right: 20 }}
+                            margin={{ top: 2, bottom: 10, left: 20, right: 40 }}
                         ></DoubleSlider>
                     </div>
 

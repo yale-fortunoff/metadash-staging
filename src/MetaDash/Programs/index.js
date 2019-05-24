@@ -26,12 +26,9 @@ export default class extends React.Component {
     }
 
     handleClick(item) {
-
-        // if (this.props.selections[0] && item.data.id === this.props.selections[0].id) {
-        //     this.props.updateSelections([])
-        // } else {
+        // if (item.id in this.props.programs) {
             this.props.updateSelections([item.data])
-        // }
+        //};
 
     }
 
@@ -55,7 +52,6 @@ export default class extends React.Component {
                     mouseInCallback={this.handleMouseIn}
                     mouseOutCallback={this.handleMouseOut}
                     selections={this.props.selections}
-
                     clickCallback={this.handleClick}
                 ></TreeMap>
 
