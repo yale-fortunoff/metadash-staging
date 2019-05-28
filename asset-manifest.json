@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/fortunoff-metadash/static/css/main.1bc3564e.chunk.css",
-    "main.js": "/fortunoff-metadash/static/js/main.7d00f236.chunk.js",
-    "main.js.map": "/fortunoff-metadash/static/js/main.7d00f236.chunk.js.map",
+    "main.css": "/fortunoff-metadash/static/css/main.04105deb.chunk.css",
+    "main.js": "/fortunoff-metadash/static/js/main.7f81786d.chunk.js",
+    "main.js.map": "/fortunoff-metadash/static/js/main.7f81786d.chunk.js.map",
     "runtime~main.js": "/fortunoff-metadash/static/js/runtime~main.0a15b005.js",
     "runtime~main.js.map": "/fortunoff-metadash/static/js/runtime~main.0a15b005.js.map",
-    "static/js/2.bde6608f.chunk.js": "/fortunoff-metadash/static/js/2.bde6608f.chunk.js",
-    "static/js/2.bde6608f.chunk.js.map": "/fortunoff-metadash/static/js/2.bde6608f.chunk.js.map",
+    "static/js/2.e865190f.chunk.js": "/fortunoff-metadash/static/js/2.e865190f.chunk.js",
+    "static/js/2.e865190f.chunk.js.map": "/fortunoff-metadash/static/js/2.e865190f.chunk.js.map",
     "index.html": "/fortunoff-metadash/index.html",
-    "precache-manifest.4c9935c2aad963d247aeb80d63048593.js": "/fortunoff-metadash/precache-manifest.4c9935c2aad963d247aeb80d63048593.js",
+    "precache-manifest.551b50cd62841e6c0df5a6b0a82a78cd.js": "/fortunoff-metadash/precache-manifest.551b50cd62841e6c0df5a6b0a82a78cd.js",
     "service-worker.js": "/fortunoff-metadash/service-worker.js",
-    "static/css/main.1bc3564e.chunk.css.map": "/fortunoff-metadash/static/css/main.1bc3564e.chunk.css.map",
-    "static/media/main.scss": "/fortunoff-metadash/static/media/search-icon.0d20b807.svg",
+    "static/css/main.04105deb.chunk.css.map": "/fortunoff-metadash/static/css/main.04105deb.chunk.css.map",
+    "static/media/main.scss": "/fortunoff-metadash/static/media/x-field.63065887.svg",
     "static/media/slider.svg": "/fortunoff-metadash/static/media/slider.8a77e598.svg"
   }
 }

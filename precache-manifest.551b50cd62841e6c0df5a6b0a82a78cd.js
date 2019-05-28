@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d4335c0047d9b15de7ac5fa995473511",
+    "revision": "767091242bbe94c633eea6e6ceb3daab",
     "url": "/fortunoff-metadash/index.html"
   },
   {
-    "revision": "2143ffa7adaa145a809e",
-    "url": "/fortunoff-metadash/static/css/main.1bc3564e.chunk.css"
+    "revision": "ca7c0456f395f8c164f9",
+    "url": "/fortunoff-metadash/static/css/main.04105deb.chunk.css"
   },
   {
-    "revision": "6abf992d5bb0afca4dc3",
-    "url": "/fortunoff-metadash/static/js/2.bde6608f.chunk.js"
+    "revision": "74d52ddd0d15ad106481",
+    "url": "/fortunoff-metadash/static/js/2.e865190f.chunk.js"
   },
   {
-    "revision": "2143ffa7adaa145a809e",
-    "url": "/fortunoff-metadash/static/js/main.7d00f236.chunk.js"
+    "revision": "ca7c0456f395f8c164f9",
+    "url": "/fortunoff-metadash/static/js/main.7f81786d.chunk.js"
   },
   {
     "revision": "74ded0f82e8e1bfa3b30",
@@ -52,11 +52,23 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fortunoff-metadash/static/media/YaleNew-Roman.b61ece38.otf"
   },
   {
+    "revision": "ab2c7571e384b44a9239c04088a2f639",
+    "url": "/fortunoff-metadash/static/media/dropdown-arrow.ab2c7571.svg"
+  },
+  {
     "revision": "0d20b8076b76513b134aea5ba1ac597e",
     "url": "/fortunoff-metadash/static/media/search-icon.0d20b807.svg"
   },
   {
     "revision": "8a77e59890bf848d2b88b801d7c6bdd3",
     "url": "/fortunoff-metadash/static/media/slider.8a77e598.svg"
+  },
+  {
+    "revision": "05b91349df87902b2ab9534135ac7aa8",
+    "url": "/fortunoff-metadash/static/media/x-circle-icon.05b91349.svg"
+  },
+  {
+    "revision": "630658872973a91efd5ae4b465f17e24",
+    "url": "/fortunoff-metadash/static/media/x-field.63065887.svg"
   }
 ]);
