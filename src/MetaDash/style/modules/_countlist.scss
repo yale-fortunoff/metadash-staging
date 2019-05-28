@@ -3,15 +3,16 @@
   overflow: scroll;
   max-height: 100%;
 
-  .x-icon {
-    flex: 10px 10px;
+  .x-circle-icon {
+    // flex: 10px 10px;
     padding-left: 15px;
     opacity: 0;
   }
 
   .selected {
-    .x-icon {
+    .x-circle-icon {
       opacity: inherit;
+      background-color: inherit;
     }
   }
 

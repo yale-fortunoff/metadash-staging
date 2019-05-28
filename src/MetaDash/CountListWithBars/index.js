@@ -57,7 +57,7 @@ export default class extends React.Component {
                             <div onClick={() => (this.props.handleItemClick || (() => { }))(item)} key={i}
                                 className={className}>
 
-                                <div className="x-icon">x</div>
+                                <div className="x-circle-icon"></div>
 
                                 <div className="list-item-name">
                                     {item.label}

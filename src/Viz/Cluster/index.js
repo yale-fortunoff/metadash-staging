@@ -40,7 +40,9 @@ export default class extends D3Component {
             height = this.props.height || svg.node().getBoundingClientRect().height;
 
         const items = this.props.items;
-        let allItems = this.props.allItems;
+        // change this to props.allItems if you want to preserve each node's circle element
+        // which is cooler, but expensive
+        let allItems = this.props.items;
 
         function allItemsMatch(arr1, arr2){
             if( arr1.length !== arr2.length ){ return false }
@@ -90,7 +92,15 @@ export default class extends D3Component {
                     .classed("city", true)
                     .on("mouseover", d => this.props.onMouseOver(d.data))
                     .on("mouseout", d => this.props.onMouseOut(d.data))
-                    .on("click", d => this.props.updateSelections([d.data]))
+                    .on("click", d => {
+                        if (this.props.selections 
+                            && this.props.selections.length == 1
+                            && this.props.selections[0].id == d.data.id){
+                            this.props.updateSelections([])
+                        } else {
+                            this.props.updateSelections([d.data])
+                        }
+                    })
                     .attr('cx', function (d) { return d.x; })
                     .attr('cy', function (d) { return d.y; })
                     .attr('r', function (d) { return d.r; }),

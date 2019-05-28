@@ -65,6 +65,9 @@ export default class extends GenericInput {
 
         return (
             <div className="TagFilter">
+                <div className="top-area">
+
+                <div className="title-area">{this.props.title}</div>
                 <TextInput
                     callback={this.updateSearchTerm}
                     placeholder={this.props.placeholder}
@@ -72,6 +75,8 @@ export default class extends GenericInput {
                 <SelectionPool
                     callback={this.dropSelection}
                     items={this.props.selections}></SelectionPool>
+                </div>
+
                 <TagPool
                     callback={this.addSelection}
                     items={items || []}

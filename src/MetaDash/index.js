@@ -3,7 +3,8 @@ import React from 'react';
 import { TagFilter, RangeSlider } from '../Inputs';
 import { BarChart, DonutChart } from "../Viz";
 
-import OverviewBillboard from "./OverviewBillboard";
+// import OverviewBillboard from "./OverviewBillboard";
+import IntroProse from "./IntroProse";
 import Gender from "./Gender";
 import Languages from "./Languages";
 import BirthAndRecordingYear from "./BirthAndRecordingYears";
@@ -11,6 +12,7 @@ import SubjectHeadings from "./SubjectHeadings";
 import Programs from "./Programs";
 import Interviewers from "./Interviewers";
 import BirthPlaces from "./BirthPlaces";
+import Results from "./Results";
 import { objectToArray, arrayToObject } from "./Common";
 
 import "./style/main.scss";
@@ -76,11 +78,19 @@ export default class extends React.Component {
         return (
             <div className="MetaDash">
 
+                <section className="prose intro-prose-section">
+                    <IntroProse
+                    items={this.state.resources}
+                    filters={this.state.filters}
+                    ></IntroProse>
+                </section>
+
                 <section className="module-area">
 
                     {/* <OverviewBillboard
                         testimonyCount={this.state.resources.length}
                     ></OverviewBillboard> */}
+
 
                     <Gender
                         updateSelections={this.updateFilterFactory("gender")}
@@ -109,7 +119,7 @@ export default class extends React.Component {
                                 .map(k => this.state.summaryData.birthYears[k])
                                 // TODO - the data needs to be cleaned up 
                                 // so we don't need to manually exclude stuff
-                                .filter(yrs => yrs.label >= 1890 && yrs.label < 1950) 
+                                .filter(yrs => yrs.label >= 1890 && yrs.label < 1950)
                                 .map(a => { return { ...a, barClass: "birth" } })
                                 .concat(
                                     Object.keys(this.state.summaryData.recordingYears)
@@ -155,9 +165,10 @@ export default class extends React.Component {
 
                 </section>
 
-                <section>
+                <section className="headings-area">
 
                     <SubjectHeadings
+                        title="Subjects"
                         updateSelections={this.updateFilterFactory("subjects")}
                         selections={this.state.filters.subjects}
                         allItems={this.state.summaryData.subjects}
@@ -165,6 +176,12 @@ export default class extends React.Component {
                         placeholder="Begin searching subjects...">
                     </SubjectHeadings>
 
+                </section>
+
+                <section className="results-section">
+                    <Results
+                        results={this.state.resources}
+                    ></Results>
                 </section>
 
 

@@ -12,10 +12,10 @@
 }
 
 .ItemSelector .clear-button.enabled:hover{
-    cursor: pointer;
+    // cursor: pointer;
 
-    background-color: gray;
-    color: white;
+    // background-color: gray;
+    // color: white;
 }
 
 
@@ -23,22 +23,22 @@
 .ItemSelector .clear-button,
 .ItemSelector select {
     box-sizing: border-box;
-    background-color: #efefef;
-    color: gray;
-    font-size: 18px;
-    padding: 10px 15px;
+    // background-color: #efefef;
+    // color: gray;
+    // font-size: 18px;
+    // padding: 10px 15px;
 
 }
 
 .ItemSelector select {
     // font-family: Georgia, 'Times New Roman', Times, serif;
 
-    width: 90%;
+    // width: 90%;
     border: none;
     display: inline-block;
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;  
-    padding: 10px 15px;
+    // padding: 10px 15px;
 
 }

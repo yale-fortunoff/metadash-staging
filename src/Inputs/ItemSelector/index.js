@@ -21,18 +21,19 @@ export default class extends React.Component {
 
         const selected = this.props.selections && this.props.selections.length === 1 ? this.props.selections[0] : { id: "ALL" };
         const clearButtonText = selected.id === "ALL" ? "" : "╳"
+        const subClass = selected.id === "ALL" ? "arrow" : "x"
         // const active = selected.id !== "ALL"
         let buttonClass = "clear-button";
+        buttonClass = "dropdown-icon " + subClass;
+
         if (selected.id !== "ALL") { buttonClass += " enabled" }
         return (
             <div className="ItemSelector">
 
-                <div className={buttonClass} onClick={this.clearSelection}>
-                    {clearButtonText}
-                </div>
-                <select 
-                defaultValue={selected.ID}
-                onChange={this.handleSelection}>
+                <select
+                    className={subClass + " dropdown-icon"}
+                    defaultValue={selected.ID}
+                    onChange={this.handleSelection}>
                     <option
                         onClick={this.clearSelection}
                         value="all"
@@ -50,6 +51,10 @@ export default class extends React.Component {
                         )
                     })}
                 </select>
+
+                <div className={buttonClass} onClick={this.clearSelection}>
+                </div>
+
             </div>
         );
     }

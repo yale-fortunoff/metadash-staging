@@ -34,13 +34,15 @@ export default class extends React.Component {
         this.renderSuggestion = this.renderSuggestion.bind(this);
         this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
 
+        this.renderHoverField = this.renderHoverField.bind(this);
+
         this.cleanClusterData();
 
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        const shouldUpdate = (nextProps !== this.props) 
-        || (nextState !== this.state);
+    shouldComponentUpdate(nextProps, nextState) {
+        const shouldUpdate = (nextProps !== this.props)
+            || (nextState !== this.state);
 
         return (shouldUpdate);
     }
@@ -56,10 +58,10 @@ export default class extends React.Component {
             .filter(
                 place => place.label.split("|").filter(x => x.length > 0).length == 2
             )
-            .map(item=>{
-                let ret = {...item};
+            .map(item => {
+                let ret = { ...item };
                 // console.log("item",item, item.id in this.props.birthPlaces)
-                if (!(item.id in this.props.birthPlaces)){ 
+                if (!(item.id in this.props.birthPlaces)) {
                     // console.log("removing", item);
                     ret.count = 0
                 }
@@ -136,6 +138,23 @@ export default class extends React.Component {
         this.setState({ hoverText: " " })
     }
 
+    renderHoverField() {
+        if (!this.props.selections || this.props.selections.length < 1) {
+            return (
+                <span>
+                    {this.state.hoverText || " "}
+                </span>
+            )
+        }
+        return (
+            <div className="selected-item">
+                <div className="x-icon"></div>
+                <div>{this.props.selections[0].label}</div>
+            </div>
+        )
+    }
+
+
     render() {
 
         const inputProps = {
@@ -154,13 +173,15 @@ export default class extends React.Component {
                 ></SelectionPool> */}
 
                 <div className="hover-text">
-                    {this.state.hoverText}
+                    {/* {this.state.hoverText} */}
+                    {this.renderHoverField()}
                 </div>
 
                 <Cluster
                     items={this.cleanClusterData()}
                     allItems={this.props.allBirthPlaces}
                     itemDict={this.props.birthPlaces}
+                    selections={this.props.selections}
                     onMouseOver={this.onMouseOver}
                     onMouseOut={this.onMouseOut}
                     updateSelections={this.props.updateSelections}
