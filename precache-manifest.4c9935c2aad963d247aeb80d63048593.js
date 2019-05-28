@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0d89e9a8ceb8f1e1cdb2a5fa1b6f5fcc",
+    "revision": "d4335c0047d9b15de7ac5fa995473511",
     "url": "/fortunoff-metadash/index.html"
   },
   {
-    "revision": "a942f3a98d2bfac90b31",
-    "url": "/fortunoff-metadash/static/css/main.d0a7bb59.chunk.css"
+    "revision": "2143ffa7adaa145a809e",
+    "url": "/fortunoff-metadash/static/css/main.1bc3564e.chunk.css"
   },
   {
-    "revision": "0f672da1a709be371d9d",
-    "url": "/fortunoff-metadash/static/js/2.7b69c468.chunk.js"
+    "revision": "6abf992d5bb0afca4dc3",
+    "url": "/fortunoff-metadash/static/js/2.bde6608f.chunk.js"
   },
   {
-    "revision": "a942f3a98d2bfac90b31",
-    "url": "/fortunoff-metadash/static/js/main.0873cec0.chunk.js"
+    "revision": "2143ffa7adaa145a809e",
+    "url": "/fortunoff-metadash/static/js/main.7d00f236.chunk.js"
   },
   {
     "revision": "74ded0f82e8e1bfa3b30",
@@ -52,7 +52,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fortunoff-metadash/static/media/YaleNew-Roman.b61ece38.otf"
   },
   {
-    "revision": "1d4d325f152154600232fb1184450ab0",
-    "url": "/fortunoff-metadash/static/media/spy-glass.1d4d325f.svg"
+    "revision": "0d20b8076b76513b134aea5ba1ac597e",
+    "url": "/fortunoff-metadash/static/media/search-icon.0d20b807.svg"
+  },
+  {
+    "revision": "8a77e59890bf848d2b88b801d7c6bdd3",
+    "url": "/fortunoff-metadash/static/media/slider.8a77e598.svg"
   }
 ]);
