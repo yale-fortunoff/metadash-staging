@@ -1,5 +1,13 @@
 .BirthPlaces{
+        justify-content: space-between;
+
+        .hover-text{
+            font-family: $font-sans;
+            font-size: 12px;
+        }
+        
         svg{
+            height: 400px;
             circle{
                 fill: $color-haas;
                 cursor: pointer;

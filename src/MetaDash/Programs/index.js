@@ -37,6 +37,8 @@ export default class extends React.Component {
     }
 
     render() {
+
+        console.log("Programs.render state", this.props)
         return (
             <div className="Programs module-box">
 

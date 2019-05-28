@@ -54,6 +54,19 @@
           stroke-width: 0.75;
           stroke: $color-darkgray;
         }
+
+        .handle rect:hover{
+          stroke: $color-yaleblack;
+          cursor: pointer;
+        }
+
+        rect.highlight {
+          fill: $color-fortunoff;
+        }
+
+        rect.track {
+          fill: $color-lightgray;
+        }
       }
     }
   }

@@ -17,14 +17,13 @@ select {
 .TextInput input,
 .react-autosuggest__input {
     padding-left: 10px;
-    background: url(icons/spy-glass.svg) no-repeat scroll 7px 7px;
+    background: url(graphics/search-icon.svg) no-repeat scroll 7px 7px;
     background-origin: content-box;
     background-position: center right;
     background-size: 21px;
     background-color: $color-backgroundgray;
 
 }
-
 
 // input[type="text"]{
 //     text-align: left;

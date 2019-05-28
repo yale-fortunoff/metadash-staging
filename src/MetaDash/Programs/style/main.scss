@@ -22,7 +22,8 @@
   svg {
     // height: 100px;
     // height: 400px;
-    height:300px;
+    // height:300px;
+    // height: 100%;
     cursor: pointer;
   }
   rect {
@@ -31,9 +32,9 @@
     cursor: pointer;
   }
 
-  svg rect:hover{
-    fill:red;
-  }
+  // svg rect:hover{
+  //   fill:red;
+  // }
   rect.highlighted {
     fill: black;
   }

@@ -148,10 +148,10 @@ export default class extends React.Component {
             <div className="BirthPlaces module-box">
                 <h3 className="title">Birth places</h3>
 
-                <SelectionPool
+                {/* <SelectionPool
                     callback={this.dropSelection}
                     items={this.props.selections}
-                ></SelectionPool>
+                ></SelectionPool> */}
 
                 <div className="hover-text">
                     {this.state.hoverText}

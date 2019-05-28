@@ -16,12 +16,12 @@
     }
 
     .pct-bar-container {
-      transition: background-color 0.25s ease;
+      // transition: background-color 0.25s ease;
       background-color: $color-mist;
       flex: 90px;
 
       .pct-bar {
-        transition: background-color 0.25s ease;
+        transition: background-color 0.25s ease, width 0.15s ease;
         background-color: $color-teal;
       }
     }
@@ -29,9 +29,10 @@
 
   .list-item:hover {
     .pct-bar-container {
-      background-color: $color-fortunoff;
+      // background-color: $color-fortunoff;
       .pct-bar {
         background-color: $color-fortunoff;
+        width: 100% !important;
       }
     }
   }

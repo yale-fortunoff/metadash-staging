@@ -1,0 +1,23 @@
+
+
+.Programs {
+    .hover-text{
+        font-family: $font-sans;
+        font-size: 12px;
+    }
+    
+    justify-content: space-between;
+
+    svg {
+        height: 400px;
+
+    }
+    rect {
+        fill: $color-sky;
+    }
+
+    rect.highlighted,
+    rect:hover{
+        fill: $color-teal;
+    }
+}

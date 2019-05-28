@@ -1,12 +1,12 @@
 .BirthPlaces {
 
   .Viz {
-    height: 300px;
-  }
-
-  svg {
     height: 100%;
   }
+
+  // svg {
+  //   height: 100%;
+  // }
 
   circle:hover{
     fill: red;

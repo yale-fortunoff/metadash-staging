@@ -12,6 +12,7 @@
 @import "./modules/birth-and-recording-years";
 @import "./modules/viz";
 @import "./modules/birth-places";
+@import "./modules/programs";
 
 body {
   @include typography-body;

@@ -31,6 +31,7 @@ export default class extends React.Component {
                     {clearButtonText}
                 </div>
                 <select 
+                defaultValue={selected.ID}
                 onChange={this.handleSelection}>
                     <option
                         onClick={this.clearSelection}
@@ -39,7 +40,7 @@ export default class extends React.Component {
 
                     {this.props.items.map((item, i) => {
                         const optionProps = {
-                            selected: selected.id === item.id,
+                            // selected: selected.id === item.id,
                             value: item.id
                         }
                         return (
