@@ -24,6 +24,7 @@ export default class extends D3Component {
         this.getHandleRange = this.getHandleRange.bind(this);
         this.updateLabels = this.updateLabels.bind(this);
         this.updateRange = this.updateRange.bind(this);
+        this.updateTrackHighlight = this.updateTrackHighlight.bind(this);
 
     }
 
@@ -68,7 +69,27 @@ export default class extends D3Component {
 
         let range = this.getHandleRange();
         this.props.updateSelections(range.map(x => x.value))
-        this.setState({ range })
+        // this.setState({ range })
+
+    }
+
+    updateTrackHighlight() {
+
+        let xValues = [];
+
+
+        d3.select(this.svg).selectAll(".handle")
+            .each(function () {
+                // console.log("Double slider handle iter", this)
+                xValues.push(Number(d3.select(this).attr("x")));
+            });
+
+            console.log("Double slider Updating track highlight", xValues)
+
+
+        d3.select(this.svg).select(".highlight")
+            .attr("x", d3.min(xValues) + this.handleWidth / 2)
+            .attr("width", d3.max(xValues) - d3.min(xValues))
 
     }
 
@@ -86,6 +107,8 @@ export default class extends D3Component {
         this.width = width;
         this.height = height;
         this.handleWidth = handleWidth;
+        this.yCenter = yCenter;
+        this.handleHeight = handleHeight;
 
         svg.attr("height", height + "px");
 
@@ -130,10 +153,11 @@ export default class extends D3Component {
 
         const limitX = this.limitX,
             xToValue = this.xToValue,
-            valueToX = this.valueToX,
-            updateLabels = this.updateLabels,
-            range = this.state.range;
+            // valueToX = this.valueToX,
+            updateLabels = this.updateLabels;
+                    // range = this.state.range;
 
+        const updateTrackHighlight = this.updateTrackHighlight;
         function dragged(d) {
             d3.select(this).attr("x", limitX(d3.event.x));
             const yr = xToValue(limitX(d3.event.x))
@@ -144,16 +168,16 @@ export default class extends D3Component {
             updateLabels();
 
             // 
-            let xValues = [];
-            svg.selectAll(".handle")
-            .each(function(){
-                xValues.push(Number(d3.select(this).attr("x")));
-            });
+            // let xValues = [];
+            // svg.selectAll(".handle")
+            //     .each(function () {
+            //         xValues.push(Number(d3.select(this).attr("x")));
+            //     });
 
-            trackHighlight
-            .attr("x", d3.min(xValues) + handleWidth / 2)
-            .attr("width", d3.max(xValues) - d3.min(xValues))
-
+            // trackHighlight
+            //     .attr("x", d3.min(xValues) + handleWidth / 2)
+            //     .attr("width", d3.max(xValues) - d3.min(xValues))
+            updateTrackHighlight();
         }
 
         const updateRange = this.updateRange;
@@ -177,26 +201,28 @@ export default class extends D3Component {
             // .append("g")
             // .classed("handle", true)
             .selectAll("g")
-            .data(this.state.range)
+            // .data(this.props.selections.map(x=>{return{value:x}}))
+            // .data(this.state.range)
+            .data([{ value: this.props.min }, { value: this.props.max }])
             .enter()
             .append("g")
             .classed("handle", true)
-            .attr("x",x=>this.valueToX(x.value))
+            .attr("x", x => this.valueToX(x.value))
             .attr("transform", x => `translate(${this.valueToX(x.value)},${yCenter - handleHeight / 2})`)
             .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
                 .on("end", dragended))
 
-        
-        const svgString ="PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNy4xNTEiIHZpZXdCb3g9IjAgMCAxMyAxNy4xNTEiPjxwYXRoIGQ9Ik0yNDAsNDQwVjQyOWgxMnYxMWwtNiw1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzOS41IC00MjguNSkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+"
+
+        const svgString = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNy4xNTEiIHZpZXdCb3g9IjAgMCAxMyAxNy4xNTEiPjxwYXRoIGQ9Ik0yNDAsNDQwVjQyOWgxMnYxMWwtNiw1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzOS41IC00MjguNSkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+"
         handleGroups.append("image")
-        .classed("handle-icon", true)
-        .attr("xlink:href",`data:image/svg+xml;base64,${svgString}`)
-        .attr("x",0)
-        .attr("y",0)
-        .attr("width",handleWidth)
-        .attr("height", handleHeight)
+            .classed("handle-icon", true)
+            .attr("xlink:href", `data:image/svg+xml;base64,${svgString}`)
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", handleWidth)
+            .attr("height", handleHeight)
         // .attr("xlink:href", { sliderHandleIcon })
 
         // handleGroups.append("rect")
@@ -220,18 +246,48 @@ export default class extends D3Component {
                     + 1})`
             })
 
-            d3.select(window).on("resize.doubleslider" + this.props.label, this.redrawChart.bind(this))
+        d3.select(window).on("resize.doubleslider" + this.props.label, this.redrawChart.bind(this))
 
 
         // this.setState({ handles });
 
 
-
-
-
     }
 
     updateChart() {
+        // const svg = d3.select(this.svg),
+        //     bbox = svg.node().getBoundingClientRect(),
+        //     width = bbox.width,
+        //     height = bbox.height,
+            // handleHeight = this.props.handleHeight || 17.151,
+            // handleWidth = this.props.handleWidth || 13,
+            // trackHeight = this.props.trackHeight || 6,
+            // yCenter = this.margin.top + (height - this.margin.bottom) / 2;
+
+
+
+        if (this.props.selections && this.props.selections.length === 2){ 
+            console.log("Double slider update skipped", this.props)
+            return 
+        }
+
+        console.log("Double slider thinks it should reset", this.props)
+
+//        this.initializeChart();
+        // let data = ([this.props.min, this.props.max]).map(x => { return { value: x } });
+        // const handleLayer = d3.select(this.svg).select(".handle-layer")
+
+        // console.log("Double slider updating handle positions", data, handleLayer.node(), this.handleHeight, this.yCenter)
+        // handleLayer
+        //     // .append("g")
+        //     // .classed("handle", true)
+        //     .selectAll("g.handle")
+        //     // .data(this.state.range)
+        //     .data(data)
+        //     .attr("x", x => this.valueToX(x.value))
+        //     .attr("transform", x => `translate(${this.valueToX(x.value)},${this.yCenter - this.handleHeight / 2})`);
+
+        // this.updateTrackHighlight();
 
     }
 

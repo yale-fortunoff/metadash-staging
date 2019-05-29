@@ -102,7 +102,7 @@ export default class extends D3Component {
             });
 
 
-        d3.select(window).on("resize", this.redrawChart.bind(this))
+        d3.select(window).on("resize.treemap",this.redrawChart.bind(this))
 
 
     }

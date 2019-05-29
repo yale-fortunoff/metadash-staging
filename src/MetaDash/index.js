@@ -19,6 +19,18 @@ import "./style/main.scss";
 import { Subject } from 'rxjs';
 
 const data = require("../Data");
+const DEFAULT_FILTERS = {
+    "gender": ["Men", "Women", "Both"],
+    "birthYear": [],
+    "birthCountry": [],
+    "language": [],
+    "yearRecorded": [],
+    "subjects": [],
+    "interviewers": [],
+    "programs": [],
+    "dateRanges": {
+    }
+};
 
 export default class extends React.Component {
 
@@ -31,35 +43,45 @@ export default class extends React.Component {
             ...this.fullData,
             // resources: data.resources.query(),
             // summaryData: summaryData,
-            filters: {
-                "gender": ["Men", "Women", "Both"],
-                "birthYear": [],
-                "birthCountry": [],
-                "language": [],
-                "yearRecorded": [],
-                "subjects": [],
-                "interviewers": [],
-                "programs": [],
-                "dateRanges": {}
-            },
+            filters: DEFAULT_FILTERS,
         }
 
 
+        this.setFilters = this.setFilters.bind(this);
+        this.clearFilters = this.clearFilters.bind(this);
         this.updateFilterFactory = this.updateFilterFactory.bind(this);
     }
+
+    setFilters(filters){
+        filters = filters || DEFAULT_FILTERS;
+        console.log("Setting filters", filters)
+        const { resources, subjects, summaryData } = data.getData(filters);
+
+        this.setState({
+            filters,
+            resources,
+            subjects,
+            summaryData
+        })
+    }
+
+    clearFilters(){ this.setFilters() }
 
     updateFilterFactory(key) {
         return val => {
             var filters = { ...this.state.filters }
             filters[key] = val;
-            const { resources, subjects, summaryData } = data.getData(filters);
+            this.setFilters(filters);
 
-            this.setState({
-                filters: filters,
-                resources,
-                subjects,
-                summaryData
-            });
+            // --- MOVED TO setFilters --
+            // const { resources, subjects, summaryData } = data.getData(filters);
+
+            // this.setState({
+            //     filters: filters,
+            //     resources,
+            //     subjects,
+            //     summaryData
+            // });
         }
     }
 
@@ -78,7 +100,6 @@ export default class extends React.Component {
         return (
             <div className="MetaDash">
 
-
                 <section className="prose intro-prose-section">
                     <IntroProse
                     items={this.state.resources}
@@ -86,17 +107,18 @@ export default class extends React.Component {
                     ></IntroProse>
                 </section>
 
-
                 <section className="module-area">
 
                     {/* <OverviewBillboard
                         testimonyCount={this.state.resources.length}
                     ></OverviewBillboard> */}
                     <div className="text-menu">
-                        <div className="item">Clear filters</div>
+                        <div 
+                        className="item"
+                        onClick={this.clearFilters} 
+                        >Clear filters</div>
                         <div className="item">Documentation</div>
                     </div>
-
 
                     <Gender
                         updateSelections={this.updateFilterFactory("gender")}
@@ -172,7 +194,6 @@ export default class extends React.Component {
                 </section>
 
                 <section className="headings-area">
-
                     <SubjectHeadings
                         title="Subjects"
                         updateSelections={this.updateFilterFactory("subjects")}
@@ -181,7 +202,6 @@ export default class extends React.Component {
                         filterItems={data.subjects.search}
                         placeholder="Begin searching subjects...">
                     </SubjectHeadings>
-
                 </section>
 
                 <section className="results-section">
@@ -189,8 +209,6 @@ export default class extends React.Component {
                         results={this.state.resources}
                     ></Results>
                 </section>
-
-
             </div >
         );
     }

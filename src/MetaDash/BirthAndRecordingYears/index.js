@@ -9,9 +9,9 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            selections: props.selections
-        }
+        // this.state = {
+        //     selections: props.selections
+        // }
 
         this.updateRangeFactory = this.updateRangeFactory.bind(this);
 
@@ -50,8 +50,9 @@ export default class extends React.Component {
                 <div className="slider-container">
                     <div className="half">
                         <DoubleSlider
-                        label="Birth year"
+                            label="Birth year"
                             updateSelections={this.updateRangeFactory("birth")}
+                            selections={this.props.selections.birth}
                             min={1890}
                             max={1945}
                             margin={{ top: 2, bottom: 10, left: 20, right: 40 }}
@@ -61,6 +62,8 @@ export default class extends React.Component {
                     <div className="half">
                         <DoubleSlider
                             label="Recording year"
+                            selections={this.props.selections.recording}
+
                             updateSelections={this.updateRangeFactory("recording")}
                             min={1969}
                             max={2020}

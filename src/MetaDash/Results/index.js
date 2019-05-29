@@ -52,7 +52,6 @@ export default class extends React.Component {
 
         if (this.props.results.length > this.state.limit
             && distanceFromBottom < 100){
-            console.log("Loading more");
             this.setState({ limit: this.state.limit + this.state.increment })
         }
     }
