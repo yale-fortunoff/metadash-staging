@@ -19,12 +19,13 @@ export default class extends React.PureComponent {
     }
 
     componentDidUpdate() { 
-        this.updateChart(this.props.data) 
+        this.updateChart(this.props.data);
     }
 
     componentDidMount() {
         this.initializeChart();
         this.updateChart();
+
     }
 
     render() {
@@ -41,7 +42,7 @@ export default class extends React.PureComponent {
             this.initializeChart();
             this.updateChart();
     
-        }, 100)
+        }, 1000)
     }
 
     // Override this 

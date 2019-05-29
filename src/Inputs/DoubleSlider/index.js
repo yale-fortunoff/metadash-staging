@@ -74,7 +74,7 @@ export default class extends D3Component {
 
     initializeChart() {
 
-        const svg = d3.select(this.svg),
+        const svg = d3.select(this.svg).html(""),
             bbox = svg.node().getBoundingClientRect(),
             width = bbox.width,
             height = bbox.height,
@@ -147,7 +147,6 @@ export default class extends D3Component {
             let xValues = [];
             svg.selectAll(".handle")
             .each(function(){
-                console.log(this);
                 xValues.push(Number(d3.select(this).attr("x")));
             });
 
@@ -190,7 +189,6 @@ export default class extends D3Component {
                 .on("end", dragended))
 
         
-        console.log("slider file", sliderHandleIcon)
         const svgString ="PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNy4xNTEiIHZpZXdCb3g9IjAgMCAxMyAxNy4xNTEiPjxwYXRoIGQ9Ik0yNDAsNDQwVjQyOWgxMnYxMWwtNiw1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzOS41IC00MjguNSkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+"
         handleGroups.append("image")
         .classed("handle-icon", true)
@@ -222,6 +220,7 @@ export default class extends D3Component {
                     + 1})`
             })
 
+            d3.select(window).on("resize.doubleslider" + this.props.label, this.redrawChart.bind(this))
 
 
         // this.setState({ handles });

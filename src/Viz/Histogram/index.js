@@ -26,6 +26,7 @@ export default class extends D3Component {
             .classed("y", true);
 
         this.barG = svg.append("g");
+
     }
 
     updateChart(data) {
@@ -115,8 +116,10 @@ export default class extends D3Component {
                         .attr("y", () => yScale(0))
                     )
             )
+        
+        d3.select(window).on("resize.histogram", this.redrawChart.bind(this))
 
-        d3.select(window).on("resize", this.redrawChart)
+        // d3.select(window).on("resize", this.redrawChart)
     }
 
 }

@@ -78,6 +78,7 @@ export default class extends React.Component {
         return (
             <div className="MetaDash">
 
+
                 <section className="prose intro-prose-section">
                     <IntroProse
                     items={this.state.resources}
@@ -85,11 +86,16 @@ export default class extends React.Component {
                     ></IntroProse>
                 </section>
 
+
                 <section className="module-area">
 
                     {/* <OverviewBillboard
                         testimonyCount={this.state.resources.length}
                     ></OverviewBillboard> */}
+                    <div className="text-menu">
+                        <div className="item">Clear filters</div>
+                        <div className="item">Documentation</div>
+                    </div>
 
 
                     <Gender

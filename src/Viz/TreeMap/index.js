@@ -21,7 +21,7 @@ export default class extends D3Component {
 
         svg.attr("height", height);
 
-        svg.on("resize", this.redrawChart)
+        // svg.on("resize", this.redrawChart)
 
     }
 
@@ -98,12 +98,11 @@ export default class extends D3Component {
             .on("mouseover", this.props.mouseInCallback || (() => { console.log("Default handler") }))
             .on("mouseout", this.props.mouseOutCallback || (() => { }))
             .on("click", item => {
-                console.log("initial click");
                 return this.props.clickCallback(item)
             });
 
 
-        d3.select(window).on("resize", this.redrawChart)
+        d3.select(window).on("resize", this.redrawChart.bind(this))
 
 
     }

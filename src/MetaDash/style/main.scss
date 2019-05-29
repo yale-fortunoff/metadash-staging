@@ -3,6 +3,7 @@
 @import "./module-area";
 @import "./inputs";
 @import "./layout";
+@import "./icons";
 
 @import "./modules/gender";
 @import "./modules/countlist";
@@ -13,7 +14,8 @@
 @import "./modules/birth-places";
 @import "./modules/programs";
 @import "./modules/results";
-@import "./icons";
+@import "./modules/subject-headings";
+
 
 body {
   @include typography-body;
@@ -24,6 +26,7 @@ body {
 }
 
 .MetaDash {
+  
   section {
     margin-top: 50px;
   }
@@ -85,7 +88,10 @@ body {
         height: 85px;
         overflow: hidden;
         overflow-y: scroll;
-        margin: 30px 80px;
+        margin: 1px 80px;
+        padding: 30px 0px;
+        // max-width: 1500px;
+
 
         .TagItem{
           font-family: $font-sans;

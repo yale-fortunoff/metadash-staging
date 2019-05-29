@@ -15,16 +15,16 @@ export default class extends D3Component {
     }
 
     initializeChart() {
-        const items = this.props.items
-
+        console.log("Initializing cluster chart")
         const svg = d3.select(this.svg).html("");
 
         const width = svg.node().getBoundingClientRect().width,
             height = this.props.height || svg.node().getBoundingClientRect().height;
 
         svg.attr("height", height + "px");
+        // svg.attr("width", width + "px");
 
-        svg.on("resize", this.redrawChart)
+        // svg.on("resize", ()=>super.redrawChart.call(this));
 
     }
 
@@ -44,11 +44,11 @@ export default class extends D3Component {
         // which is cooler, but expensive
         let allItems = this.props.items;
 
-        function allItemsMatch(arr1, arr2){
-            if( arr1.length !== arr2.length ){ return false }
-            for (let i = 0; i < arr1.length; i++){
-                if (arr1[i].id !== arr2[i].id){ return false}
-                if (arr1[i].count !== arr2[i].count){ return false}
+        function allItemsMatch(arr1, arr2) {
+            if (arr1.length !== arr2.length) { return false }
+            for (let i = 0; i < arr1.length; i++) {
+                if (arr1[i].id !== arr2[i].id) { return false }
+                if (arr1[i].count !== arr2[i].count) { return false }
             }
             return true;
         }
@@ -59,12 +59,10 @@ export default class extends D3Component {
         // if (Object.keys((prevProps||{}).itemDict||{}).length ===  Object.keys(this.props.itemDict).length){ return }
         // this should be better
         if (allItemsMatch(
-            objectToArray((prevProps||{}).itemDict||{}), 
-            objectToArray(this.props.itemDict))){ 
-                return
-            }
-
-        console.log("re-rendering!")
+            objectToArray((prevProps || {}).itemDict || {}),
+            objectToArray(this.props.itemDict))) {
+            return
+        }
 
         const root = d3.stratify()
             .id(d => d.label.split("|")[0])
@@ -93,9 +91,9 @@ export default class extends D3Component {
                     .on("mouseover", d => this.props.onMouseOver(d.data))
                     .on("mouseout", d => this.props.onMouseOut(d.data))
                     .on("click", d => {
-                        if (this.props.selections 
+                        if (this.props.selections
                             && this.props.selections.length == 1
-                            && this.props.selections[0].id == d.data.id){
+                            && this.props.selections[0].id == d.data.id) {
                             this.props.updateSelections([])
                         } else {
                             this.props.updateSelections([d.data])
@@ -108,9 +106,9 @@ export default class extends D3Component {
                     .call(update =>
                         update.transition(t)
                             .attr("data-city", d => d.data.label)
-                            .attr('cx', d=>d.x)
-                            .attr('cy',d=>d.y)
-                            .attr('r',d=>d.r)
+                            .attr('cx', d => d.x)
+                            .attr('cy', d => d.y)
+                            .attr('r', d => d.r)
                     ),
                 // exit=>exit
                 // .call(exit=>
@@ -118,6 +116,9 @@ export default class extends D3Component {
                 //     .attr('r', 0)
                 // )
             )
+
+            d3.select(window).on("resize.cluster", this.redrawChart.bind(this))
+
 
     }
 
