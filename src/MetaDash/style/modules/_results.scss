@@ -1,23 +1,26 @@
 .Results {
-    font-family: $font-sans;
-    padding: 0px 80px;
-    box-sizing: border-box;
-    max-width: 100%;
+  font-family: $font-sans;
+  padding: 0px 80px;
+  box-sizing: border-box;
+  max-width: 100%;
 
-    .result-item{
-        background-color: white;
-        height: 60px;
-        border-left: 10px solid $color-robinegg;
-        margin-bottom: 16px;
-        border-radius: 8px;
+  .result-item {
+    background-color: white;
+    height: 60px;
+    border-left: 10px solid $color-robinegg;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    color: $color-textgray;
 
-        
+    .testimony-name {
+      font-size: 21px;
     }
+  }
 
-
-    .result-item:hover{
-        border: 1px solid $color-resultsborder;
-        border-left: 10px solid $color-fortunoff;
-
-    }
+  .result-item:hover {
+    border: 1px solid $color-resultsborder;
+    border-left: 10px solid $color-fortunoff;
+    color: $color-yaleblack;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.16);
+  }
 }

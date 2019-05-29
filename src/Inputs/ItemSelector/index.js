@@ -1,5 +1,5 @@
 import React from 'react';
-import "./style/main.scss"
+import "./style/main.scss";
 
 export default class extends React.Component {
 
@@ -20,7 +20,7 @@ export default class extends React.Component {
     render() {
 
         const selected = this.props.selections && this.props.selections.length === 1 ? this.props.selections[0] : { id: "ALL" };
-        const clearButtonText = selected.id === "ALL" ? "" : "╳"
+        // const clearButtonText = selected.id === "ALL" ? "" : "╳"
         const subClass = selected.id === "ALL" ? "arrow" : "x"
         // const active = selected.id !== "ALL"
         let buttonClass = "clear-button";
@@ -52,7 +52,7 @@ export default class extends React.Component {
                     })}
                 </select>
 
-                <div className={buttonClass} onClick={this.clearSelection}>
+                <div className={"button " + buttonClass} onClick={this.clearSelection}>
                 </div>
 
             </div>
