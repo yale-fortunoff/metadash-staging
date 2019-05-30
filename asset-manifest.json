@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/fortunoff-metadash/static/css/main.6e81f474.chunk.css",
+    "main.css": "/fortunoff-metadash/static/css/main.7dadc71a.chunk.css",
     "main.js": "/fortunoff-metadash/static/js/main.da91e403.chunk.js",
     "main.js.map": "/fortunoff-metadash/static/js/main.da91e403.chunk.js.map",
     "runtime~main.js": "/fortunoff-metadash/static/js/runtime~main.0a15b005.js",
@@ -8,9 +8,9 @@
     "static/js/2.79bbbe92.chunk.js": "/fortunoff-metadash/static/js/2.79bbbe92.chunk.js",
     "static/js/2.79bbbe92.chunk.js.map": "/fortunoff-metadash/static/js/2.79bbbe92.chunk.js.map",
     "index.html": "/fortunoff-metadash/index.html",
-    "precache-manifest.c172c4522bb880751e3a87aabc65d382.js": "/fortunoff-metadash/precache-manifest.c172c4522bb880751e3a87aabc65d382.js",
+    "precache-manifest.c537ebf89b0f65c5799566a82311cc75.js": "/fortunoff-metadash/precache-manifest.c537ebf89b0f65c5799566a82311cc75.js",
     "service-worker.js": "/fortunoff-metadash/service-worker.js",
-    "static/css/main.6e81f474.chunk.css.map": "/fortunoff-metadash/static/css/main.6e81f474.chunk.css.map",
+    "static/css/main.7dadc71a.chunk.css.map": "/fortunoff-metadash/static/css/main.7dadc71a.chunk.css.map",
     "static/media/main.scss": "/fortunoff-metadash/static/media/yalenew-roman-webfont.f2b260ad.woff2"
   }
 }
