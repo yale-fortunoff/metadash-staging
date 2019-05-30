@@ -5,69 +5,80 @@
   margin-left: 80px;
 
   display: grid;
+  
   grid-gap: 16px;
+
   grid-template-rows: auto repeat(5, 200px);
+
   grid-template-columns: minmax(280px, 280px) repeat(2, 2fr) 300px;
 
-  grid-template-areas:    //"overview  overview  overview  overview"
-    "textmenu textmenu textmenu textmenu"
-    "gender birthyear birthyear      interviewers"
-    "languages    birthyear birthyear      interviewers "
-    "languages  birthplaces    programs interviewers"
-    "languages  birthplaces      programs interviewers"
-    "languages  birthplaces    programs    interviewers"
-    //"languages  birthplaces    programs    interviewers"
-    "subjects  subjects  subjects  subjects";
+  grid-template-areas:
+    "textmenu   textmenu    textmenu textmenu"
+    "gender     birthyear   birthyear interviewers"
+    "languages  birthyear   birthyear interviewers "
+    "languages  birthplaces programs  interviewers"
+    "languages  birthplaces programs  interviewers"
+    "languages  birthplaces programs  interviewers"
+    "subjects   subjects    subjects  subjects";
 
   .text-menu {
-    grid-area: textmenu-start / textmenu-start / textmenu-end / textmenu-end;
-    display: flex;
-    justify-content: flex-end;
-    font-family: $font-sans;
-    padding-right: 30px;
-
-    .item {
-      padding-left: 1em;
-      text-decoration: underline;
-      color: $color-reallylightgray;
-    }
-
-    .item:hover {
-      color: $color-fortunoff;
-      cursor: pointer;
-    }
+    grid-area: textmenu;//-start / textmenu-start / textmenu-end / textmenu-end;
   }
   .tagfilter-collection {
     display: flex;
   }
 
-  .OverviewBillboard {
-    grid-row-start: billboard-start;
-    grid-row-end: billboard-end;
-  }
-
   .Gender {
-    grid-area: gender-start / gender-start / gender-end / gender-end;
+    grid-area: gender;//-start / gender-start / gender-end / gender-end;
+  }
+  .Languages {
+    grid-area: languages;//-start / languages-start / languages-end / languages-end;
   }
 
-  .Languages {
-    grid-area: languages-start / languages-start / languages-end / languages-end;
+  .Interviewers{
+    grid-area: interviewers;
   }
 
   .BirthPlaces {
-    grid-area: birthplaces-start / birthplaces-start / birthplaces-end / birthplaces-end;
+    grid-area: birthplaces;//-start / birthplaces-start / birthplaces-end / birthplaces-end;
+  }
+
+  .BirthYear {
+    grid-area: birthyear;//-start / birthyear-start / birthyear-end / birthyear-end;
+  }
+
+  .Programs {
+    grid-area: programs;//-start / programs-start / programs-end /programs-end;
   }
 }
 
-@media only screen and (min-width: 600px) and (max-width: 1500px) {
+@media only screen and (min-width: 900px) and (max-width: 1400px) {
   .module-area {
     display: grid;
 
-    grid-template-rows: 1em repeat(11, 200px);
+    grid-template-rows: 1em repeat(8, 200px);
     grid-template-columns: 1fr 1fr;
-    // // grid-template-rows: repeat(6,minmax(1fr, 300px));
-    // grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
-    grid-template-areas:    //"overview  overview  overview  overview"
+    grid-template-areas:    
+      "textmenu     textmenu"
+      "birthyear    birthyear"
+      "birthyear    birthyear"
+      "birthplaces  programs"
+      "birthplaces  programs"
+      "birthplaces  programs"
+      "gender       interviewers"
+      "languages    interviewers"
+      "languages    interviewers";
+  }
+
+}
+
+@media only screen and (min-width: 600px) and (max-width: 899px) {
+  .module-area {
+    display: grid;
+
+    grid-template-rows: 1em repeat(12, 200px);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:    
       "textmenu     textmenu"
       "birthyear    birthyear"
       "birthyear    birthyear"
@@ -77,11 +88,14 @@
       "programs     programs"
       "programs     programs"
       "programs     programs"
-      "gender       interviewers"
+      "gender       gender"
+      "languages    interviewers"
       "languages    interviewers"
       "languages    interviewers";
   }
+  
 }
+
 
 @media only screen and (max-width: 599px) {
   .module-area {
@@ -89,23 +103,26 @@
     margin-right: 8px;
     margin-left: 8px;
 
-    grid-template-rows: 1em repeat(10, 200px);
+    grid-template-rows: 1em repeat(15, 200px);
     grid-template-columns: 1fr;
     // // grid-template-rows: repeat(6,minmax(1fr, 300px));
     // grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
     grid-template-areas:    //"overview  overview  overview  overview"
       "textmenu"
+      "birthyear"
+      "birthyear"
+      "birthplaces"
+      "birthplaces"
+      "birthplaces"
+      "programs"
+      "programs"
+      "programs"
       "gender"
-      "birthyear"
-      "birthyear"
-      "birthplaces"
-      "birthplaces"
-      "birthplaces"
-      "programs"
-      "programs"
-      "programs"
+      "interviewers"
+      "interviewers"
       "interviewers"
       "languages"
-      ;
+      "languages"
+      "languages";
   }
 }

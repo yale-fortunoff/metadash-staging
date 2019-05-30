@@ -1,4 +1,8 @@
 .module-box {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
   border-radius: 8px;
   box-shadow: 1px 1px 6px rgba(0,0,0,0.16);
   box-sizing: border-box;
@@ -6,6 +10,8 @@
   display: flex;
   flex-direction: column;
   background-color: $color-white;
+
+
 
   .title {
     @include typography-module-box-title;

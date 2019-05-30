@@ -1,3 +1,4 @@
+/* autoprefixer grid: on */
 @import "./colors";
 @import "./typography";
 @import "./module-area";
@@ -15,6 +16,7 @@
 @import "./modules/programs";
 @import "./modules/results";
 @import "./modules/subject-headings";
+@import "./modules/text-menu";
 
 
 body {

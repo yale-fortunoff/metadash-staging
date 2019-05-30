@@ -28,8 +28,7 @@ const DEFAULT_FILTERS = {
     "subjects": [],
     "interviewers": [],
     "programs": [],
-    "dateRanges": {
-    }
+    "dateRanges": {}
 };
 
 export default class extends React.Component {
@@ -52,7 +51,7 @@ export default class extends React.Component {
         this.updateFilterFactory = this.updateFilterFactory.bind(this);
     }
 
-    setFilters(filters){
+    setFilters(filters) {
         filters = filters || DEFAULT_FILTERS;
         console.log("Setting filters", filters)
         const { resources, subjects, summaryData } = data.getData(filters);
@@ -65,7 +64,7 @@ export default class extends React.Component {
         })
     }
 
-    clearFilters(){ this.setFilters() }
+    clearFilters() { this.setFilters() }
 
     updateFilterFactory(key) {
         return val => {
@@ -102,8 +101,8 @@ export default class extends React.Component {
 
                 <section className="prose intro-prose-section">
                     <IntroProse
-                    items={this.state.resources}
-                    filters={this.state.filters}
+                        items={this.state.resources}
+                        filters={this.state.filters}
                     ></IntroProse>
                 </section>
 
@@ -113,9 +112,9 @@ export default class extends React.Component {
                         testimonyCount={this.state.resources.length}
                     ></OverviewBillboard> */}
                     <div className="text-menu">
-                        <div 
-                        className="item"
-                        onClick={this.clearFilters} 
+                        <div
+                            className="item"
+                            onClick={this.clearFilters}
                         >Clear filters</div>
                         <div className="item">Documentation</div>
                     </div>
