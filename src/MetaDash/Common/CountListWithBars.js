@@ -20,7 +20,7 @@ export default class extends React.Component {
 
     render() {
         const total = this.props.items.reduce((subtotal, nextItem) => subtotal + nextItem.count, 0);
-        const width = val => `${val * 100 / total}%`
+        const width = val => `${val * 100 / total}%`;
 
         return (
             <div className="count-list">

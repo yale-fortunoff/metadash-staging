@@ -15,6 +15,7 @@ export default class extends D3Component {
 
     initializeChart() {
         const svg = d3.select(this.svg).html("");
+        svg.selectAll("*").remove();
 
         const width = svg.node().getBoundingClientRect().width,
             height = this.props.height || svg.node().getBoundingClientRect().height;

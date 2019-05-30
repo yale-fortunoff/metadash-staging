@@ -10,6 +10,10 @@ export default class extends React.PureComponent {
         this.updateChart = this.updateChart.bind(this);
         this.redrawChart = this.redrawChart.bind(this);
 
+        this.state = {
+            currentWidth: -1
+        }
+
         this.margin = props.margin || {
             top:0,
             left:0,
@@ -36,8 +40,15 @@ export default class extends React.PureComponent {
     }
 
     redrawChart(){
-        // throttle redrawing
-        clearTimeout(this.timeout)
+
+        // prevent redraw if the width hasn't changed
+        const newWidth = window.document.body.getBoundingClientRect().width;
+        if (newWidth === this.state.currentWidth){ return };
+
+        this.setState({currentWidth:newWidth});
+
+        // only redraw at max once per second
+        clearTimeout(this.timeout);
         this.timeout = setTimeout(()=>{
             this.initializeChart();
             this.updateChart();

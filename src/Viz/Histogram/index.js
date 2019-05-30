@@ -16,6 +16,7 @@ export default class extends D3Component {
 
     initializeChart() {
         const svg = d3.select(this.svg).html("");
+        svg.selectAll("*").remove();
 
         this.xAxisG = svg.append("g")
             .classed("axis", true)
@@ -30,6 +31,7 @@ export default class extends D3Component {
     }
 
     updateChart(data) {
+
 
         data = data || this.props.data;
         const svg = d3.select(this.svg);

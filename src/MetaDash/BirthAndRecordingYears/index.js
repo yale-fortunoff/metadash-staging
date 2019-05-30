@@ -4,6 +4,11 @@ import { DoubleSlider } from "../../Inputs";
 
 import "./style/main.scss";
 
+const BIRTH_MIN = 1890;
+const BIRTH_MAX = 1945;
+const RECORDING_MIN = 1970;
+const RECORDING_MAX = 2020;
+
 export default class extends React.Component {
 
     constructor(props) {
@@ -13,6 +18,7 @@ export default class extends React.Component {
         //     selections: props.selections
         // }
 
+      
         this.updateRangeFactory = this.updateRangeFactory.bind(this);
 
     }
@@ -26,6 +32,8 @@ export default class extends React.Component {
     }
 
     render() {
+
+        console.log("Rendering dates module")
         const itemProps = {
             ...this.props,
             margin: {
@@ -53,8 +61,8 @@ export default class extends React.Component {
                             label="Birth year"
                             updateSelections={this.updateRangeFactory("birth")}
                             selections={this.props.selections.birth}
-                            min={1890}
-                            max={1945}
+                            min={BIRTH_MIN}
+                            max={BIRTH_MAX}
                             margin={{ top: 2, bottom: 10, left: 20, right: 40 }}
                         ></DoubleSlider>
 
@@ -63,10 +71,9 @@ export default class extends React.Component {
                         <DoubleSlider
                             label="Recording year"
                             selections={this.props.selections.recording}
-
                             updateSelections={this.updateRangeFactory("recording")}
-                            min={1969}
-                            max={2020}
+                            min={RECORDING_MIN}
+                            max={RECORDING_MAX}
                             margin={{ top: 2, bottom: 10, left: 20, right: 40 }}
                         ></DoubleSlider>
                     </div>

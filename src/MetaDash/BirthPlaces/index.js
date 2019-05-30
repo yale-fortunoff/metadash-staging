@@ -157,6 +157,8 @@ export default class extends React.Component {
 
     render() {
 
+        console.log("Rendering birth places module")
+
         const inputProps = {
             placeholder: 'Type a place name',
             value: this.state.searchTerm,

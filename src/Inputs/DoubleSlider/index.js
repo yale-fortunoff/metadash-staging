@@ -3,8 +3,6 @@ import D3Component from "../../Viz/D3Component"
 import "./style/main.scss";
 import * as d3 from "d3";
 
-import sliderHandleIcon from "./style/graphics/slider.svg";
-
 export default class extends D3Component {
 
     constructor(props) {
@@ -25,6 +23,8 @@ export default class extends D3Component {
         this.updateLabels = this.updateLabels.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.updateTrackHighlight = this.updateTrackHighlight.bind(this);
+
+        this.repositionHandles = this.repositionHandles.bind(this);
 
     }
 
@@ -62,21 +62,24 @@ export default class extends D3Component {
     }
 
     updateLabels() {
-        this.setState({ labels: this.getHandleRange() });
+        // this.setState({ labels: this.getHandleRange() });
+        const handles = d3.select(this.svg).select(".handle-layer").selectAll(".handle");
+
+        handles.each(function(d){
+            d3.select(this).select("text").text(d.value)
+        })
+
     }
 
     updateRange() {
-
         let range = this.getHandleRange();
         this.props.updateSelections(range.map(x => x.value))
         // this.setState({ range })
-
     }
 
     updateTrackHighlight() {
 
         let xValues = [];
-
 
         d3.select(this.svg).selectAll(".handle")
             .each(function () {
@@ -84,18 +87,29 @@ export default class extends D3Component {
                 xValues.push(Number(d3.select(this).attr("x")));
             });
 
-            console.log("Double slider Updating track highlight", xValues)
-
-
         d3.select(this.svg).select(".highlight")
             .attr("x", d3.min(xValues) + this.handleWidth / 2)
             .attr("width", d3.max(xValues) - d3.min(xValues))
 
     }
 
+    updateChart() { }
+
     initializeChart() {
 
-        const svg = d3.select(this.svg).html(""),
+        this.render();
+
+        let svg = d3.select(this.svg)
+        svg.selectAll("*").remove();
+        svg.html("")
+
+        try{
+            this.svg.current.innerHTML = "";
+        } catch(e){}
+
+        svg = d3.select(this.svg)
+
+        const
             bbox = svg.node().getBoundingClientRect(),
             width = bbox.width,
             height = bbox.height,
@@ -109,22 +123,17 @@ export default class extends D3Component {
         this.handleWidth = handleWidth;
         this.yCenter = yCenter;
         this.handleHeight = handleHeight;
+        this.margin.left = 110;
+
 
         svg.attr("height", height + "px");
 
+        // add label and position it
         const label = svg.append("text")
             .text(this.props.label || "Double Slider")
             .attr("x", function () { return 120 - d3.select(this).node().getBBox().width - 2 * handleWidth })
+            .attr("y", function () { return yCenter + d3.select(this).node().getBBox().height * 0.25 })
 
-        label.attr("y", function () {
-            return yCenter
-                + d3.select(this).node().getBBox().height * 0.25
-        })
-
-        this.margin.left = 120;
-        // this.margin.left = label.node().getBBox().width
-        //     + label.node().getBBox().x
-        //     + handleWidth;
 
         svg.append("rect")
             .classed("track", true)
@@ -133,50 +142,31 @@ export default class extends D3Component {
             .attr("y", yCenter - trackHeight / 2)
             .attr("height", trackHeight);
 
-
-        // add selected tract
-        const trackHighlight = svg.append("rect")
+        // add selected track highlight
+        svg.append("rect")
             .classed("highlight", true)
             .attr("y", yCenter - trackHeight / 2)
             .attr("height", trackHeight)
 
-
         function dragstarted(d) {
             d3.select(this).raise().classed("active", true)
-                .transition().duration(250)//.ease(d3.easeQuadIn)
-            // .attr("transform","skewX(10)")
-            // .attr("height",handleHeight * 0.7)
-            // .attr("y", yCenter - handleHeight * 0.7 / 2)
-            // .attr("width",handleWidth * 0.7);
-
         }
 
         const limitX = this.limitX,
             xToValue = this.xToValue,
-            // valueToX = this.valueToX,
             updateLabels = this.updateLabels;
-                    // range = this.state.range;
 
         const updateTrackHighlight = this.updateTrackHighlight;
+
         function dragged(d) {
             d3.select(this).attr("x", limitX(d3.event.x));
             const yr = xToValue(limitX(d3.event.x))
             d3.select(this)
                 .attr("transform", x => `translate(${limitX(d3.event.x)},${yCenter - handleHeight / 2})`)
+
             d3.select(this).attr("data-value", d.value = yr);
-            d3.select(this).select(".year-label").text(yr)
+            // d3.select(this).select(".value-label").text(yr)
             updateLabels();
-
-            // 
-            // let xValues = [];
-            // svg.selectAll(".handle")
-            //     .each(function () {
-            //         xValues.push(Number(d3.select(this).attr("x")));
-            //     });
-
-            // trackHighlight
-            //     .attr("x", d3.min(xValues) + handleWidth / 2)
-            //     .attr("width", d3.max(xValues) - d3.min(xValues))
             updateTrackHighlight();
         }
 
@@ -184,26 +174,17 @@ export default class extends D3Component {
 
         function dragended(d) {
             d3.select(this).classed("active", false)
-            // .transition().duration(250)//.ease(d3.easeQuadOut)
-            // .attr("transform","skewX(0)")
-            // .attr("y", yCenter - handleHeight / 2)
-            // .attr("height",handleHeight)
-            // .attr("width",handleWidth)
-
             updateRange();
-
         }
 
+        const data = this.props.selections ? this.props.selections.map(x => { return { value: x } }) : [{ value: this.props.min }, { value: this.props.max }];
+
         const handleLayer = svg.append("g")
-            .classed("handle-layer", true)
+            .classed("handle-layer", true);
 
         const handleGroups = handleLayer
-            // .append("g")
-            // .classed("handle", true)
-            .selectAll("g")
-            // .data(this.props.selections.map(x=>{return{value:x}}))
-            // .data(this.state.range)
-            .data([{ value: this.props.min }, { value: this.props.max }])
+            .selectAll("g.handle")
+            .data(data)
             .enter()
             .append("g")
             .classed("handle", true)
@@ -215,7 +196,9 @@ export default class extends D3Component {
                 .on("end", dragended))
 
 
-        const svgString = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNy4xNTEiIHZpZXdCb3g9IjAgMCAxMyAxNy4xNTEiPjxwYXRoIGQ9Ik0yNDAsNDQwVjQyOWgxMnYxMWwtNiw1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzOS41IC00MjguNSkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+"
+        updateTrackHighlight();
+        const svgString = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNy4xNTEiIHZpZXdCb3g9IjAgMCAxMyAxNy4xNTEiPjxwYXRoIGQ9Ik0yNDAsNDQwVjQyOWgxMnYxMWwtNiw1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzOS41IC00MjguNSkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+";
+
         handleGroups.append("image")
             .classed("handle-icon", true)
             .attr("xlink:href", `data:image/svg+xml;base64,${svgString}`)
@@ -223,19 +206,9 @@ export default class extends D3Component {
             .attr("y", 0)
             .attr("width", handleWidth)
             .attr("height", handleHeight)
-        // .attr("xlink:href", { sliderHandleIcon })
-
-        // handleGroups.append("rect")
-        //     .attr("width", handleWidth)
-        //     .attr("height", handleHeight)
-        // .attr("transform", x => `translate(${this.valueToX(x.value)},0)`)
-        // .attr("y", yCenter - handleHeight / 2)
-
-        // .attr("x", x => this.valueToX(x.value))
-        // .attr("y", yCenter - handleHeight / 2)
 
         handleGroups.append("text")
-            .classed("year-label", true)
+            .classed("value-label", true)
             .text(d => d.value)
             .attr("transform", function () {
                 return `translate(${
@@ -248,48 +221,209 @@ export default class extends D3Component {
 
         d3.select(window).on("resize.doubleslider" + this.props.label, this.redrawChart.bind(this))
 
+    }
 
-        // this.setState({ handles });
+    // initializeChartOld() {
 
+    //     const svg = d3.select(this.svg).html(""),
+    //         bbox = svg.node().getBoundingClientRect(),
+    //         width = bbox.width,
+    //         height = bbox.height,
+    //         handleHeight = this.props.handleHeight || 17.151,
+    //         handleWidth = this.props.handleWidth || 13,
+    //         trackHeight = this.props.trackHeight || 6,
+    //         yCenter = this.margin.top + (height - this.margin.bottom) / 2;
+
+    //     this.width = width;
+    //     this.height = height;
+    //     this.handleWidth = handleWidth;
+    //     this.yCenter = yCenter;
+    //     this.handleHeight = handleHeight;
+
+    //     svg.attr("height", height + "px");
+
+    //     const label = svg.append("text")
+    //         .text(this.props.label || "Double Slider")
+    //         .attr("x", function () { return 120 - d3.select(this).node().getBBox().width - 2 * handleWidth })
+
+    //     label.attr("y", function () {
+    //         return yCenter
+    //             + d3.select(this).node().getBBox().height * 0.25
+    //     })
+
+    //     this.margin.left = 120;
+    //     // this.margin.left = label.node().getBBox().width
+    //     //     + label.node().getBBox().x
+    //     //     + handleWidth;
+
+    //     svg.append("rect")
+    //         .classed("track", true)
+    //         .attr("x", this.margin.left)
+    //         .attr("width", width - this.margin.left - this.margin.right)
+    //         .attr("y", yCenter - trackHeight / 2)
+    //         .attr("height", trackHeight);
+
+
+    //     // add selected tract
+    //     const trackHighlight = svg.append("rect")
+    //         .classed("highlight", true)
+    //         .attr("y", yCenter - trackHeight / 2)
+    //         .attr("height", trackHeight)
+
+
+    //     function dragstarted(d) {
+    //         d3.select(this).raise().classed("active", true)
+    //             .transition().duration(250)//.ease(d3.easeQuadIn)
+    //         // .attr("transform","skewX(10)")
+    //         // .attr("height",handleHeight * 0.7)
+    //         // .attr("y", yCenter - handleHeight * 0.7 / 2)
+    //         // .attr("width",handleWidth * 0.7);
+
+    //     }
+
+    //     const limitX = this.limitX,
+    //         xToValue = this.xToValue,
+    //         // valueToX = this.valueToX,
+    //         updateLabels = this.updateLabels;
+    //     // range = this.state.range;
+
+    //     const updateTrackHighlight = this.updateTrackHighlight;
+    //     function dragged(d) {
+    //         d3.select(this).attr("x", limitX(d3.event.x));
+    //         const yr = xToValue(limitX(d3.event.x))
+    //         d3.select(this)
+    //             .attr("transform", x => `translate(${limitX(d3.event.x)},${yCenter - handleHeight / 2})`)
+    //         d3.select(this).attr("data-value", d.value = yr);
+    //         d3.select(this).select(".value-label").text(yr)
+    //         updateLabels();
+
+    //         // 
+    //         // let xValues = [];
+    //         // svg.selectAll(".handle")
+    //         //     .each(function () {
+    //         //         xValues.push(Number(d3.select(this).attr("x")));
+    //         //     });
+
+    //         // trackHighlight
+    //         //     .attr("x", d3.min(xValues) + handleWidth / 2)
+    //         //     .attr("width", d3.max(xValues) - d3.min(xValues))
+    //         updateTrackHighlight();
+    //     }
+
+    //     const updateRange = this.updateRange;
+
+    //     function dragended(d) {
+    //         d3.select(this).classed("active", false)
+    //         updateRange();
+    //     }
+
+    //     const handleLayer = svg.append("g")
+    //         .classed("handle-layer", true);
+
+    //     const data = this.props.selections ? this.props.selections.map(x => { return { value: x } }) : [{ value: this.props.min }, { value: this.props.max }];
+
+    //     const handleGroups = handleLayer
+    //         .selectAll("g.handle")
+    //         .data(data)
+    //         .enter()
+    //         .append("g")
+    //         .classed("handle", true)
+    //         .attr("x", x => this.valueToX(x.value))
+    //         .attr("transform", x => `translate(${this.valueToX(x.value)},${yCenter - handleHeight / 2})`)
+    //         .call(d3.drag()
+    //             .on("start", dragstarted)
+    //             .on("drag", dragged)
+    //             .on("end", dragended))
+
+
+    //     const svgString = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNy4xNTEiIHZpZXdCb3g9IjAgMCAxMyAxNy4xNTEiPjxwYXRoIGQ9Ik0yNDAsNDQwVjQyOWgxMnYxMWwtNiw1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzOS41IC00MjguNSkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+";
+
+    //     handleGroups.append("image")
+    //         .classed("handle-icon", true)
+    //         .attr("xlink:href", `data:image/svg+xml;base64,${svgString}`)
+    //         .attr("x", 0)
+    //         .attr("y", 0)
+    //         .attr("width", handleWidth)
+    //         .attr("height", handleHeight)
+    //     // .attr("xlink:href", { sliderHandleIcon })
+
+    //     // handleGroups.append("rect")
+    //     //     .attr("width", handleWidth)
+    //     //     .attr("height", handleHeight)
+    //     // .attr("transform", x => `translate(${this.valueToX(x.value)},0)`)
+    //     // .attr("y", yCenter - handleHeight / 2)
+
+    //     // .attr("x", x => this.valueToX(x.value))
+    //     // .attr("y", yCenter - handleHeight / 2)
+
+    //     handleGroups.append("text")
+    //         .classed("value-label", true)
+    //         .text(d => d.value)
+    //         .attr("transform", function () {
+    //             return `translate(${
+    //                 handleWidth / 2 - d3.select(this).node().getBBox().width / 2
+    //                 },${
+    //                 yCenter
+    //                 + handleHeight / 2
+    //                 + 1})`
+    //         })
+
+    //     d3.select(window).on("resize.doubleslider" + this.props.label, this.redrawChart.bind(this))
+
+
+    //     // this.setState({ handles });
+
+
+    // }
+
+    // updateChartOld() { }
+
+    repositionHandles(arr) {
+        if (!arr) { arr = [this.props.min, this.props.max] }
+        // if (arr.length !== 2) { return }
+
+        const handleLayer = d3.select(this.svg).select(".handle-layer")
+        handleLayer.selectAll(".handle")
+            .data(arr.map(x => { return { value: x } }))
+            .attr("x", x => this.valueToX(x.value))
+            .attr("transform", x => `translate(${this.valueToX(x.value)},${this.yCenter - this.handleHeight / 2})`);
 
     }
 
-    updateChart() {
-        // const svg = d3.select(this.svg),
-        //     bbox = svg.node().getBoundingClientRect(),
-        //     width = bbox.width,
-        //     height = bbox.height,
-            // handleHeight = this.props.handleHeight || 17.151,
-            // handleWidth = this.props.handleWidth || 13,
-            // trackHeight = this.props.trackHeight || 6,
-            // yCenter = this.margin.top + (height - this.margin.bottom) / 2;
+    componentDidUpdate(oldProps, newData) {
+        super.componentDidUpdate.call(this);
 
-
-
-        if (this.props.selections && this.props.selections.length === 2){ 
-            console.log("Double slider update skipped", this.props)
-            return 
+        function legitArray(arr) {
+            if (!arr) { return [-1, -1] }
+            return arr;
         }
 
-        console.log("Double slider thinks it should reset", this.props)
+        const oldArr = legitArray(oldProps.selections),
+            newArr = legitArray(this.props.selections);
 
-//        this.initializeChart();
-        // let data = ([this.props.min, this.props.max]).map(x => { return { value: x } });
-        // const handleLayer = d3.select(this.svg).select(".handle-layer")
+        function arrsMatch(arr1, arr2) {
+            if (arr1.length != arr2.length) { return false };
+            for (let i = 0; i < arr1.length; i++) {
+                if (arr1[i] !== arr2[i]) { return false }
+            }
+            return true;
+        }
 
-        // console.log("Double slider updating handle positions", data, handleLayer.node(), this.handleHeight, this.yCenter)
-        // handleLayer
-        //     // .append("g")
-        //     // .classed("handle", true)
-        //     .selectAll("g.handle")
-        //     // .data(this.state.range)
-        //     .data(data)
-        //     .attr("x", x => this.valueToX(x.value))
-        //     .attr("transform", x => `translate(${this.valueToX(x.value)},${this.yCenter - this.handleHeight / 2})`);
+        if (!arrsMatch(oldArr, newArr)) {
+            if (!this.props.selections) {
+                // reset detected
+                this.repositionHandles(this.props.selections);
+                this.updateLabels();
+                this.updateTrackHighlight();
+            }
+        }
 
+
+        // this.repositionHandles(this.props.selections);
+        // this.updateLabels();
         // this.updateTrackHighlight();
-
     }
+
 
     render() {
         return (
