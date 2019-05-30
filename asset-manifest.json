@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/fortunoff-metadash/static/css/main.55bcc22e.chunk.css",
+    "main.css": "/fortunoff-metadash/static/css/main.9ed28919.chunk.css",
     "main.js": "/fortunoff-metadash/static/js/main.8be74638.chunk.js",
     "main.js.map": "/fortunoff-metadash/static/js/main.8be74638.chunk.js.map",
     "runtime~main.js": "/fortunoff-metadash/static/js/runtime~main.0a15b005.js",
@@ -8,9 +8,9 @@
     "static/js/2.a17efdbc.chunk.js": "/fortunoff-metadash/static/js/2.a17efdbc.chunk.js",
     "static/js/2.a17efdbc.chunk.js.map": "/fortunoff-metadash/static/js/2.a17efdbc.chunk.js.map",
     "index.html": "/fortunoff-metadash/index.html",
-    "precache-manifest.f34b253449574ed4d466565cb38afd7d.js": "/fortunoff-metadash/precache-manifest.f34b253449574ed4d466565cb38afd7d.js",
+    "precache-manifest.7ea0f1c09491a7b3d756bbae9fcc9df1.js": "/fortunoff-metadash/precache-manifest.7ea0f1c09491a7b3d756bbae9fcc9df1.js",
     "service-worker.js": "/fortunoff-metadash/service-worker.js",
-    "static/css/main.55bcc22e.chunk.css.map": "/fortunoff-metadash/static/css/main.55bcc22e.chunk.css.map",
+    "static/css/main.9ed28919.chunk.css.map": "/fortunoff-metadash/static/css/main.9ed28919.chunk.css.map",
     "static/media/main.scss": "/fortunoff-metadash/static/media/x-field.63065887.svg",
     "static/media/slider.svg": "/fortunoff-metadash/static/media/slider.8a77e598.svg"
   }
