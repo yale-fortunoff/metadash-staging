@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ced715081270e50b35f535eba2da66d0",
+    "revision": "b7d8e01ebe9890b0f54c33fb1fbb2381",
     "url": "/fortunoff-metadash/index.html"
   },
   {
-    "revision": "e8b7a05853373bd538f5",
-    "url": "/fortunoff-metadash/static/css/main.adf6ff43.chunk.css"
+    "revision": "413bd0d9d47cee89d260",
+    "url": "/fortunoff-metadash/static/css/main.a582bb44.chunk.css"
   },
   {
     "revision": "927f343603785019dae1",
     "url": "/fortunoff-metadash/static/js/2.a52292c8.chunk.js"
   },
   {
-    "revision": "e8b7a05853373bd538f5",
+    "revision": "413bd0d9d47cee89d260",
     "url": "/fortunoff-metadash/static/js/main.5880c060.chunk.js"
   },
   {
