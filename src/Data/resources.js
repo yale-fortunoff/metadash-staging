@@ -1,6 +1,5 @@
-const {getRecordingYear }= require("./getRecordingYear");
-const {normalizeString} = require("../Common");
-const { MEN_SUBJECT, WOMEN_SUBJECT } = require("./static");
+const { getRecordingYear } = require("./getRecordingYear");
+const { normalizeString } = require("../Common");
 const { getGender } = require("./getGender");
 /**
  * all - return an array containing all records.
@@ -8,7 +7,7 @@ const { getGender } = require("./getGender");
  *       without any parameters
  *         
  */
-const all = () => require("./json/index.2.min.json");
+const all = () => require("./json/index.4.min.json");
 
 let filters = {};
 
@@ -20,7 +19,6 @@ filters.resourceContainsAllItems = (itemField, itemFilters) => {
         }
         return true;
     }
-
 }
 
 filters.resourceContainsAllSubjects = subjects => { return filters.resourceContainsAllItems("subject_refs", subjects) }
@@ -29,21 +27,30 @@ filters.resourceContainsAllInterviewers = interviewers => { return filters.resou
 
 filters.resourceContainsAllPrograms = programs => { return filters.resourceContainsAllItems("programs", programs) }
 
+filters.resourceContainsOnlyPrograms = programs => {
+    return r => {
+        if (programs.length < 1) { return true; } // don't filter if it's not set
+        if (r.programs.length > 1 || r.programs.length < 1) { return false }
+        if (r.programs[0] === programs[0].id) { return true }
+        return false;
+    }
+}
+
 filters.getResources = options => {
 
     // just skip the iteration if no args are passed
     if (!options) { return all; }
 
-    function validRecordingYear(r){
-        const yr = getRecordingYear(r);
-        if (!options.filters){ return true}
-        if (!options.filters.dateRanges){ return true}
-        if (!options.filters.dateRanges.recording){ return true}
-        if (yr < options.filters.dateRanges[0]){ return false}
-        if (yr > options.filters.dateRanges[1]){ return false}
-        return true;
+    // function validRecordingYear(r){
+    //     const yr = getRecordingYear(r);
+    //     if (!options.filters){ return true}
+    //     if (!options.filters.dateRanges){ return true}
+    //     if (!options.filters.dateRanges.recording){ return true}
+    //     if (yr < options.filters.dateRanges[0]){ return false}
+    //     if (yr > options.filters.dateRanges[1]){ return false}
+    //     return true;
 
-    }
+    // }
 
     return r => {
 
@@ -51,26 +58,26 @@ filters.getResources = options => {
         if (!filters.resourceContainsAllSubjects(options.subjects || [])(r)) { return false }
 
         // TODO - filter by gender
-        if ((options.gender || []).length > 0 && (options.gender || []).length < 3){
-            if (options.gender.indexOf(getGender(r)) < 0){ return }
+        if ((options.gender || []).length > 0 && (options.gender || []).length < 3) {
+            if (options.gender.indexOf(getGender(r)) < 0) { return }
         }
 
         // TODO - filter by year of recording
         const recordingYear = getRecordingYear(r);
-        if (options.dateRanges 
-           && options.dateRanges.recording 
-           && (recordingYear < options.dateRanges.recording[0] || recordingYear > options.dateRanges.recording[1] || !recordingYear)){ return false }
+        if (options.dateRanges
+            && options.dateRanges.recording
+            && (recordingYear < options.dateRanges.recording[0] || recordingYear > options.dateRanges.recording[1] || !recordingYear)) { return false }
 
         // TODO - filter by year of birth
         const birthYears = r.birth_years || [];
-        if (!birthYears.reduce((curr, next)=>{ 
-            if (!curr){ return false}
-            if (!options){ return true};
-            if (!options.dateRanges){ return true};
-            if (!options.dateRanges.birth){ return true}
-            if (next < options.dateRanges.birth[0] || next > options.dateRanges.birth[1]){ return false}
+        if (!birthYears.reduce((curr, next) => {
+            if (!curr) { return false }
+            if (!options) { return true };
+            if (!options.dateRanges) { return true };
+            if (!options.dateRanges.birth) { return true }
+            if (next < options.dateRanges.birth[0] || next > options.dateRanges.birth[1]) { return false }
             return true;
-        }, true)) { return false}
+        }, true)) { return false }
 
         // TODO - filter by place of birth
 
@@ -79,7 +86,7 @@ filters.getResources = options => {
 
             for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
 
-                if ((r.birth_place_cities||[]).length !== (r.birth_place_countries||[]).length){ return false}
+                if ((r.birth_place_cities || []).length !== (r.birth_place_countries || []).length) { return false }
                 let city = r.birth_place_cities[j],
                     country = r.birth_place_countries[j];
 
@@ -89,7 +96,8 @@ filters.getResources = options => {
         }
 
         // TODO - filter by affiliate program
-        if (!filters.resourceContainsAllPrograms(options.programs || [])(r)) { return false }
+        // if (!filters.resourceContainsAllPrograms(options.programs || [])(r)) { return false }
+        if (!filters.resourceContainsOnlyPrograms(options.programs || [])(r)) { return false }
 
         // TODO - filter by interviewer
         if (!filters.resourceContainsAllInterviewers(options.interviewers || [])(r)) { return false }

@@ -19,6 +19,11 @@ import "./style/main.scss";
 import { Subject } from 'rxjs';
 
 const data = require("../Data");
+const BIRTH_MIN = 1890;
+const BIRTH_MAX = 1945;
+const RECORDING_MIN = 1970;
+const RECORDING_MAX = 2020;
+
 const DEFAULT_FILTERS = {
     "gender": ["Men", "Women", "Both"],
     "birthYear": [],
@@ -53,7 +58,6 @@ export default class extends React.Component {
 
     setFilters(filters) {
         filters = filters || DEFAULT_FILTERS;
-        console.log("Setting filters", filters)
         const { resources, subjects, summaryData } = data.getData(filters);
 
         this.setState({
@@ -102,6 +106,12 @@ export default class extends React.Component {
                     <IntroProse
                         items={this.state.resources}
                         filters={this.state.filters}
+                        summaryData={this.state.summaryData}
+                        BIRTH_MIN={BIRTH_MIN}
+                        BIRTH_MAX={BIRTH_MAX}
+                        RECORDING_MIN={RECORDING_MIN}
+                        RECORDING_MAX={RECORDING_MAX}
+
                     ></IntroProse>
                 </section>
 
@@ -135,8 +145,12 @@ export default class extends React.Component {
 
                     <BirthAndRecordingYear
                         // height={200}
-                        minYear={1890}
-                        maxYear={2022}
+                        minYear={BIRTH_MIN}
+                        maxYear={RECORDING_MAX}
+                        BIRTH_MIN={BIRTH_MIN}
+                        BIRTH_MAX={BIRTH_MAX}
+                        RECORDING_MIN={RECORDING_MIN}
+                        RECORDING_MAX={RECORDING_MAX}
                         updateSelections={this.updateFilterFactory("dateRanges")}
                         selections={this.state.filters.dateRanges}
                         subsetMode={this.fullData.resources.length > this.state.resources.length}
@@ -145,12 +159,12 @@ export default class extends React.Component {
                                 .map(k => this.state.summaryData.birthYears[k])
                                 // TODO - the data needs to be cleaned up 
                                 // so we don't need to manually exclude stuff
-                                .filter(yrs => yrs.label >= 1890 && yrs.label < 1950)
+                                .filter(yrs => yrs.label >= BIRTH_MIN && yrs.label <= BIRTH_MAX)
                                 .map(a => { return { ...a, barClass: "birth" } })
                                 .concat(
                                     Object.keys(this.state.summaryData.recordingYears)
                                         .map(k => this.state.summaryData.recordingYears[k])
-                                        .filter(yrs => yrs.label >= 1960 && yrs.label < 2030)
+                                        .filter(yrs => yrs.label >= RECORDING_MIN && yrs.label <= RECORDING_MAX)
                                         .map(a => { return { ...a, barClass: "recording" } })
                                 )
                         }
@@ -204,6 +218,7 @@ export default class extends React.Component {
 
                 <section className="results-section">
                     <Results
+                        programs={this.state.summaryData.programs}
                         results={this.state.resources}
                     ></Results>
                 </section>

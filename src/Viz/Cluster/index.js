@@ -15,7 +15,6 @@ export default class extends D3Component {
     }
 
     initializeChart() {
-        console.log("Initializing cluster chart")
         const svg = d3.select(this.svg).html("");
 
         const width = svg.node().getBoundingClientRect().width,

@@ -4,8 +4,8 @@ import * as subjects from "./subjects";
 import * as interviewers from "./interviewers";
 import * as programs from "./programs";
 import { MEN_SUBJECT, WOMEN_SUBJECT } from "./static";
-import {getRecordingYear} from "./getRecordingYear";
-import {getGender} from "./getGender";
+import { getRecordingYear } from "./getRecordingYear";
+import { getGender } from "./getGender";
 
 /**
  * 
@@ -23,9 +23,10 @@ function getData(options) {
         "birthYears": {},
         "interviewers": {},
         "gender": {
-            men:{label:"Men",count:0},
-            women:{label:"Women",count:0},
-            both:{label:"Both",count:0}},
+            men: { label: "Men", count: 0 },
+            women: { label: "Women", count: 0 },
+            both: { label: "Both", count: 0 }
+        },
         "programs": {},
 
         // not implemented
@@ -33,6 +34,9 @@ function getData(options) {
         // "birthCities": {},
         // "birthCountries": {},
         "birthPlaces": {},
+        "birthCities": {},
+        "birthCountries": {}
+
     }
 
     // let subj = [];
@@ -67,7 +71,7 @@ function getData(options) {
         r.subject_refs.forEach(s => { incr("subjects", subjects.byID(s)) });
 
         // count the number of records with both men and women
-        const genderItem = {id:getGender(r).toLowerCase()};
+        const genderItem = { id: getGender(r).toLowerCase() };
         // console.log("gender", genderItem)
         incr("gender", genderItem);
         // if (r.subject_refs.indexOf(MEN_SUBJECT) >= 0 && r.subject_refs.indexOf(WOMEN_SUBJECT) >= 0){ ret.gender.both.count += 1 }
@@ -81,19 +85,33 @@ function getData(options) {
         incr("languages", { label: r.language, id: r.language });
 
         // // count occurrences of each birth city/country pair
-        r.birthPlaces.forEach(place => incr("birthPlaces", {
-            label: place,
-            id: place,
-            city: place.split("|")[0],
-            country: place.split("|")[1],
-        }));
+        r.birthPlaces.forEach(place => {
+            const city = place.split("|")[0],
+                country = place.split("|")[1];
+            incr("birthPlaces", {
+                label: place,
+                id: place,
+                city,
+                country
+            });
+            incr("birthCities", {
+                label: city,
+                id: city,
+            });
+            incr("birthCountries", {
+                label: country,
+                id: country,
+            })
+
+        });
+
 
         // count occurrences of each recording year
         const ryear = getRecordingYear(r);
         incr("recordingYears", { label: ryear, id: ryear });
 
-            // count occurrences of each affiliate program
-            (r.programs || []).forEach(i => { incr("programs", programs.byID(i)) });
+        // count occurrences of each affiliate program
+        (r.programs || []).forEach(i => { incr("programs", programs.byID(i)) });
 
         // count occurences of each interviewer
         (r.interviewers || []).forEach(i => { incr("interviewers", interviewers.byID(i)) })
@@ -104,7 +122,7 @@ function getData(options) {
     // ret.gender.women = (ret.subjects[WOMEN_SUBJECT] || 0 )
     // ret.gender.men.count -= ret.gender.both.count || 0 ;
     // ret.gender.women.count -= ret.gender.both.count;
-    
+
 
     const returnValue = {
         resources: res,
@@ -121,5 +139,7 @@ export {
     resources,
     interviewers,
     subjects,
-    programs
+    programs,
+
+    getRecordingYear
 };

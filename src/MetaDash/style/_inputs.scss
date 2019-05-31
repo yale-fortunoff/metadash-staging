@@ -8,16 +8,19 @@
 
 .ItemSelector {
   border: 1px solid $color-inputborder;
+  padding-left: 8px;
+  padding-right: 8px;
 
   .button.dropdown-icon{
     width: 0px;
     background-color: unset;
   }
   .button.dropdown-icon.x{
-    width: 2em;
+    width: 32px;
+    padding-right: 6px; 
     background: url(graphics/x-field.svg) no-repeat;// scroll 1em 1em;
     background-origin: content-box;
-    background-position: center center;
+    background-position: center right;
     background-size: 1em;
     cursor: pointer;
   
@@ -55,7 +58,8 @@ select {
 
 .TextInput input,
 .react-autosuggest__input {
-  padding-left: 10px;
+  padding-left: 16px;
+  padding-right: 16px; 
   background: url(graphics/search-icon.svg) no-repeat scroll 7px 7px;
   background-origin: content-box;
   background-position: center right;

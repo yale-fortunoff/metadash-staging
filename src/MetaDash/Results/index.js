@@ -1,6 +1,7 @@
 import React from 'react';
 import "./style/main.scss";
 import numeral from "numeral";
+import { getRecordingYear } from "../../Data";
 
 
 export default class extends React.Component {
@@ -26,23 +27,33 @@ export default class extends React.Component {
 
     renderResult(result, i) {
         return (
-            <div key={i} className="result-item">
-                <div className="testimony-name">
-                    Name of testimony
+            <a target="_blank" href={result.link} key={i}>
+                <div className="result-item">
+                    <div className="testimony-name">
+                        {result.title}
+                    </div>
+
+                    <div className="birth-year">
+                        {result.birth_years.map(yr => (<li className="sub-item" key={i}>{yr}</li>))}
+                        {/* </div>
+
+                    <div className="birth-place"> */}
+                        {result.birth_place_cities.map((city, i) => (<li className="sub-item" k={i}>{city}, {result.birth_place_countries[i]}</li>))}
+
+
+                    </div>
+                    <div className="affiliate">
+                        {result.programs.map((ref, i) => (<li className="sub-item" key={i}>{this.props.programs[ref].label}</li>))}
+                    </div>
+                    <div className="recording-year">
+                        {getRecordingYear(result)}
+                    </div>
+
+                    <div className="big-button-container">
+                        <div className="big-button">View</div>
+                    </div>
                 </div>
-                <div className="birth-year">
-                    19XX
-                </div>
-                <div className="birth-place">
-                    City, Country
-                </div>
-                <div className="affiliate">
-                    Affiliate name
-                </div>
-                <div className="recording-year">
-                    19XX
-                </div>
-            </div>
+            </a>
         )
     }
 
@@ -51,7 +62,7 @@ export default class extends React.Component {
         const distanceFromBottom = window.document.body.offsetHeight - scrollBottom;
 
         if (this.props.results.length > this.state.limit
-            && distanceFromBottom < 100){
+            && distanceFromBottom < 100) {
             this.setState({ limit: this.state.limit + this.state.increment })
         }
     }
@@ -70,6 +81,24 @@ export default class extends React.Component {
                 className="Results">
                 <div className="prose">
                     There are <span className="stat">{numeral(this.props.results.length).format("0,0")}</span> testimonies with matching criteria.
+                </div>
+                <div className="headers">
+                    <div className="testimony-name">
+                        Testimony title
+                    </div>
+                    <div className="birth-year">
+                        Birth year / place
+                        </div>
+                    <div className="affiliate">
+                        Affiliate
+                    </div>
+                    <div className="recording-year">
+                        Recording year
+                    </div>
+
+                    <div className="big-button-container">
+                        &nbsp;
+                    </div>
                 </div>
                 <div
                     ref={this.resultsRef}

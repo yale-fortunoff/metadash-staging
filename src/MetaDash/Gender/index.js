@@ -142,7 +142,7 @@ export default class extends React.Component {
                         onClick={() => this.genderToggle("Both")}
                     >
                         {/* <div className={"toggle-light"}></div> */}
-                        <div>Both</div>
+                        <div>Multiple</div>
                         <div className="subtext">{numeral(both).format("0,0")}</div>
 
                     </div>

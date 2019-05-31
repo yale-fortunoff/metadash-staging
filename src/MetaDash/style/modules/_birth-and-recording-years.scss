@@ -1,7 +1,21 @@
 
-.BirthYear.subset-mode .bar {
+.BirthYear.BirthYear.subset-mode {
+  .bar {
+    transition: fill 0.5s ease;
     fill: $color-robinegg;
   }
+
+  .slider-container{
+    .half {
+      .DoubleSlider{
+        rect.highlight{
+          transition: fill 0.5s ease;
+          fill: $color-robinegg;
+        }
+      }
+    }
+  }
+}
 
 .BirthYear {
   // .bar{
@@ -17,7 +31,6 @@
   // }
 
   .bar {
-    transition: fill 0.5s ease;
     fill: $color-fortunoff;
   }
 
@@ -50,7 +63,7 @@
           stroke: $color-darkgray;
         }
 
-        .handle rect:hover{
+        .handle rect:hover {
           stroke: $color-yaleblack;
           cursor: pointer;
         }

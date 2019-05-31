@@ -4,6 +4,28 @@
   box-sizing: border-box;
   max-width: 100%;
 
+  .headers {
+    display: flex;
+    padding-left: 21px;
+    color: $color-reallylightgray;
+    font-weight: 600px;
+    margin-bottom: 16px;
+  }
+  a {
+    text-decoration: none;
+  }
+
+  .testimony-name,
+  .affiliate {
+    flex: 2;
+  }
+
+  .birth-year,
+  .recording-year,
+  .big-button-container {
+    flex: 1;
+  }
+
   .result-item {
     background-color: white;
     height: 60px;
@@ -12,15 +34,95 @@
     border-radius: 8px;
     color: $color-textgray;
 
+    // remove padding on hover, to compensate
+    // for hover-border and avoid jitter on hover
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    font-size: 14px;
+
     .testimony-name {
       font-size: 21px;
+      padding-left: 21px;
+    }
+
+    .testimony-name,
+    .birth-year,
+    .recording-year,
+    .birth-place,
+    .affiliate,
+    .big-button-container {
+      li {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+      }
+    }
+
+    .big-button {
+      width: 80px;
+      height: 30px;
+      border-radius: 8px;
+      color: $color-white;
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: $color-robinegg;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sub-item {
+      padding-right: 1em;
     }
   }
 
   .result-item:hover {
+    padding: 0px;
     border: 1px solid $color-resultsborder;
     border-left: 10px solid $color-fortunoff;
     color: $color-yaleblack;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.16);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.16);
+
+    .big-button {
+      background-color: $color-fortunoff;
+    }
+  }
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1900px) {
+  .Results {
+    // .birth-year,
+    // .affiliate 
+    .recording-year,
+    .birth-place
+    {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1399px) {
+  .Results {
+    // .birth-year,
+    .affiliate,
+    .recording-year,
+    .birth-place
+    {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 899px) {
+  .Results {
+    .birth-year,
+    .affiliate,
+    .recording-year,
+    .birth-place {
+      display: none;
+    }
   }
 }
