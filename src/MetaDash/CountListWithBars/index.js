@@ -4,10 +4,6 @@ import numeral from "numeral";
 
 export default class extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     renderBar(width) {
         if (!this.props.showBars) { return }
         return (

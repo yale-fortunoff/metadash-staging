@@ -1,5 +1,5 @@
 import React from 'react';
-import CheckboxInput from "../CheckboxInput";
+// import CheckboxInput from "../CheckboxInput";
 import GenericInput from "../GenericInput";
 
 import Autosuggest from 'react-autosuggest';

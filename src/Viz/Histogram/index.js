@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import "./style/main.scss";
 import D3Component from "../../Viz/D3Component";
 import numeral from "numeral";

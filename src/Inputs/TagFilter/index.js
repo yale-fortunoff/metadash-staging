@@ -22,14 +22,14 @@ export default class extends GenericInput {
         this.updateSelections = this.updateSelections.bind(this);
     }
 
-    updateSelections(newSelections){
+    updateSelections(newSelections) {
         this.props.updateSelections(newSelections);
-        this.setState({searchTerm:""})
+        this.setState({ searchTerm: "" })
     }
 
     updateSearchTerm(t) {
         this.setState({
-            searchTerm: t, 
+            searchTerm: t,
         });
     }
 
@@ -60,21 +60,24 @@ export default class extends GenericInput {
     render() {
         //const items = this.props.getItems(this.props.selections, this.state.searchTerm.split(""))
         const items = this.props.filterItems(this.state.searchTerm.split(" "))
-        .filter(i=>i.id in this.props.allItems)
+            .filter(i => i.id in this.props.allItems)
         // .filter(i=>Object.keysthis.props.allItems.indexOf(i.id) >= 0)
 
         return (
             <div className="TagFilter">
                 <div className="top-area">
 
-                <div className="title-area">{this.props.title}</div>
-                <TextInput
-                    callback={this.updateSearchTerm}
-                    placeholder={this.props.placeholder}
-                    value={this.state.searchTerm}></TextInput>
-                <SelectionPool
-                    callback={this.dropSelection}
-                    items={this.props.selections}></SelectionPool>
+                    <div className="type-area">
+                        <div className="title-area">{this.props.title}</div>
+                        <TextInput
+                            callback={this.updateSearchTerm}
+                            placeholder={this.props.placeholder}
+                            value={this.state.searchTerm}></TextInput>
+
+                    </div>
+                    <SelectionPool
+                        callback={this.dropSelection}
+                        items={this.props.selections}></SelectionPool>
                 </div>
 
                 <TagPool

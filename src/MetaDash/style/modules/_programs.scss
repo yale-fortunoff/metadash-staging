@@ -1,12 +1,28 @@
 
-
-.Programs {
-    .hover-text{
-        font-family: $font-sans;
-        font-size: 12px;
+.Programs, .BirthPlaces{
+    .hover-text {
+      text-align: center;
+      font-family: $font-sans;
+      font-size: 14px;
+      height: 1em;
+      padding: 3px;
+      color: $color-textgray;
     }
+  
+  }
+  
+.Programs {
+
+    display: unset;
+    position: relative;
+
+    // .hover-text{
+    //     font-family: $font-sans;
+    //     font-size: 12px;
+    // }
     
-    justify-content: space-between;
+    //justify-content: space-between;
+
 
     svg {
         height: 400px;
@@ -24,6 +40,11 @@
     .ItemSelector{
         background-color: $color-backgroundgray;
         font-family: $font-sans;
+
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        right: 30px;
 
     }
 }

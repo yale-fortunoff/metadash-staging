@@ -1,11 +1,9 @@
 import React from 'react';
 import "./style/main.scss";
-import numeral from "numeral";
 import { Cluster } from "../../Viz";
 import { objectToArray } from "../Common";
 import { normalizeString } from "../../Common";
 
-import SelectionPool from "../../Inputs/SelectionPool";
 import Autosuggest from 'react-autosuggest';
 
 export default class extends React.Component {
@@ -53,10 +51,11 @@ export default class extends React.Component {
     // we want to create a hierarchy of countries and cities
     cleanClusterData() {
         // if (this.state.cleanClusterData) { return this.state.cleanClusterData }
-        let addedCountries = []
+        let addedCountries = [];
+
         let clusterData = objectToArray(this.props.allBirthPlaces)
             .filter(
-                place => place.label.split("|").filter(x => x.length > 0).length == 2
+                place => place.label.split("|").filter(x => x.length > 0).length === 2
             )
             .map(item => {
                 let ret = { ...item };
@@ -65,8 +64,20 @@ export default class extends React.Component {
                     // console.log("removing", item);
                     ret.count = 0
                 }
+
+                const element = ret;
+                
+                // if (addedCountries.indexOf(country) < 0) { 
+                //     addedCountries.push(country);
+                //     const label = `${country}|root`,
+                //         newItem = { label, id: label };
+                //     countryItems.push(newItem)
+                //  }
+    
                 return ret
             });
+
+        // clusterData = clusterData.concat(countryItems);
 
         // add an item for each country
         clusterData.forEach(element => {
@@ -131,7 +142,7 @@ export default class extends React.Component {
     }
 
     onMouseOver(d) {
-        this.setState({ hoverText: d.label.split("|")[0].split(",")[0] + " " + d.country })
+        this.setState({ hoverText: d.label.split("|")[0].split(",")[0] + ", " + d.country })
     }
 
     onMouseOut() {
@@ -149,7 +160,7 @@ export default class extends React.Component {
         return (
             <div className="selected-item">
                 <div className="x-icon"></div>
-                <div>{this.props.selections[0].label}</div>
+                <div>{this.props.selections[0].label.split("|")[0].split(",")[0] + ", " + this.props.selections[0].country}</div>
             </div>
         )
     }

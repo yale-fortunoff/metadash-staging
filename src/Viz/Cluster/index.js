@@ -1,4 +1,3 @@
-import React from 'react';
 import "./style/main.scss";
 import D3Component from "../D3Component";
 // import numeral from "numeral";
@@ -17,7 +16,7 @@ export default class extends D3Component {
     initializeChart() {
         const svg = d3.select(this.svg).html("");
 
-        const width = svg.node().getBoundingClientRect().width,
+        const //width = svg.node().getBoundingClientRect().width,
             height = this.props.height || svg.node().getBoundingClientRect().height;
 
         svg.attr("height", height + "px");
@@ -41,7 +40,7 @@ export default class extends D3Component {
         const items = this.props.items;
         // change this to props.allItems if you want to preserve each node's circle element
         // which is cooler, but expensive
-        let allItems = this.props.items;
+        // let allItems = this.props.items;
 
         function allItemsMatch(arr1, arr2) {
             if (arr1.length !== arr2.length) { return false }

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TagFilter, RangeSlider } from '../Inputs';
-import { BarChart, DonutChart } from "../Viz";
+// import { TagFilter, RangeSlider } from '../Inputs';
+// import { BarChart, DonutChart } from "../Viz";
 
 // import OverviewBillboard from "./OverviewBillboard";
 import IntroProse from "./IntroProse";
@@ -13,10 +13,9 @@ import Programs from "./Programs";
 import Interviewers from "./Interviewers";
 import BirthPlaces from "./BirthPlaces";
 import Results from "./Results";
-import { objectToArray, arrayToObject } from "./Common";
+import { objectToArray } from "./Common";
 
 import "./style/main.scss";
-import { Subject } from 'rxjs';
 
 const data = require("../Data");
 const BIRTH_MIN = 1890;

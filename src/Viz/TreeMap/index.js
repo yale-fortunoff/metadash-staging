@@ -1,7 +1,6 @@
-import React from 'react';
+// import React from 'react';
 import "./style/main.scss";
 import D3Component from "../D3Component";
-import numeral from "numeral";
 import * as d3 from "d3";
 
 export default class extends D3Component {
@@ -17,7 +16,7 @@ export default class extends D3Component {
         const svg = d3.select(this.svg).html("");
         svg.selectAll("*").remove();
 
-        const width = svg.node().getBoundingClientRect().width,
+        const //width = svg.node().getBoundingClientRect().width,
             height = this.props.height || svg.node().getBoundingClientRect().height;
 
         svg.attr("height", height);
@@ -39,11 +38,10 @@ export default class extends D3Component {
             .size([width, height])
             .padding(2);
 
-        var nodes = treemap(h
+        treemap(h
             .sum(function (d) { return d.count; })
             .sort(function (a, b) { return a.height - b.height || b.count - a.count; })
-        )
-            .descendants();
+        ).descendants();
 
         // function color() { return "gray" }
 
@@ -57,7 +55,7 @@ export default class extends D3Component {
             .duration(500)
             .ease(d3.easeQuad)
 
-        var cell = svg.selectAll("rect")
+        svg.selectAll("rect")
             .data(h.leaves())
             .join(
                 enter => enter
@@ -65,18 +63,18 @@ export default class extends D3Component {
                     .classed("program", true)
                     .classed("highlighted", isHighlighted)
                     .attr("id", function (d) { return d.id; })
-                    .call(enter=>enter
+                    .call(enter => enter
                         .attr("x", d => d.x0)
                         .attr("y", d => d.y0)
                         .attr("width", function (d) { return d.x1 - d.x0; })
                         .attr("height", function (d) { return d.y1 - d.y0; })
                     )
-                    // .on("click", d => {
-                    //     if (d.data.id in this.props.itemDict) {
-                    //         return this.props.clickCallback(d)
-                    //     }
-                    // })
-                    ,
+                // .on("click", d => {
+                //     if (d.data.id in this.props.itemDict) {
+                //         return this.props.clickCallback(d)
+                //     }
+                // })
+                ,
                 update => update
                     .classed("highlighted", isHighlighted)
                     .attr("id", function (d) { return d.id; })
@@ -103,7 +101,7 @@ export default class extends D3Component {
             });
 
 
-        d3.select(window).on("resize.treemap",this.redrawChart.bind(this))
+        d3.select(window).on("resize.treemap", this.redrawChart.bind(this))
 
 
     }

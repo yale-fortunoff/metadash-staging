@@ -27,7 +27,10 @@ export default class extends React.Component {
 
     renderResult(result, i) {
         return (
-            <a target="_blank" href={result.link} key={i}>
+            <a 
+            target="_blank" 
+            rel="noopener noreferrer"
+            href={result.link} key={i}>
                 <div className="result-item">
                     <div className="testimony-name">
                         {result.title}

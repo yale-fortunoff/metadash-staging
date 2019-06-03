@@ -129,7 +129,7 @@ export default class extends D3Component {
         svg.attr("height", height + "px");
 
         // add label and position it
-        const label = svg.append("text")
+        svg.append("text")
             .text(this.props.label || "Double Slider")
             .attr("x", function () { return 120 - d3.select(this).node().getBBox().width - 2 * handleWidth })
             .attr("y", function () { return yCenter + d3.select(this).node().getBBox().height * 0.25 })
@@ -402,7 +402,7 @@ export default class extends D3Component {
             newArr = legitArray(this.props.selections);
 
         function arrsMatch(arr1, arr2) {
-            if (arr1.length != arr2.length) { return false };
+            if (arr1.length !== arr2.length) { return false };
             for (let i = 0; i < arr1.length; i++) {
                 if (arr1[i] !== arr2[i]) { return false }
             }

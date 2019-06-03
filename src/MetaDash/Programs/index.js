@@ -1,6 +1,6 @@
 import React from 'react';
 import "./style/main.scss";
-import { TagFilter, ItemSelector } from "../../Inputs";
+import { ItemSelector } from "../../Inputs";
 import { TreeMap } from "../../Viz";
 import { objectToArray } from "../Common"
 

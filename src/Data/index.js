@@ -3,7 +3,6 @@ import * as resources from "./resources";
 import * as subjects from "./subjects";
 import * as interviewers from "./interviewers";
 import * as programs from "./programs";
-import { MEN_SUBJECT, WOMEN_SUBJECT } from "./static";
 import { getRecordingYear } from "./getRecordingYear";
 import { getGender } from "./getGender";
 

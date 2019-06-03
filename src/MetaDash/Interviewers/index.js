@@ -1,10 +1,10 @@
 import React from 'react';
 import "./style/main.scss";
 // import TagFilter from "../../Inputs/TagFilter";
-import { arrayToObject, objectToArray } from "../Common";
+import { arrayToObject } from "../Common";
 import CountListWithBars from "../CountListWithBars";
 
-import { TextInput, SelectionPool } from "../../Inputs";
+import { TextInput } from "../../Inputs";
 
 
 export default class extends React.Component {

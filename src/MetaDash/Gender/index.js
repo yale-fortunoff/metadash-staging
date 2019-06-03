@@ -42,7 +42,7 @@ export default class extends React.Component {
                 otherVal = this.state.Men || this.state.Women;
                 break;
             default:
-                throw (`Error: Invalid gender ${gender}`)
+                throw new Error(`Error: Invalid gender ${gender}`)
 
         }
 

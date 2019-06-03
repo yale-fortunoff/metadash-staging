@@ -1,12 +1,15 @@
 .BirthPlaces {
-  justify-content: space-between;
+  //justify-content: space-between;
+  display:unset;
+  position:relative;
+  overflow: unset;
 
-  .hover-text {
-    font-family: $font-sans;
-    font-size: 12px;
-    height: 1.2em;
-    text-align: center;
-  }
+  // .hover-text {
+  //   font-family: $font-sans;
+  //   font-size: 12px;
+  //   height: 1.2em;
+  //   text-align: center;
+  // }
 
   svg {
     height: 400px;
@@ -20,7 +23,10 @@
   }
 
   .react-autosuggest__container {
-    position: relative;
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
   }
 
   .react-autosuggest__suggestions-container {
