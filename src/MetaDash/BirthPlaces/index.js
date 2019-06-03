@@ -65,7 +65,7 @@ export default class extends React.Component {
                     ret.count = 0
                 }
 
-                const element = ret;
+                // const element = ret;
                 
                 // if (addedCountries.indexOf(country) < 0) { 
                 //     addedCountries.push(country);

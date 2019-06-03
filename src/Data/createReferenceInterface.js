@@ -4,7 +4,7 @@
  */
 
 module.exports = function(data, indexField) {
-    let ret = {};
+    // let ret = {};
 
     /**
      * Data api - designed to replaced in-place with a backend API

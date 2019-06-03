@@ -75,9 +75,11 @@ export default class extends D3Component {
         const yAxis = d3.axisLeft(yScale).tickSizeOuter(0)
             .tickFormat(e => Math.floor(e) === e ? e : undefined);
 
+        const ty = d3.transition().duration(1000).ease(d3.easeQuadIn);
+
         this.yAxisG
             .attr("transform", `translate(${margin.left},${0})`)
-            .transition().duration(1000).ease(d3.easeQuadIn)
+            .transition(ty)
             .call(yAxis)
 
         const t = i => svg.transition()
@@ -95,7 +97,7 @@ export default class extends D3Component {
                     .attr("y", d => yScale(0))
                     .attr("width", xScale.bandwidth)
                     .attr("x", d => xScale(d.label))
-                    .call(enter => enter.transition(t(i))
+                    .call(enter => enter.transition(null)
                         .attr("y", d => yScale(d.count || 0))
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                         .attr("width", xScale.bandwidth)
@@ -105,7 +107,7 @@ export default class extends D3Component {
                     .attr("class", d => d.barClass)
                     .classed("bar", true)
                     .attr("x", d => xScale(d.label))
-                    .call(update => update.transition(t(100))
+                    .call(update => update.transition(t(1000))
                         .attr("y", d => yScale(d.count || 0))
                         .attr("height", d => yScale(0) - yScale(d.count || 0))
                     ),

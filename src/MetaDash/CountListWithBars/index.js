@@ -4,6 +4,44 @@ import numeral from "numeral";
 
 export default class extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.trackScrolling = this.trackScrolling.bind(this);
+        this.poolRef = React.createRef();
+
+        this.state = {
+            itemCount:100,
+            increment: 50
+        }
+    }
+
+    trackScrolling(){
+
+        // this adds lazy loading in 100-item increments
+        if (this.state.itemCount >= this.props.items){ return }
+
+        const scrollTop = this.poolRef.current.scrollTop,
+              scrollBottom = scrollTop + this.poolRef.current.getBoundingClientRect().height,
+              totalHeight = this.poolRef.current.getBoundingClientRect().height,
+              startPct = scrollTop / totalHeight,
+              endPct = scrollBottom / totalHeight;
+
+        if (endPct * 100 > 80){
+            const itemCount = this.state.itemCount + this.state.increment;
+            this.setState({itemCount});
+        }
+
+    }
+
+    componentDidMount() {
+        this.poolRef.current.addEventListener("scroll", this.trackScrolling);
+    }
+
+    componentWillUnmount() {
+        this.poolRef.current.removeEventListener("scroll", this.trackScrolling);
+    }
+
+
     renderBar(width) {
         if (!this.props.showBars) { return }
         return (
@@ -21,11 +59,17 @@ export default class extends React.Component {
 
         const items = this.props.showAll ? this.props.allItems : this.props.items;
         return (
-            <div className="count-list">
+            <div 
+            ref={this.poolRef}
+            className="count-list">
                 {(items || [])
                     .sort((a, b) => a.count < b.count ? 1 : -1)
-                    .filter(a => a.label && a.label.length > 0)
+                    .slice(0,this.state.itemCount)
+                    // .filter(a => a.label && a.label.length > 0)
                     .map((item, i) => {
+
+                        // skip the filter loop
+                        if (!(item.label && item.label.length > 0)){ return (null)}
 
                         let itemCount,
                             barWidth,

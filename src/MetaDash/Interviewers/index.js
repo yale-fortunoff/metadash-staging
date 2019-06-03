@@ -1,7 +1,6 @@
 import React from 'react';
 import "./style/main.scss";
 // import TagFilter from "../../Inputs/TagFilter";
-import { arrayToObject } from "../Common";
 import CountListWithBars from "../CountListWithBars";
 
 import { TextInput } from "../../Inputs";
@@ -27,10 +26,11 @@ export default class extends React.Component {
 
     updateSearchTerm(searchTerm) {
 
+
         this.setState({
-            searchTerm,
-            // filteredItems: this.props.filterItems(searchTerm)
+            searchTerm, 
         })
+
 
     }
 
@@ -45,7 +45,7 @@ export default class extends React.Component {
     handleItemClick(item) {
         // if you click an item that's already selected, unselect it.
         // otherwise, select it
-        const selections = arrayToObject(this.props.selections);
+        const selections = this.props.selectionsDict; //arrayToObject(this.props.selections);
         const selectionsWithoutCurrentItem = this.props.selections.filter(i => i.id !== item.id);
 
         if (item.id in selections) { this.updateSelections(selectionsWithoutCurrentItem) }
@@ -56,17 +56,19 @@ export default class extends React.Component {
 
     render() {
 
-        const items = this.props.filterItems(this.state.searchTerm);
+        // 6-3-19 - updated to expect an array and a dictionary to prevent
+        // the need to use arrayToObject(dict+arr+interviewers)
+        const [items, itemDict] = this.props.filterItems(this.state.searchTerm);
 
         const listProps = {
             showBars: this.props.showBars,
             updateSelections: this.updateSelections,
-            items: items,
+            items,//: items,
             allItems: this.props.allInterviewers,
             showAll: false,
-            itemDict: arrayToObject(items),
+            itemDict,//: arrayToObject(items),
             handleItemClick: this.handleItemClick,
-            selections: arrayToObject(this.props.selections)
+            selections: this.props.selectionsDict,//arrayToObject(this.props.selections)
             //allowMultipleSelections: true,
             // items: this.state.filteredItems
             // items: objectToArray(this.props.interviewers)

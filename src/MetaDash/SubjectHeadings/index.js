@@ -6,9 +6,14 @@ import TagFilter from "../../Inputs/TagFilter";
 export default class extends React.Component {
 
     render() {
+        const props = {
+            ...this.props,
+            lazy: true
+        };
+
         return (
             <div className="SubjectHeadings">
-                <TagFilter {...this.props}></TagFilter>
+                <TagFilter {...props}></TagFilter>
             </div>);
 
     }

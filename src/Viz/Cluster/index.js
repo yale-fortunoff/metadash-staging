@@ -42,25 +42,21 @@ export default class extends D3Component {
         // which is cooler, but expensive
         // let allItems = this.props.items;
 
-        function allItemsMatch(arr1, arr2) {
-            if (arr1.length !== arr2.length) { return false }
-            for (let i = 0; i < arr1.length; i++) {
-                if (arr1[i].id !== arr2[i].id) { return false }
-                if (arr1[i].count !== arr2[i].count) { return false }
-            }
-            return true;
-        }
+        // function allItemsMatch(arr1, arr2) {
+        //     if (arr1.length !== arr2.length) { return false }
+        //     for (let i = 0; i < arr1.length; i++) {
+        //         if (arr1[i].id !== arr2[i].id) { return false }
+        //         if (arr1[i].count !== arr2[i].count) { return false }
+        //     }
+        //     return true;
+        // }
 
-        // FIXME - this is a really naive improvement that prevents reanimating when
-        // the length of the properties hasn't changed. There could be cases when
-        // it should redraw but won't. really I should check that each item/count is unchanged
-        // if (Object.keys((prevProps||{}).itemDict||{}).length ===  Object.keys(this.props.itemDict).length){ return }
-        // this should be better
-        if (allItemsMatch(
-            objectToArray((prevProps || {}).itemDict || {}),
-            objectToArray(this.props.itemDict))) {
-            return
-        }
+        // // Prevents reanimating if item dict hasn't changed
+        // if (allItemsMatch(
+        //     objectToArray((prevProps || {}).itemDict || {}),
+        //     objectToArray(this.props.itemDict))) {
+        //     return
+        // }
 
         const root = d3.stratify()
             .id(d => d.label.split("|")[0])
@@ -70,16 +66,28 @@ export default class extends D3Component {
             .padding(0.725)
             .size([width, height]);
 
-        root.sum(d => d.count);
+        root.sum(d => Number(d.count ? d.count : 0));
 
-        const data = root.descendants().filter(d => d.data.label.indexOf("root") < 0);
+        const data = root.descendants()
+            .filter(d => d.data.label.indexOf("root") < 0)
+
         packLayout(root);
         svg.selectAll("circle.city").transition();
 
-        const t = d3.transition().duration(1400)//.ease(d3.easeQuad);
+        const t = d3.transition().duration(1100);
         this.allowInteraction = data.length;
 
-        let nodes = svg
+        // let nodes = 
+
+        function realChange(newRadius, oldRadius) {
+            return (newRadius > 0) && (oldRadius > 0);
+        };
+
+        const r = d => d.r || 0;
+        const x = d => d.x || 0;
+        const y = d => d.y || 0;
+
+        svg
             .selectAll('circle.city')
             .data(data)
             .join(
@@ -90,24 +98,30 @@ export default class extends D3Component {
                     .on("mouseout", d => this.props.onMouseOut(d.data))
                     .on("click", d => {
                         if (this.props.selections
-                            && this.props.selections.length == 1
-                            && this.props.selections[0].id == d.data.id) {
+                            && this.props.selections.length === 1
+                            && this.props.selections[0].id === d.data.id) {
                             this.props.updateSelections([])
                         } else {
                             this.props.updateSelections([d.data])
                         }
                     })
-                    .attr('cx', function (d) { return d.x; })
-                    .attr('cy', function (d) { return d.y; })
-                    .attr('r', function (d) { return d.r; }),
+                    .attr('cx', x)
+                    .attr('cy', y)
+                    .attr('r', r),
                 update => update
-                    .call(update =>
-                        update.transition(t)
-                            .attr("data-city", d => d.data.label)
-                            .attr('cx', d => d.x)
-                            .attr('cy', d => d.y)
-                            .attr('r', d => d.r)
-                    ),
+                    .attr("data-city", d => d.data.label)
+                    .call(update => {
+                        update
+                            .transition(function (d) {
+                                // only transition if 
+                                if (r(d) <= 0){ return null}
+                                return realChange(r(d), d3.select(this).attr("r") || 0) ? t : null
+                            })
+                            .attr('cx', x)
+                            .attr('cy', y)
+                            .attr('r', r);
+                    }),
+                exit => exit.remove()
                 // exit=>exit
                 // .call(exit=>
                 //     exit.transition().duration(1000)
@@ -115,7 +129,7 @@ export default class extends D3Component {
                 // )
             )
 
-            d3.select(window).on("resize.cluster", this.redrawChart.bind(this))
+        d3.select(window).on("resize.cluster", this.redrawChart.bind(this))
 
 
     }

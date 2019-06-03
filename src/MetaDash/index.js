@@ -13,7 +13,7 @@ import Programs from "./Programs";
 import Interviewers from "./Interviewers";
 import BirthPlaces from "./BirthPlaces";
 import Results from "./Results";
-import { objectToArray } from "./Common";
+import { objectToArray, arrayToObject } from "./Common";
 
 import "./style/main.scss";
 
@@ -92,7 +92,7 @@ export default class extends React.Component {
         console.log("MetaDash.render state", this.state);
 
         let genderSubjects = [];
-        Object.keys(this.state.summaryData.subjects).filter(s => {
+        Object.keys(this.state.summaryData.subjects).forEach(s => {
             if (["Men", "Women"].indexOf(this.state.summaryData.subjects[s].label) >= 0) {
                 genderSubjects.push(this.state.summaryData.subjects[s]);
             }
@@ -182,14 +182,25 @@ export default class extends React.Component {
                         allInterviewers={this.fullData.summaryData.interviewers}
                         updateSelections={this.updateFilterFactory("interviewers")}
                         selections={this.state.filters.interviewers}
-                        allInterviewers={
-                            data.interviewers.search()
-                        }
+                        selectionsDict={arrayToObject(this.state.filters.interviewers)} // TODO - improve efficiency
+                        // allInterviewers={ data.interviewers.search() } // TODO - improve efficiency
                         filterItems={t => {
+                            // 6-3-19 - just updated to return both an array and a dictionary
+                            // so it doesn't have to be retouched later on. (dict+arr+interviewers)
                             const results = data.interviewers.search((t || "").split(" "));
-                            return results
-                                .filter(i => i.id in this.state.summaryData.interviewers)
-                                .map(i => { return { ...i, count: this.state.summaryData.interviewers[i.id].count } })
+                            let retDict = {}
+                            let retArr = results
+                            .filter(i => i.id in this.state.summaryData.interviewers)
+                            .map(i => { 
+                                const retItem = { ...i, count: this.state.summaryData.interviewers[i.id].count }
+                                retDict[i.id] = retItem;
+                                return retItem;
+                             })
+
+                            return [retArr, retDict];
+                            // return results
+                            //     .filter(i => i.id in this.state.summaryData.interviewers)
+                            //     .map(i => { return { ...i, count: this.state.summaryData.interviewers[i.id].count } })
                         }}
                     ></Interviewers>
 

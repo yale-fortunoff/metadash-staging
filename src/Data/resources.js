@@ -63,21 +63,32 @@ filters.getResources = options => {
         }
 
         // TODO - filter by year of recording
-        const recordingYear = getRecordingYear(r);
         if (options.dateRanges
-            && options.dateRanges.recording
-            && (recordingYear < options.dateRanges.recording[0] || recordingYear > options.dateRanges.recording[1] || !recordingYear)) { return false }
+            && options.dateRanges.recording) {
+            const recordingYear = getRecordingYear(r);
+            if (recordingYear < options.dateRanges.recording[0]
+                || recordingYear > options.dateRanges.recording[1]
+                || !recordingYear) { return false }
+
+        } else { 
+            // console.log("Skipping recording year filter")
+    }
 
         // TODO - filter by year of birth
-        const birthYears = r.birth_years || [];
-        if (!birthYears.reduce((curr, next) => {
-            if (!curr) { return false }
-            if (!options) { return true };
-            if (!options.dateRanges) { return true };
-            if (!options.dateRanges.birth) { return true }
-            if (next < options.dateRanges.birth[0] || next > options.dateRanges.birth[1]) { return false }
-            return true;
-        }, true)) { return false }
+        if (options.dateRanges && options.dateRanges.birth) {
+            const birthYears = r.birth_years || [];
+            if (!birthYears.reduce((curr, next) => {
+                if (!curr) { return false }
+                if (!options) { return true };
+                if (!options.dateRanges) { return true };
+                if (!options.dateRanges.birth) { return true }
+                if (next < options.dateRanges.birth[0] || next > options.dateRanges.birth[1]) { return false }
+                return true;
+            }, true)) { return false }
+
+        } else { 
+            // console.log("Skipping birth year filter")
+        }
 
         // TODO - filter by place of birth
 
