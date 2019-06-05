@@ -35,7 +35,11 @@ export default class extends D3Component {
         const svg = d3.select(this.svg)
 
         const width = svg.node().getBoundingClientRect().width,
-            height = this.props.height || svg.node().getBoundingClientRect().height;
+            height = Math.min(width,
+                this.props.height || svg.node().getBoundingClientRect().height
+            );
+
+        
 
         const items = this.props.items;
         // change this to props.allItems if you want to preserve each node's circle element
@@ -64,7 +68,7 @@ export default class extends D3Component {
             (prevProps||{items:[]}).items,
             this.props.items
             )){
-                console.log("redraw prevented")
+                // console.log("redraw prevented")
 
             // objectToArray(this.props.itemDict))) {
             return

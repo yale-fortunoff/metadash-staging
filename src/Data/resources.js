@@ -101,7 +101,12 @@ filters.getResources = options => {
                     country = r.birth_place_countries[j];
 
                 if (normalizeString(country) !== normalizeString(place.country)) return false;
-                if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
+                if (place.city){
+                    // if there's a city, limit by that as well
+                    if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
+
+                }
+
             }
         }
 

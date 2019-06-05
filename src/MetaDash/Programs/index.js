@@ -31,18 +31,17 @@ export default class extends React.Component {
     }
 
     handleMouseIn(item) {
-        this.setText(item.data.label)
+        this.setText(item.label)
     }
 
     handleClick(item) {
-        console.log("click", item.data)
+
         if (this.props.selections
             && this.props.selections.length > 0
-            && this.props.selections[0].id === item.data.id) {
+            && this.props.selections[0].id === item.id) {
             this.props.updateSelections([])
         } else {
-            this.props.updateSelections([item.data])
-
+            this.props.updateSelections([item])
         }
 
     }

@@ -87,18 +87,16 @@ export default class extends D3Component {
                     ),
                 exit => exit.remove()
             )
-            .on("click", d => {
-                if (d.data.id in this.props.itemDict) {
-                    return this.props.clickCallback(d)
-                }
-            })
+            // .on("click", d => {
+            //     if (d.data.id in this.props.itemDict) {
+            //         return this.props.clickCallback(d.data)
+            //     }
+            // })
 
         svg.selectAll("rect")
-            .on("mouseover", this.props.mouseInCallback || (() => { console.log("Default handler") }))
-            .on("mouseout", this.props.mouseOutCallback || (() => { }))
-            .on("click", item => {
-                return this.props.clickCallback(item)
-            });
+            .on("mouseover", item => this.props.mouseInCallback (item.data))
+            .on("mouseout", item => this.props.mouseOutCallback (item.data))
+            .on("click", item => this.props.clickCallback(item.data));
 
 
         d3.select(window).on("resize.treemap", this.redrawChart.bind(this))

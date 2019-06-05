@@ -33,6 +33,7 @@ export default class extends React.Component {
         this.renderSuggestion = this.renderSuggestion.bind(this);
         this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
         this.label = this.label.bind(this);
+        this.cleanPlaceName = this.cleanPlaceName.bind(this);
 
         // this.renderHoverField = this.renderHoverField.bind(this);
 
@@ -40,9 +41,22 @@ export default class extends React.Component {
 
     }
 
+    cleanPlaceName(item){
+        if (!item){ return ""}
+        let city = item.label.split("|")[0].split(",")[0], 
+        country = item.country;
+
+        
+        if (city && country){ return city + ", " + country}
+        else if (city){ return city}
+        else if (country){ return country}
+        // return item.label.split("|")[0].split(",")[0] + ", " + item.country
+    }
     label(){
         if (!this.props.selections || this.props.selections.length < 1){ return ""}
-        return this.props.selections[0].label.split("|")[0].split(",")[0] + ", " + this.props.selections[0].country
+
+        return this.cleanPlaceName(this.props.selections[0]);
+//        return this.props.selections[0].label.split("|")[0].split(",")[0] + ", " + this.props.selections[0].country
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -104,7 +118,8 @@ export default class extends React.Component {
     }
 
     getSuggestionValue(suggestion) {
-        return suggestion.label
+//        return suggestion.label;
+        return this.cleanPlaceName(suggestion);
     }
 
     getSuggestions = value => {
@@ -135,7 +150,8 @@ export default class extends React.Component {
     renderSuggestion(suggestion) {
         return (
             <div className="suggestion">
-                {suggestion.label.split("|")[0].split(",").join(", ")}
+                {this.cleanPlaceName(suggestion)}
+                {/* {suggestion.label.split("|")[0].split(",").join(", ")} */}
             </div>
         )
     }
@@ -149,7 +165,9 @@ export default class extends React.Component {
     }
 
     onMouseOver(d) {
-        this.setState({ hoverText: d.label.split("|")[0].split(",")[0] + ", " + d.country })
+        this.setState({ hoverText: this.cleanPlaceName(d) })
+
+        // this.setState({ hoverText: d.label.split("|")[0].split(",")[0] + ", " + d.country })
     }
 
     onMouseOut() {
@@ -193,10 +211,10 @@ export default class extends React.Component {
             <div className="BirthPlaces module-box">
                 <h3 className="title">Birth places</h3>
 
-
                 <Cluster
                     items={this.cleanClusterData()}
-                    allItems={this.props.allBirthPlaces}
+                    items={this.cleanClusterData()}
+                    // allItems={this.props.allBirthPlaces}
                     itemDict={this.props.birthPlaces}
                     selections={this.props.selections}
                     onMouseOver={this.onMouseOver}
