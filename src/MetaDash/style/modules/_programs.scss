@@ -1,50 +1,37 @@
+// .Programs,
+// .BirthPlaces {
+// }
 
-.Programs, .BirthPlaces{
-    .hover-text {
-      text-align: center;
-      font-family: $font-sans;
-      font-size: 14px;
-      height: 1em;
-      padding: 3px;
-      color: $color-textgray;
-    }
-  
-  }
-  
 .Programs {
+  display: unset;
+  position: relative;
 
-    display: unset;
-    position: relative;
+  // .hover-text{
+  //     font-family: $font-sans;
+  //     font-size: 12px;
+  // }
 
-    // .hover-text{
-    //     font-family: $font-sans;
-    //     font-size: 12px;
-    // }
-    
-    //justify-content: space-between;
+  //justify-content: space-between;
 
+  svg {
+    height: 400px;
+  }
+  rect {
+    fill: $color-robinegg;
+  }
 
-    svg {
-        height: 400px;
+  rect.highlighted,
+  rect:hover {
+    fill: $color-teal;
+  }
 
-    }
-    rect {
-        fill: $color-sky;
-    }
+  .ItemSelector {
+    background-color: $color-backgroundgray;
+    font-family: $font-sans;
 
-    rect.highlighted,
-    rect:hover{
-        fill: $color-teal;
-    }
-
-    .ItemSelector{
-        background-color: $color-backgroundgray;
-        font-family: $font-sans;
-
-        position: absolute;
-        bottom: 30px;
-        left: 30px;
-        right: 30px;
-
-    }
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+  }
 }

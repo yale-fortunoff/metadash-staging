@@ -2,7 +2,7 @@ import "./style/main.scss";
 import D3Component from "../D3Component";
 // import numeral from "numeral";
 import * as d3 from "d3";
-import { objectToArray } from '../../MetaDash/Common';
+// import { objectToArray } from '../../MetaDash/Common';
 
 export default class extends D3Component {
 
@@ -42,21 +42,35 @@ export default class extends D3Component {
         // which is cooler, but expensive
         // let allItems = this.props.items;
 
-        // function allItemsMatch(arr1, arr2) {
-        //     if (arr1.length !== arr2.length) { return false }
-        //     for (let i = 0; i < arr1.length; i++) {
-        //         if (arr1[i].id !== arr2[i].id) { return false }
-        //         if (arr1[i].count !== arr2[i].count) { return false }
-        //     }
-        //     return true;
-        // }
+        //--------------HACK--------------
+        // TODO - Fix this q-a-d hack to prevent redrawing if the data have not changed
+        //        Get rid of this whole block....
+        function allItemsMatch(arr1, arr2) {
+            if (arr1.length !== arr2.length) { return false }
+            for (let i = 0; i < arr1.length; i++) {
+                if (arr1[i].id !== arr2[i].id) { return false }
+                if (arr1[i].count !== arr2[i].count) { return false }
+            }
+            return true;
+        }
 
-        // // Prevents reanimating if item dict hasn't changed
-        // if (allItemsMatch(
-        //     objectToArray((prevProps || {}).itemDict || {}),
-        //     objectToArray(this.props.itemDict))) {
-        //     return
-        // }
+        if (allItemsMatch(
+
+            // this works, but do I really have to loop this each time?
+            // objectToArray((prevProps || {}).itemDict || {}),
+            // objectToArray(this.props.itemDict)
+
+            // this seems to be working just as well without the two loops
+            (prevProps||{items:[]}).items,
+            this.props.items
+            )){
+                console.log("redraw prevented")
+
+            // objectToArray(this.props.itemDict))) {
+            return
+        }
+        // ... down to here.
+        //----------END OF HACK-----------
 
         const root = d3.stratify()
             .id(d => d.label.split("|")[0])
@@ -114,7 +128,7 @@ export default class extends D3Component {
                         update
                             .transition(function (d) {
                                 // only transition if 
-                                if (r(d) <= 0){ return null}
+                                if (r(d) <= 0) { return null }
                                 return realChange(r(d), d3.select(this).attr("r") || 0) ? t : null
                             })
                             .attr('cx', x)

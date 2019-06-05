@@ -60,9 +60,13 @@ export default class extends D3Component {
             .padding(0.5)
             .rangeRound([margin.left, width - margin.right])
 
+        const tickSteps = width > 600 ? 10 : 40;
+        const tickValues = d3.range(this.props.minYear, this.props.maxYear, tickSteps);
+
+
         const xAxis = d3.axisBottom(xScale)
             .tickFormat(e => numeral(e).format("0"))
-            .tickValues(d3.range(this.props.minYear, this.props.maxYear, 10))
+            .tickValues(tickValues)
 
         this.xAxisG
             .attr("transform", `translate(${0},${height - margin.bottom})`)
@@ -71,8 +75,10 @@ export default class extends D3Component {
         const yScale = d3.scaleLinear()
             .domain(countRange)
             .rangeRound([height - margin.bottom, margin.top])
-
+        
         const yAxis = d3.axisLeft(yScale).tickSizeOuter(0)
+            // .tickSize(width - margin.left - margin.right)
+            .ticks(height / 20)
             .tickFormat(e => Math.floor(e) === e ? e : undefined);
 
         const ty = d3.transition().duration(1000).ease(d3.easeQuadIn);
@@ -120,7 +126,7 @@ export default class extends D3Component {
                         .attr("y", () => yScale(0))
                     )
             )
-        
+
         d3.select(window).on("resize.histogram", this.redrawChart.bind(this))
 
         // d3.select(window).on("resize", this.redrawChart)

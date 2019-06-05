@@ -23,7 +23,7 @@ export default class extends React.Component{
         const scrollTop = this.poolRef.current.scrollTop,
               scrollBottom = scrollTop + this.poolRef.current.getBoundingClientRect().height,
               totalHeight = this.poolRef.current.getBoundingClientRect().height,
-              startPct = scrollTop / totalHeight,
+            //   startPct = scrollTop / totalHeight,
               endPct = scrollBottom / totalHeight;
 
         if (endPct * 100 > 80){

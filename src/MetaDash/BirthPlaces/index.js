@@ -3,6 +3,7 @@ import "./style/main.scss";
 import { Cluster } from "../../Viz";
 import { objectToArray } from "../Common";
 import { normalizeString } from "../../Common";
+import { HoverText } from "../../Inputs";
 
 import Autosuggest from 'react-autosuggest';
 
@@ -15,7 +16,7 @@ export default class extends React.Component {
         this.state = {
             searchTerm: "",
             suggestions: [],
-            hoverText: " "
+            hoverText: " ",
         }
 
         this.cleanClusterData = this.cleanClusterData.bind(this);
@@ -31,11 +32,17 @@ export default class extends React.Component {
         this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
         this.renderSuggestion = this.renderSuggestion.bind(this);
         this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+        this.label = this.label.bind(this);
 
-        this.renderHoverField = this.renderHoverField.bind(this);
+        // this.renderHoverField = this.renderHoverField.bind(this);
 
         this.cleanClusterData();
 
+    }
+
+    label(){
+        if (!this.props.selections || this.props.selections.length < 1){ return ""}
+        return this.props.selections[0].label.split("|")[0].split(",")[0] + ", " + this.props.selections[0].country
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -66,14 +73,14 @@ export default class extends React.Component {
                 }
 
                 // const element = ret;
-                
+
                 // if (addedCountries.indexOf(country) < 0) { 
                 //     addedCountries.push(country);
                 //     const label = `${country}|root`,
                 //         newItem = { label, id: label };
                 //     countryItems.push(newItem)
                 //  }
-    
+
                 return ret
             });
 
@@ -149,20 +156,28 @@ export default class extends React.Component {
         this.setState({ hoverText: " " })
     }
 
-    renderHoverField() {
-        if (!this.props.selections || this.props.selections.length < 1) {
-            return (
-                <span>
-                    {this.state.hoverText || " "}
-                </span>
-            )
-        }
-        return (
-            <div className="selected-item">
-                <div className="x-icon"></div>
-                <div>{this.props.selections[0].label.split("|")[0].split(",")[0] + ", " + this.props.selections[0].country}</div>
-            </div>
-        )
+    // renderHoverField() {
+    //     if (!this.props.selections || this.props.selections.length < 1) {
+
+    //         return (
+    //             <span>
+    //                 {this.state.hoverText || " "}
+    //             </span>
+    //         )
+    //     }
+    //     return (
+    //         <div 
+    //         className="selected-item"
+    //         onClick={this.dropSelection}
+    //         >
+    //             <div className="x-icon"></div>
+    //             <div>{this.props.selections[0].label.split("|")[0].split(",")[0] + ", " + this.props.selections[0].country}</div>
+    //         </div>
+    //     )
+    // }
+
+    placeLabel(){
+
     }
 
 
@@ -178,15 +193,6 @@ export default class extends React.Component {
             <div className="BirthPlaces module-box">
                 <h3 className="title">Birth places</h3>
 
-                {/* <SelectionPool
-                    callback={this.dropSelection}
-                    items={this.props.selections}
-                ></SelectionPool> */}
-
-                <div className="hover-text">
-                    {/* {this.state.hoverText} */}
-                    {this.renderHoverField()}
-                </div>
 
                 <Cluster
                     items={this.cleanClusterData()}
@@ -207,6 +213,17 @@ export default class extends React.Component {
                     renderSuggestion={this.renderSuggestion}
                     inputProps={inputProps}
                 ></Autosuggest>
+
+                {/* <div className="hover-text">
+                    {this.renderHoverField()}
+                </div> */}
+                <HoverText
+                    dropCallback={this.dropSelection}
+                    selections={this.props.selections}
+                    hoverText={this.state.hoverText}
+                    label={this.label()}
+                ></HoverText>
+
             </div>
         );
     }

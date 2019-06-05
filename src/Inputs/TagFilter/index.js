@@ -58,10 +58,12 @@ export default class extends GenericInput {
     }
 
     render() {
+        // return (null);
+
         //const items = this.props.getItems(this.props.selections, this.state.searchTerm.split(""))
         const items = this.props.filterItems(this.state.searchTerm.split(" "))
             .filter(i => i.id in this.props.allItems)
-        // .filter(i=>Object.keysthis.props.allItems.indexOf(i.id) >= 0)
+
 
         return (
             <div className="TagFilter">
@@ -72,12 +74,14 @@ export default class extends GenericInput {
                         <TextInput
                             callback={this.updateSearchTerm}
                             placeholder={this.props.placeholder}
-                            value={this.state.searchTerm}></TextInput>
+                            value={this.state.searchTerm}
+                        ></TextInput>
 
                     </div>
                     <SelectionPool
                         callback={this.dropSelection}
-                        items={this.props.selections}></SelectionPool>
+                        items={this.props.selections}
+                    ></SelectionPool>
                 </div>
 
                 <TagPool

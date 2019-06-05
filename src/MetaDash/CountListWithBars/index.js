@@ -11,7 +11,7 @@ export default class extends React.Component {
 
         this.state = {
             itemCount:100,
-            increment: 50
+            increment: 10
         }
     }
 
@@ -22,11 +22,17 @@ export default class extends React.Component {
 
         const scrollTop = this.poolRef.current.scrollTop,
               scrollBottom = scrollTop + this.poolRef.current.getBoundingClientRect().height,
-              totalHeight = this.poolRef.current.getBoundingClientRect().height,
-              startPct = scrollTop / totalHeight,
-              endPct = scrollBottom / totalHeight;
+              totalHeight = this.poolRef.current.scrollHeight //getBoundingClientRect().height,
+              //startPct = scrollTop / totalHeight,
+            //   endPct = scrollBottom / totalHeight
+            ;
 
-        if (endPct * 100 > 80){
+        // console.log("height",totalHeight, this.poolRef.current.getBoundingClientRect().height)
+
+        // if ((endPct * 100) > 99){
+        if ((totalHeight - scrollBottom) <= 80){
+            console.log("height", scrollBottom, totalHeight)
+
             const itemCount = this.state.itemCount + this.state.increment;
             this.setState({itemCount});
         }

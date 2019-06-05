@@ -17,6 +17,7 @@
 @import "./modules/results";
 @import "./modules/subject-headings";
 @import "./modules/text-menu";
+@import "./modules/hover-text";
 
 body {
   @include typography-body;
@@ -35,7 +36,7 @@ body {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     font-family: $font-serif;
     font-size: 24px;
     text-align: center;

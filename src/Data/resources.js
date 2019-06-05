@@ -7,7 +7,8 @@ const { getGender } = require("./getGender");
  *       without any parameters
  *         
  */
-const all = () => require("./json/index.4.min.json");
+const __all = require("./json/index.4.min.json");
+const all = () => __all;
 
 let filters = {};
 
@@ -90,8 +91,6 @@ filters.getResources = options => {
             // console.log("Skipping birth year filter")
         }
 
-        // TODO - filter by place of birth
-
         if ((options.birthplaces || []).length > 0) {
             let place = options.birthplaces[0];
 
@@ -142,6 +141,11 @@ filters.getResources = options => {
  * 
  * }
  */
-let query = options => all().filter(filters.getResources(options))
+// let query = options => all().filter(filters.getResources(options))
+
+function query(options){
+    if (!options){ return all()}
+    return all().filter(filters.getResources(options));
+}
 
 module.exports = { all, query }

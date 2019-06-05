@@ -65,7 +65,7 @@ export default class extends D3Component {
         // this.setState({ labels: this.getHandleRange() });
         const handles = d3.select(this.svg).select(".handle-layer").selectAll(".handle");
 
-        handles.each(function(d){
+        handles.each(function (d) {
             d3.select(this).select("text").text(d.value)
         })
 
@@ -103,9 +103,9 @@ export default class extends D3Component {
         svg.selectAll("*").remove();
         svg.html("")
 
-        try{
+        try {
             this.svg.current.innerHTML = "";
-        } catch(e){}
+        } catch (e) { }
 
         svg = d3.select(this.svg)
 
@@ -123,15 +123,16 @@ export default class extends D3Component {
         this.handleWidth = handleWidth;
         this.yCenter = yCenter;
         this.handleHeight = handleHeight;
-        this.margin.left = 110;
+        this.margin.left = 140;
 
 
         svg.attr("height", height + "px");
 
         // add label and position it
         svg.append("text")
+            .classed("track-label", true)
             .text(this.props.label || "Double Slider")
-            .attr("x", function () { return 120 - d3.select(this).node().getBBox().width - 2 * handleWidth })
+            .attr("x", function () { return 150 - d3.select(this).node().getBBox().width - 2 * handleWidth })
             .attr("y", function () { return yCenter + d3.select(this).node().getBBox().height * 0.25 })
 
 

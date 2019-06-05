@@ -27,12 +27,15 @@ export default class extends React.Component {
 
 
     renderResult(result, i) {
+
         return (
             <a 
             target="_blank" 
             rel="noopener noreferrer"
-            href={result.link} key={i}>
-                <div className="result-item">
+            href={result.link} 
+            key={i}>
+                <div 
+                className="result-item">
                     <div className="testimony-name">
                         {result.title}
                     </div>
@@ -42,8 +45,7 @@ export default class extends React.Component {
                         {/* </div>
 
                     <div className="birth-place"> */}
-                        {result.birth_place_cities.map((city, i) => (<li className="sub-item" k={i}>{city}, {result.birth_place_countries[i]}</li>))}
-
+                        {result.birth_place_cities.map((city, i) => (<li className="sub-item" key={i}>{city}{city && result.birth_place_countries[i] ? ", " : ""}{result.birth_place_countries[i]}</li>))}
 
                     </div>
                     <div className="affiliate">

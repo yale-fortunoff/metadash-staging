@@ -1,4 +1,6 @@
 
+
+
 .BirthYear.BirthYear.subset-mode {
   .bar {
     transition: fill 0.5s ease;
@@ -8,6 +10,17 @@
   .slider-container{
     .half {
       .DoubleSlider{
+        .handle{
+          cursor: pointer;
+        }
+        .handle:hover{
+          text{
+            fill: $color-teal;
+            transition: fill 0.2s ease;
+          }
+        }
+
+
         rect.highlight{
           transition: fill 0.5s ease;
           fill: $color-robinegg;
@@ -18,6 +31,9 @@
 }
 
 .BirthYear {
+  .Viz svg text.track-label{
+    font-size: 14px;
+  }
   // .bar{
   //     // stroke: green;
   //     // stroke-width: 1;
@@ -75,6 +91,28 @@
         rect.track {
           fill: $color-lightgray;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:900px){
+
+  .BirthYear{
+
+    .Histogram{
+      .Viz{
+        svg{
+          height: 120px;
+        }
+      }
+    }
+    
+    .slider-container{
+      display: block;
+
+      .half{
+        width: unset;
       }
     }
   }

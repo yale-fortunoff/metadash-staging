@@ -5,6 +5,7 @@ import TextInput from "./TextInput";
 import SelectionPool from "./SelectionPool";
 import ItemSelector from "./ItemSelector";
 import DoubleSlider from "./DoubleSlider";
+import HoverText from "./HoverText";
 
 export { 
     ChecklistInput, 
@@ -13,5 +14,6 @@ export {
     TagFilter, 
     RangeSlider, 
     SelectionPool,
-    ItemSelector
+    ItemSelector,
+    HoverText
 }

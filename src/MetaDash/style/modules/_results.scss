@@ -92,13 +92,19 @@
   }
 }
 
+@media only screen and (max-width: 800px) {
+  .Results{
+    padding: 0px 16px;
+  }
+}
+
+
 @media only screen and (min-width: 1400px) and (max-width: 1900px) {
   .Results {
     // .birth-year,
-    // .affiliate 
+    // .affiliate
     .recording-year,
-    .birth-place
-    {
+    .birth-place {
       display: none;
     }
   }
@@ -106,11 +112,11 @@
 
 @media only screen and (min-width: 900px) and (max-width: 1399px) {
   .Results {
+    
     // .birth-year,
     .affiliate,
     .recording-year,
-    .birth-place
-    {
+    .birth-place {
       display: none;
     }
   }
@@ -118,6 +124,14 @@
 
 @media only screen and (max-width: 899px) {
   .Results {
+
+    .result-item {
+      .testimony-name {
+        font-size: unset;
+        padding-left: 1em;
+      }
+    }
+
     .birth-year,
     .affiliate,
     .recording-year,

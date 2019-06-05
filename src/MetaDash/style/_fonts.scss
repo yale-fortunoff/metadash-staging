@@ -32,7 +32,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("Proxima"), 
-      // url("./fonts/ProximaNova-Sbold.otf") format("otf"),
+      url("./fonts/ProximaNova-Sbold.otf") format("otf"),
       url("./fonts/ProximaNova-Sbold.ttf") format("truetype")
 }
 
@@ -41,7 +41,7 @@
   font-style: bold;
   font-weight: 700;
   src: local("Proxima"), 
-      // url("./fonts/ProximaNova-Bold.otf") format("otf"),
+      url("./fonts/ProximaNova-Bold.otf") format("otf"),
       url("./fonts/ProximaNova-Bold.ttf") format("truetype")
 }
 
