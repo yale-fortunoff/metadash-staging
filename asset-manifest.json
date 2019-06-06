@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/fortunoff-metadash/static/css/main.e384f6a3.chunk.css",
-    "main.js": "/fortunoff-metadash/static/js/main.0a6d8b38.chunk.js",
-    "main.js.map": "/fortunoff-metadash/static/js/main.0a6d8b38.chunk.js.map",
+    "main.css": "/fortunoff-metadash/static/css/main.771b7d9e.chunk.css",
+    "main.js": "/fortunoff-metadash/static/js/main.2af1a0f2.chunk.js",
+    "main.js.map": "/fortunoff-metadash/static/js/main.2af1a0f2.chunk.js.map",
     "runtime~main.js": "/fortunoff-metadash/static/js/runtime~main.0a15b005.js",
     "runtime~main.js.map": "/fortunoff-metadash/static/js/runtime~main.0a15b005.js.map",
     "static/js/2.be847462.chunk.js": "/fortunoff-metadash/static/js/2.be847462.chunk.js",
     "static/js/2.be847462.chunk.js.map": "/fortunoff-metadash/static/js/2.be847462.chunk.js.map",
     "index.html": "/fortunoff-metadash/index.html",
-    "precache-manifest.65ed3f198f066030b53bb67aae9fc08a.js": "/fortunoff-metadash/precache-manifest.65ed3f198f066030b53bb67aae9fc08a.js",
+    "precache-manifest.23d2e95ffb46a409149b672894b7f5f3.js": "/fortunoff-metadash/precache-manifest.23d2e95ffb46a409149b672894b7f5f3.js",
     "service-worker.js": "/fortunoff-metadash/service-worker.js",
-    "static/css/main.e384f6a3.chunk.css.map": "/fortunoff-metadash/static/css/main.e384f6a3.chunk.css.map",
+    "static/css/main.771b7d9e.chunk.css.map": "/fortunoff-metadash/static/css/main.771b7d9e.chunk.css.map",
     "static/media/main.scss": "/fortunoff-metadash/static/media/yalenew-roman-webfont.f2b260ad.woff2"
   }
 }

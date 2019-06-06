@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/fortunoff-metadash/precache-manifest.65ed3f198f066030b53bb67aae9fc08a.js"
+  "/fortunoff-metadash/precache-manifest.23d2e95ffb46a409149b672894b7f5f3.js"
 );
 
 self.addEventListener('message', (event) => {
