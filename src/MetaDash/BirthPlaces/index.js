@@ -213,7 +213,7 @@ export default class extends React.Component {
 
                 <Cluster
                     items={this.cleanClusterData()}
-                    items={this.cleanClusterData()}
+                    // items={this.cleanClusterData()}
                     // allItems={this.props.allBirthPlaces}
                     itemDict={this.props.birthPlaces}
                     selections={this.props.selections}

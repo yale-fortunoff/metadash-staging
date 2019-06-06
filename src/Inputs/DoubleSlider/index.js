@@ -13,11 +13,17 @@ export default class extends D3Component {
         //     range: [{ value: props.min }, { value: props.max }],
         //     labels: [{ value: props.min }, { value: props.max }]
         // }
-        this.setState({
+        this.state ={
+            margin: props.margin || {
+                top:0,
+                left:0,
+                right:0,
+                bottom:0
+            },
             handles: [],
             range: [{ value: props.min }, { value: props.max }],
             labels: [{ value: props.min }, { value: props.max }]
-        })
+        };
 
         this.scale = this.scale.bind(this);
         this.valueToX = this.valueToX.bind(this);
@@ -135,19 +141,20 @@ export default class extends D3Component {
 
         // for really narrow windows, put the label
         // top and center
-        let labelX, labelY, trackX, trackWidth;
-        // if (width < 300) {
-        labelX = el => width / 2 - d3.select(el).node().getBBox().width / 2;
-        // labelY = _ => 0;//yCenter + d3.select(el).node().getBBox().height * 0.25;
-        // labelY = el => yCenter + d3.select(el).node().getBBox().height * 0.25;
-        labelY = el => {
-            this.setMargin({ top: d3.select(el).node().getBBox().height })
-            // this.margin.top = d3.select(el).node().getBBox().height;
-            // yCenter += 4;
-            // this.setState({yCenter});
-            return d3.select(el).node().getBBox().height;
-        }
-        trackX = _ => this.state.margin.left;
+        // let labelX, labelY, 
+        // trackX, trackWidth;
+        // // if (width < 300) {
+        // labelX = el => width / 2 - d3.select(el).node().getBBox().width / 2;
+        // // labelY = _ => 0;//yCenter + d3.select(el).node().getBBox().height * 0.25;
+        // // labelY = el => yCenter + d3.select(el).node().getBBox().height * 0.25;
+        // labelY = el => {
+        //     this.setMargin({ top: d3.select(el).node().getBBox().height })
+        //     // this.margin.top = d3.select(el).node().getBBox().height;
+        //     // yCenter += 4;
+        //     // this.setState({yCenter});
+        //     return d3.select(el).node().getBBox().height;
+        // }
+        let trackX = _ => this.state.margin.left,
         trackWidth = _ => width - this.state.margin.left - this.state.margin.right;
 
         // } else {

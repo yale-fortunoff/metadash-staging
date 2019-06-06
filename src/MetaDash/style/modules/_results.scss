@@ -8,7 +8,7 @@
     display: flex;
     padding-left: 21px;
     color: $color-reallylightgray;
-    font-weight: 600px;
+    font-weight: 600;
     margin-bottom: 16px;
   }
   a {
@@ -33,6 +33,7 @@
     margin-bottom: 16px;
     border-radius: 8px;
     color: $color-textgray;
+    font-weight: 600;
 
     // remove padding on hover, to compensate
     // for hover-border and avoid jitter on hover
@@ -43,6 +44,7 @@
 
     .testimony-name {
       font-size: 21px;
+      // font-weight: 600;
       padding-left: 21px;
     }
 

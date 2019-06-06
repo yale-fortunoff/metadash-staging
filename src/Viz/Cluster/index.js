@@ -39,7 +39,7 @@ export default class extends D3Component {
                 this.props.height || svg.node().getBoundingClientRect().height
             );
 
-        
+
 
         const items = this.props.items;
         // change this to props.allItems if you want to preserve each node's circle element
@@ -65,10 +65,10 @@ export default class extends D3Component {
             // objectToArray(this.props.itemDict)
 
             // this seems to be working just as well without the two loops
-            (prevProps||{items:[]}).items,
+            (prevProps || { items: [] }).items,
             this.props.items
-            )){
-                // console.log("redraw prevented")
+        )) {
+            // console.log("redraw prevented")
 
             // objectToArray(this.props.itemDict))) {
             return
@@ -90,16 +90,16 @@ export default class extends D3Component {
             .filter(d => d.data.label.indexOf("root") < 0)
 
         packLayout(root);
-        svg.selectAll("circle.city").transition();
+        svg.selectAll("circle.city")//.transition();
 
-        const t = d3.transition().duration(1100);
+        // const t = d3.transition().duration(1100);
         this.allowInteraction = data.length;
 
         // let nodes = 
 
-        function realChange(newRadius, oldRadius) {
-            return (newRadius > 0) && (oldRadius > 0);
-        };
+        // function realChange(newRadius, oldRadius) {
+        //     return (newRadius > 0) && (oldRadius > 0);
+        // };
 
         const r = d => d.r || 0;
         const x = d => d.x || 0;
@@ -128,17 +128,41 @@ export default class extends D3Component {
                     .attr('r', r),
                 update => update
                     .attr("data-city", d => d.data.label)
-                    .call(update => {
-                        update
-                            .transition(function (d) {
-                                // only transition if 
-                                if (r(d) <= 0) { return null }
-                                return realChange(r(d), d3.select(this).attr("r") || 0) ? t : null
-                            })
+                    .each(function (d, i) {
+
+                        let handle = d3.select(this).style("opacity","0.5");
+                        const newRadius = r(d);
+                        const currentRadius = d3.select(this).attr("r") || 0;
+
+                        if (newRadius > 0 && currentRadius > 0 && currentRadius !== newRadius ) {
+                            // console.log("Animating")
+                            handle = handle.transition().duration( 1000 * Math.random());
+                        } else {
+                            //console.log("Skipping animation")
+                        }
+
+                        handle
+                        .style("opacity","1")
                             .attr('cx', x)
                             .attr('cy', y)
                             .attr('r', r);
+
                     }),
+                // .call(update => {
+                //     update
+                //     .transition(t)
+                //         .transition(function (d) {
+                //             console.log("Should I transition?",d)
+                //             // only transition if 
+                //             if (r(d) <= 0) { return null }
+                //             return realChange(r(d), d3.select(this).attr("r") || 0) ? t: null
+                //         })
+                //         .attr('cx', x)
+                //         .attr('cy', y)
+                //         .attr('r', r);
+
+
+                // }),
                 exit => exit.remove()
                 // exit=>exit
                 // .call(exit=>
@@ -152,4 +176,9 @@ export default class extends D3Component {
 
     }
 
+
+    newMethod(handle, t) {
+        handle = handle.transition(t);
+        return handle;
+    }
 }
