@@ -7,7 +7,7 @@ const { getGender } = require("./getGender");
  *       without any parameters
  *         
  */
-const __all = require("./json/index.4.min.json");
+const __all = require("./json/index.5.min.json");
 const all = () => __all;
 
 let filters = {};
