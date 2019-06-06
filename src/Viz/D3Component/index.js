@@ -9,9 +9,16 @@ export default class extends React.PureComponent {
         this.initializeChart = this.initializeChart.bind(this);
         this.updateChart = this.updateChart.bind(this);
         this.redrawChart = this.redrawChart.bind(this);
+        this.setMargin = this.setMargin.bind(this);
 
         this.state = {
-            currentWidth: -1
+            currentWidth: -1,
+            margin: props.margin || {
+                top:0,
+                left:0,
+                right:0,
+                bottom:0
+            }
         }
 
         this.margin = props.margin || {
@@ -20,6 +27,13 @@ export default class extends React.PureComponent {
             right:0,
             bottom:0
         }
+
+    }
+
+    setMargin(newMargin){
+        const margin = {...this.state.margin, ...newMargin};
+        this.setState({ margin });
+
     }
 
     componentDidUpdate() { 

@@ -15,7 +15,7 @@ export default class extends React.Component {
     render() {
         return (
             <div onClick={this.handleClick} className="SelectionPoolItem">
-                <div>{this.props.item.label}</div> <div className="button">x</div>
+                <div>{this.props.item.label}</div> <div className="button"></div>
             </div>
         )
     }

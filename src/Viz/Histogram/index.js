@@ -47,12 +47,13 @@ export default class extends D3Component {
         const yearRange = [this.props.minYear, this.props.maxYear]
         const countRange = [0, d3.max(data.map(x => x.count)) || 1]
 
-        const margin = this.props.margin || {
-            bottom: 30,
-            top: 20,
-            left: 20,
-            right: 20
-        }
+        // const margin = this.props.margin || {
+        //     bottom: 30,
+        //     top: 20,
+        //     left: 20,
+        //     right: 20
+        // }
+        const margin = this.state.margin;
 
         // add axes
         const xScale = d3.scaleBand()

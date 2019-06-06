@@ -104,7 +104,6 @@ filters.getResources = options => {
                 if (place.city){
                     // if there's a city, limit by that as well
                     if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
-
                 }
 
             }

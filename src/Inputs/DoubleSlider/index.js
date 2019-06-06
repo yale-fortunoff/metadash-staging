@@ -8,11 +8,16 @@ export default class extends D3Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        // this.state = {
+        //     handles: [],
+        //     range: [{ value: props.min }, { value: props.max }],
+        //     labels: [{ value: props.min }, { value: props.max }]
+        // }
+        this.setState({
             handles: [],
             range: [{ value: props.min }, { value: props.max }],
             labels: [{ value: props.min }, { value: props.max }]
-        }
+        })
 
         this.scale = this.scale.bind(this);
         this.valueToX = this.valueToX.bind(this);
@@ -31,7 +36,9 @@ export default class extends D3Component {
     scale() {
         return d3.scaleLinear()
             .domain([this.props.min, this.props.max])
-            .range([this.margin.left, this.width - this.margin.right]);
+            // .range([this.margin.left, this.width - this.margin.right]);
+            .range([this.state.margin.left, this.width - this.state.margin.right]);
+
     }
 
     valueToX(val) {
@@ -115,31 +122,63 @@ export default class extends D3Component {
             height = bbox.height,
             handleHeight = this.props.handleHeight || 17.151,
             handleWidth = this.props.handleWidth || 13,
-            trackHeight = this.props.trackHeight || 6,
-            yCenter = this.margin.top + (height - this.margin.bottom) / 2;
+            trackHeight = this.props.trackHeight || 6;
+
+        let yCenter = this.state.margin.top + (height - this.state.margin.bottom) / 2;
 
         this.width = width;
         this.height = height;
         this.handleWidth = handleWidth;
-        this.yCenter = yCenter;
+        // this.yCenter = yCenter;
+        this.setState({ yCenter })
         this.handleHeight = handleHeight;
-        this.margin.left = 140;
 
+        // for really narrow windows, put the label
+        // top and center
+        let labelX, labelY, trackX, trackWidth;
+        // if (width < 300) {
+        labelX = el => width / 2 - d3.select(el).node().getBBox().width / 2;
+        // labelY = _ => 0;//yCenter + d3.select(el).node().getBBox().height * 0.25;
+        // labelY = el => yCenter + d3.select(el).node().getBBox().height * 0.25;
+        labelY = el => {
+            this.setMargin({ top: d3.select(el).node().getBBox().height })
+            // this.margin.top = d3.select(el).node().getBBox().height;
+            // yCenter += 4;
+            // this.setState({yCenter});
+            return d3.select(el).node().getBBox().height;
+        }
+        trackX = _ => this.state.margin.left;
+        trackWidth = _ => width - this.state.margin.left - this.state.margin.right;
+
+        // } else {
+        //     this.setMargin({ left: 140 });
+        //     // this.margin.left = 140;
+        //     labelX = el => 145 + 10 - d3.select(el).node().getBBox().width - 2 * handleWidth
+        //     labelY = el => yCenter + d3.select(el).node().getBBox().height * 0.25;
+        //     trackX = _ => this.state.margin.left;
+        //     trackWidth = _ => width - this.state.margin.left - this.state.margin.right;
+
+
+        // }
 
         svg.attr("height", height + "px");
 
-        // add label and position it
-        svg.append("text")
-            .classed("track-label", true)
-            .text(this.props.label || "Double Slider")
-            .attr("x", function () { return 150 - d3.select(this).node().getBBox().width - 2 * handleWidth })
-            .attr("y", function () { return yCenter + d3.select(this).node().getBBox().height * 0.25 })
-
+        // // add label and position it
+        // svg.append("text")
+        //     .classed("track-label", true)
+        //     .text(this.props.label || "Double Slider")
+        //     .attr("x", function () { return labelX(this) })
+        //     .attr("y", function () { return labelY(this) });
+        // // .attr("x", function () { return (lpad + 10) - d3.select(this).node().getBBox().width - 2 * handleWidth })
+        // // .attr("y", function () { return yCenter + d3.select(this).node().getBBox().height * 0.25 })
 
         svg.append("rect")
             .classed("track", true)
-            .attr("x", this.margin.left)
-            .attr("width", width - this.margin.left - this.margin.right)
+            .attr("x", function () { return trackX(this) })
+            .attr("width", function () { return trackWidth(this) })
+
+            // .attr("x", this.state.margin.left)
+            // .attr("width", width - this.state.margin.left - this.state.margin.right)
             .attr("y", yCenter - trackHeight / 2)
             .attr("height", trackHeight);
 
@@ -387,7 +426,7 @@ export default class extends D3Component {
         handleLayer.selectAll(".handle")
             .data(arr.map(x => { return { value: x } }))
             .attr("x", x => this.valueToX(x.value))
-            .attr("transform", x => `translate(${this.valueToX(x.value)},${this.yCenter - this.handleHeight / 2})`);
+            .attr("transform", x => `translate(${this.valueToX(x.value)},${this.state.yCenter - this.handleHeight / 2})`);
 
     }
 
@@ -429,7 +468,10 @@ export default class extends D3Component {
     render() {
         return (
             <div className="DoubleSlider">
-                {D3Component.prototype.render.call(this)}
+                <div className="track-label">{this.props.label}</div>
+                <div className="track-wrapper">
+                    {D3Component.prototype.render.call(this)}
+                </div>
                 {/* <div className="label-container">
                     <div className="label min">{this.state.labels[0].value}</div>
                     <div className="label max">{this.state.labels[1].value}</div>

@@ -1,4 +1,5 @@
 
+  @import url("https://use.typekit.net/wjj5bcz.css");
 
 // @font-face {
 //   font-family: "YaleNew";
@@ -78,7 +79,9 @@
 }
 
 $font-serif: "yalenewroman";
-$font-sans: "Proxima";
+// $font-sans: "Proxima";
+$font-sans: proxima-nova, sans-serif, arial;
+
 
 // $font-serif: "Georgia";
 // $font-sans: "Arial";
