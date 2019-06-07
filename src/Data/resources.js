@@ -7,7 +7,7 @@ const { getGender } = require("./getGender");
  *       without any parameters
  *         
  */
-const __all = require("./json/index.5.min.json");
+const __all = require("./json/index.6.min.json");
 const all = () => __all;
 
 let filters = {};
@@ -92,6 +92,7 @@ filters.getResources = options => {
         }
 
         if ((options.birthplaces || []).length > 0) {
+            
             let place = options.birthplaces[0];
 
             for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
