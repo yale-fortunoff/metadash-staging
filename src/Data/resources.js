@@ -37,8 +37,44 @@ filters.resourceContainsOnlyPrograms = programs => {
     }
 }
 
+// TODO - eventually, I should just make all of the filters into factories 
+//        like this one, so the function is declared once per query 
+let filterBirthPlacesFactory = options => {
+ 
+    if (!options 
+        || !options.birthplaces
+        || (options.birthplaces || []).length < 1){ 
+            return () => true 
+        }
+
+    return r => {
+        let place = options.birthplaces[0];
+
+        // these two should always match
+        if ((r.birth_place_cities || []).length !== (r.birth_place_countries || []).length) { return false }
+
+        for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
+    
+            let city = r.birth_place_cities[j],
+                country = r.birth_place_countries[j];
+            
+            if (normalizeString(country) !== normalizeString(place.country)) return false;
+
+            if (place.city){
+                // if there's a city, limit by that as well
+                if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+}
+
 filters.getResources = options => {
 
+    let filterBirthPlaces = filterBirthPlacesFactory(options)
     // just skip the iteration if no args are passed
     if (!options) { return all; }
 
@@ -91,24 +127,26 @@ filters.getResources = options => {
             // console.log("Skipping birth year filter")
         }
 
-        if ((options.birthplaces || []).length > 0) {
+        if (! filterBirthPlaces(r)){ return false}
+        // if ((options.birthplaces || []).length > 0) {
             
-            let place = options.birthplaces[0];
+        //     let place = options.birthplaces[0];
 
-            for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
+        //     for (let j = 0; j < (r.birth_place_cities || []).length; j++) {
 
-                if ((r.birth_place_cities || []).length !== (r.birth_place_countries || []).length) { return false }
-                let city = r.birth_place_cities[j],
-                    country = r.birth_place_countries[j];
+        //         if ((r.birth_place_cities || []).length !== (r.birth_place_countries || []).length) { return false }
+        //         let city = r.birth_place_cities[j],
+        //             country = r.birth_place_countries[j];
+        //         if (normalizeString(country) !== normalizeString(place.country)) return false;
+        //         if (place.city){
+        //             // if there's a city, limit by that as well
+        //             if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
+        //         }
+        //         console.log("match", place, city, country)
 
-                if (normalizeString(country) !== normalizeString(place.country)) return false;
-                if (place.city){
-                    // if there's a city, limit by that as well
-                    if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
-                }
 
-            }
-        }
+        //     }
+        // }
 
         // TODO - filter by affiliate program
         // if (!filters.resourceContainsAllPrograms(options.programs || [])(r)) { return false }
