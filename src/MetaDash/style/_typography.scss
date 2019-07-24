@@ -25,7 +25,8 @@
 @mixin typography-module-box-title {
   font-size: 24px;
   font-weight: normal;
-  line-height: 84px;
+  line-height: 24px;
+  margin-bottom: 18px;
 }
 
 @mixin typography-gender {

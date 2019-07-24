@@ -31,7 +31,7 @@ export default class extends React.Component {
         const itemProps = {
             ...this.props,
             margin: {
-                top: 20,
+                top: 0,
                 left: 30,
                 right: 10,
                 bottom: 20

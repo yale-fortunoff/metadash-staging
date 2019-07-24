@@ -13,17 +13,25 @@
   
   grid-gap: 16px;
 
-  grid-template-rows: 20px repeat(5, 200px);
+  grid-template-rows: 20px 180px 90px repeat(6, 80px);
 
-  grid-template-columns: minmax(280px, 280px) repeat(2, 2fr) 300px;
+  grid-template-columns: minmax(280px, 280px) repeat(3, 1fr) 280px;
 
   grid-template-areas:
-    "textmenu   textmenu    textmenu textmenu"
-    "gender     birthyear   birthyear interviewers"
-    "languages  birthyear   birthyear interviewers "
-    "languages  birthplaces programs  interviewers"
-    "languages  birthplaces programs  interviewers"
-    "languages  birthplaces programs  interviewers";
+    // -- 1x20px
+    "textmenu   textmenu    textmenu    textmenu textmenu"
+    // -- 1x180px
+    "gender     birthyear   birthyear   birthyear interviewers"
+    // -- 1x90px
+    "languages  birthyear   birthyear   birthyear interviewers"
+    // --- 8x90px
+    "languages  birthplaces birthplaces  programs  programs"
+    "languages  birthplaces birthplaces  programs  programs"
+    "languages  birthplaces birthplaces  programs  programs"
+    "languages  birthplaces birthplaces  programs  programs"
+    "languages  birthplaces birthplaces  programs  programs"
+    //"languages  birthplaces birthplaces  programs  programs"
+    "languages  birthplaces birthplaces  programs  programs";
   .text-menu {
     grid-area: textmenu;//-start / textmenu-start / textmenu-end / textmenu-end;
   }
@@ -55,22 +63,24 @@
   }
 }
 
-@media only screen and (min-width: 900px) and (max-width: 1400px) {
+@media only screen and (min-width: 900px) and (max-width: 1200px) {
   .module-area {
     display: grid;
 
-    grid-template-rows: 1em repeat(8, 200px);
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1em 270px repeat(5, 180px);
+    grid-template-columns: repeat(6, fr);
     grid-template-areas:    
-      "textmenu     textmenu"
-      "birthyear    birthyear"
-      "birthyear    birthyear"
-      "birthplaces  programs"
-      "birthplaces  programs"
-      "birthplaces  programs"
-      "gender       interviewers"
-      "languages    interviewers"
-      "languages    interviewers";
+      "textmenu     textmenu     textmenu textmenu     textmenu     textmenu"
+      "gender    birthyear    birthyear  birthyear    birthyear    birthyear"
+      // "birthyear    birthyear"
+      "birthplaces  birthplaces  birthplaces  programs  programs  programs"
+      "birthplaces  birthplaces  birthplaces  programs  programs  programs"
+      "birthplaces  birthplaces  birthplaces  programs  programs  programs"
+      // "gender       gender       gender       gender"
+      "languages    languages    interviewers interviewers interviewers interviewersx"
+      //"languages    languages    interviewers interviewers interviewers interviewersx"
+      //"languages    languages    interviewers interviewers interviewers interviewersx"
+      "languages    languages    interviewers interviewers interviewers interviewersx";
   }
 
 }
@@ -78,12 +88,14 @@
 @media only screen and (min-width: 600px) and (max-width: 899px) {
   .module-area {
     display: grid;
+    margin-right: 30px;
+    margin-left: 30px;
 
-    grid-template-rows: 1em repeat(12, 200px);
+
+    grid-template-rows: 1em 300px repeat(10, 180px);
     grid-template-columns: 1fr 1fr;
     grid-template-areas:    
       "textmenu     textmenu"
-      "birthyear    birthyear"
       "birthyear    birthyear"
       "birthplaces  birthplaces"
       "birthplaces  birthplaces"
@@ -103,16 +115,15 @@
 @media only screen and (max-width: 599px) {
   .module-area {
     display: grid;
-    margin-right: 8px;
-    margin-left: 8px;
+    margin-right: 30px;
+    margin-left: 30px;
 
-    grid-template-rows: 1em repeat(15, 200px);
+    grid-template-rows: 1em 320px repeat(13, 180px);
     grid-template-columns: 1fr;
     // // grid-template-rows: repeat(6,minmax(1fr, 300px));
     // grid-template-columns: minmax(200px, 1fr) repeat(2, 2fr) 300px;
     grid-template-areas:    //"overview  overview  overview  overview"
       "textmenu"
-      "birthyear"
       "birthyear"
       "birthplaces"
       "birthplaces"

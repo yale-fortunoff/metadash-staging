@@ -39,6 +39,7 @@ export default class extends D3Component {
                 this.props.height || svg.node().getBoundingClientRect().height
             );
 
+        svg.attr("height", height + "px");
 
 
         const items = this.props.items;

@@ -57,13 +57,15 @@ let filterBirthPlacesFactory = options => {
     
             let city = r.birth_place_cities[j],
                 country = r.birth_place_countries[j];
-            
+            //if (!city || !country ){ return false}
             if (normalizeString(country) !== normalizeString(place.country)) return false;
 
             if (place.city){
                 // if there's a city, limit by that as well
                 if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
-            }
+            } //else { return false }
+
+            console.log("match", city, country, r.birth_place_cities, place)
             return true;
         }
 
@@ -88,7 +90,7 @@ filters.getResources = options => {
     //     return true;
 
     // }
-
+    
     return r => {
 
         // filter by selected subject

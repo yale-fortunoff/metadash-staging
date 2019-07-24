@@ -77,7 +77,7 @@ export default class extends React.Component {
         let clusterData = objectToArray(this.props.allBirthPlaces)
             .filter(
                 // only keep places with a city and country, in theory
-                place => place.label.split("|").filter(x => x.length > 0).length === 2
+                place => place.label.split("|").filter(x => x && x.length > 0).length === 2
             )
             .map(item => {
                 let ret = { ...item };
