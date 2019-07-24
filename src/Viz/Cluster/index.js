@@ -88,7 +88,11 @@ export default class extends D3Component {
         root.sum(d => Number(d.count ? d.count : 0));
 
         const data = root.descendants()
-            .filter(d => d.data.label.indexOf("root") < 0)
+            // .filter(d => d.data.label.indexOf("root") < 0)
+            .filter(d => d.data.label.indexOf("|country") < 0)
+            .filter(d => d.data.label.indexOf("country|") < 0)
+
+
 
         packLayout(root);
         svg.selectAll("circle.city")//.transition();
@@ -112,7 +116,9 @@ export default class extends D3Component {
             .join(
                 enter => enter
                     .append('circle')
-                    .classed("city", true)
+                    // .classed("city", true)
+                    .classed("city", d => d.data.label.indexOf("|country") < 0)
+                    .classed("country", d => d.data.label.indexOf("|country") >= 0)
                     .on("mouseover", d => this.props.onMouseOver(d.data))
                     .on("mouseout", d => this.props.onMouseOut(d.data))
                     .on("click", d => {

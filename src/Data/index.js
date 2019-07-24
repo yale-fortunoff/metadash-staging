@@ -87,6 +87,7 @@ function getData(options) {
         r.birthPlaces.forEach(place => {
             const city = place.split("|")[0],
                 country = place.split("|")[1];
+
             incr("birthPlaces", {
                 label: place,
                 id: place,

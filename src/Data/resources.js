@@ -61,11 +61,11 @@ let filterBirthPlacesFactory = options => {
             if (normalizeString(country) !== normalizeString(place.country)) return false;
 
             if (place.city){
+                //console.log("There's a city to filter", place)
                 // if there's a city, limit by that as well
                 if (normalizeString(city) !== normalizeString(place.city.split(",")[0])) return false;
-            } //else { return false }
+            } //else { console.log("there's no city required", city, country, place.city, place.country, place) }
 
-            console.log("match", city, country, r.birth_place_cities, place)
             return true;
         }
 

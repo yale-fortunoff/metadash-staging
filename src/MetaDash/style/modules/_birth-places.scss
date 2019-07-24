@@ -13,11 +13,14 @@
 
   svg {
     height: 400px;
-    circle {
+    circle.country{
+      fill: white;
+    }
+    circle.city {
       fill: $color-haas;
       cursor: pointer;
     }
-    circle:hover {
+    circle.city:hover {
       fill: $color-teal;
     }
   }

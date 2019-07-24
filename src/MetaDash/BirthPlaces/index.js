@@ -46,7 +46,7 @@ export default class extends React.Component {
         let city = item.label.split("|")[0].split(",")[0], 
         country = item.country;
 
-        
+        if(city === country){ return country}
         if (city && country){ return city + ", " + country}
         else if (city){ return city}
         else if (country){ return country}
@@ -106,12 +106,12 @@ export default class extends React.Component {
             const country = element.label.split("|")[1];
             if (addedCountries.indexOf(country) >= 0) { return }
             addedCountries.push(country);
-            const label = `${country}|root`,
-                newItem = { label, id: label };
+            const label = `${country}|country`, // changed from "root" to "country"
+                newItem = { label, id: label, country };
             clusterData.push(newItem)
         });
 
-        clusterData.push({ label: "root|", id: "root|" })
+        clusterData.push({ label: "country|", id: "country|" })
 
         // this.setState({ cleanClusterData: clusterData });
         return clusterData;
@@ -125,7 +125,10 @@ export default class extends React.Component {
 
     getSuggestions = value => {
         const all = this.cleanClusterData();
-        return all.filter(x => normalizeString(x.label).indexOf(normalizeString(value)) >= 0)
+        return all.filter(x => normalizeString(x.label).indexOf(normalizeString(value.replace(":","|"))) >= 0)
+        // filter out roots
+            .filter(x => x.label.indexOf("|root") < 0)
+            .filter(x => x.label.indexOf("root|") < 0)
         // return [{label: value + " and a hot plate!"}]
     }
 
@@ -144,6 +147,7 @@ export default class extends React.Component {
 
     onSuggestionsClearRequested = () => {
         this.setState({
+            searchTerm: "",
             suggestions: []
         });
     };
