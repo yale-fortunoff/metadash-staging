@@ -31,7 +31,7 @@ export default class extends React.Component {
 
         // if ((endPct * 100) > 99){
         if ((totalHeight - scrollBottom) <= 80){
-            console.log("height", scrollBottom, totalHeight)
+            // console.log("height", scrollBottom, totalHeight)
 
             const itemCount = this.state.itemCount + this.state.increment;
             this.setState({itemCount});
