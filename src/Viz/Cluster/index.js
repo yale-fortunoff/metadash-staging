@@ -116,9 +116,10 @@ export default class extends D3Component {
             .join(
                 enter => enter
                     .append('circle')
-                    // .classed("city", true)
-                    .classed("city", d => d.data.label.indexOf("|country") < 0)
-                    .classed("country", d => d.data.label.indexOf("|country") >= 0)
+                    // .classed("city", d => d.data.label.indexOf("|country") < 0)
+                    // .classed("country", d => d.data.label.indexOf(",") === 0)
+        
+                    .classed("city", true)
                     .on("mouseover", d => this.props.onMouseOver(d.data))
                     .on("mouseout", d => this.props.onMouseOut(d.data))
                     .on("click", d => {
@@ -137,19 +138,19 @@ export default class extends D3Component {
                     .attr("data-city", d => d.data.label)
                     .each(function (d, i) {
 
-                        let handle = d3.select(this).style("opacity","0.5");
+                        let handle = d3.select(this).style("opacity", "0.5");
                         const newRadius = r(d);
                         const currentRadius = d3.select(this).attr("r") || 0;
 
-                        if (newRadius > 0 && currentRadius > 0 && currentRadius !== newRadius ) {
+                        if (newRadius > 0 && currentRadius > 0 && currentRadius !== newRadius) {
                             // console.log("Animating")
-                            handle = handle.transition().duration( 1000 * Math.random());
+                            handle = handle.transition().duration(1000 * Math.random());
                         } else {
                             //console.log("Skipping animation")
                         }
 
                         handle
-                        .style("opacity","1")
+                            .style("opacity", "1")
                             .attr('cx', x)
                             .attr('cy', y)
                             .attr('r', r);
