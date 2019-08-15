@@ -8,7 +8,7 @@ export default class extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             limit: 1,
             increment: 1
@@ -29,23 +29,35 @@ export default class extends React.Component {
     renderResult(result, i) {
 
         return (
-            <a 
-            target="_blank" 
-            rel="noopener noreferrer"
-            href={result.link} 
-            key={i}>
-                <div 
-                className="result-item">
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={result.link}
+                key={i}>
+                <div
+                    className={`result-item ${result.birth_years.length > 1 ? "multiple" : null}`}>
                     <div className="testimony-name">
                         {result.title}
                     </div>
 
                     <div className="birth-year">
-                        {result.birth_years.map(yr => (<li className="sub-item" key={i}>{yr}</li>))}
-                        {/* </div>
+                        {
+                            result.birth_years
+                            .filter(yr => yr)
+                            .map(yr => (<li className="sub-item" key={i}>{yr}</li>))
+                            .concat(result.birth_place_cities
+                                .filter((_, i)=> result.birth_place_cities[i] ||  result.birth_place_countries[i])
+                                .map((city, i) => (
+                                    <li className="sub-item" key={i}>
+                                        {city}{city && result.birth_place_countries[i] ? ", " : ""}{result.birth_place_countries[i]}
+                                    </li>
+                                    )
+                                )
 
-                    <div className="birth-place"> */}
-                        {result.birth_place_cities.map((city, i) => (<li className="sub-item" key={i}>{city}{city && result.birth_place_countries[i] ? ", " : ""}{result.birth_place_countries[i]}</li>))}
+                            )
+                            .slice(-2) // don't show more than two items
+
+                        }
 
                     </div>
                     <div className="affiliate">
