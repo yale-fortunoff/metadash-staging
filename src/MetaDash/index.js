@@ -124,7 +124,6 @@ export default class extends React.Component {
                             className="item"
                             onClick={this.clearFilters}
                         >Clear filters</div>
-                        <div className="item">Documentation</div>
                     </div>
 
                     <Gender
