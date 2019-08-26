@@ -14,6 +14,7 @@ import Interviewers from "./Interviewers";
 import BirthPlaces from "./BirthPlaces";
 import Results from "./Results";
 import { objectToArray, arrayToObject } from "./Common";
+import pym from "pym.js";
 
 import "./style/main.scss";
 
@@ -53,6 +54,8 @@ export default class extends React.Component {
         this.setFilters = this.setFilters.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
         this.updateFilterFactory = this.updateFilterFactory.bind(this);
+        this.pymChild = new pym.Child({ polling: 250});
+
     }
 
     setFilters(filters) {
@@ -228,6 +231,7 @@ export default class extends React.Component {
 
                 <section className="results-section">
                     <Results
+                        pymChild={this.pymChild}
                         programs={this.state.summaryData.programs}
                         results={this.state.resources}
                     ></Results>

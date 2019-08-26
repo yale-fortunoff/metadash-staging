@@ -18,7 +18,14 @@ export default class extends React.Component {
         this.renderResult = this.renderResult.bind(this);
         this.trackScrolling = this.trackScrolling.bind(this);
         // this.maybeLoadMore = this.maybeLoadMore.bind(this);
-        this.resultsRef = React.createRef()
+        this.resultsRef = React.createRef();
+
+        this.decideToIncrement = this.decideToIncrement.bind(this);
+        
+        if(this.props.pymChild){
+            this.handlePymScroll = this.handlePymScroll.bind(this);
+            this.props.pymChild.onMessage('viewport-iframe-position', this.handlePymScroll);
+        }
     }
 
     // maybeLoadMore(el){
@@ -44,11 +51,11 @@ export default class extends React.Component {
                         {
                             result.birth_years
                             .filter(yr => yr)
-                            .map(yr => (<li className="sub-item" key={i}>{yr}</li>))
+                            .map(yr => (<li className="sub-item" key={`by-${i}`}>{yr}</li>))
                             .concat(result.birth_place_cities
                                 .filter((_, i)=> result.birth_place_cities[i] ||  result.birth_place_countries[i])
                                 .map((city, i) => (
-                                    <li className="sub-item" key={i}>
+                                    <li className="sub-item" key={`bp-${i}`}>
                                         {city}{city && result.birth_place_countries[i] ? ", " : ""}{result.birth_place_countries[i]}
                                     </li>
                                     )
@@ -75,14 +82,42 @@ export default class extends React.Component {
         )
     }
 
-    trackScrolling() {
-        const scrollBottom = window.pageYOffset + window.innerHeight;
-        const distanceFromBottom = window.document.body.offsetHeight - scrollBottom;
+    handlePymScroll(parentInfo){
+        this.props.pymChild.sendMessage(
+            "console-log", 
+            parentInfo.split(" ").map(x=>Number(x))
+        );
+        // parentInfo contains in order
+        // Viewport width and height.
+        // Iframe top, left, bottom and right positions.
 
+        const arr = parentInfo.split(" ").map(x=>Number(x)),
+        vheight = arr[1],
+        ibottom = arr[4],
+        distanceFromBottom = ibottom - vheight;
+
+        this.decideToIncrement(distanceFromBottom);
+    }
+
+    decideToIncrement(distanceFromBottom){
+        this.props.pymChild.sendMessage("console-log", distanceFromBottom);
         if (this.props.results.length > this.state.limit
             && distanceFromBottom < 100) {
             this.setState({ limit: this.state.limit + this.state.increment })
         }
+
+    }
+
+    trackScrolling() {
+        const scrollBottom = window.pageYOffset + window.innerHeight;
+        const distanceFromBottom = window.document.body.offsetHeight - scrollBottom;
+
+        this.decideToIncrement(distanceFromBottom);
+
+        // if (this.props.results.length > this.state.limit
+        //     && distanceFromBottom < 100) {
+        //     this.setState({ limit: this.state.limit + this.state.increment })
+        // }
     }
 
     componentDidMount() {
