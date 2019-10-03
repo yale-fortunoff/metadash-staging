@@ -54,7 +54,7 @@ export default class extends React.Component {
         this.setFilters = this.setFilters.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
         this.updateFilterFactory = this.updateFilterFactory.bind(this);
-        this.pymChild = new pym.Child({ polling: 250});
+        this.pymChild = new pym.Child({ polling: 50});
 
     }
 
