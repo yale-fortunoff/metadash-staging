@@ -1,10 +1,10 @@
 import React from 'react';
 // import CheckboxInput from "../CheckboxInput";
-import GenericInput from "../GenericInput";
+// import GenericInput from "../GenericInput";
 
 import Autosuggest from 'react-autosuggest';
 
-export default class extends GenericInput {
+export default class extends React.Component {
 
     constructor(props) {
         super(props)

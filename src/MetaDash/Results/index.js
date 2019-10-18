@@ -2,7 +2,8 @@ import React from 'react';
 import "./style/main.scss";
 import numeral from "numeral";
 import { getRecordingYear } from "../../Data";
-
+// import {ResultList} from "@bit/jakekara.metadash.fortunoff-app"
+import { ResultList } from "../../FortunoffApp";
 
 export default class extends React.Component {
 
@@ -21,11 +22,11 @@ export default class extends React.Component {
         this.resultsRef = React.createRef();
 
         this.decideToIncrement = this.decideToIncrement.bind(this);
-        
-        if(this.props.pymChild){
-            this.handlePymScroll = this.handlePymScroll.bind(this);
-            this.props.pymChild.onMessage('viewport-iframe-position', this.handlePymScroll);
-        }
+
+        // if (this.props.pymChild) {
+        //     this.handlePymScroll = this.handlePymScroll.bind(this);
+        //     this.props.pymChild.onMessage('viewport-iframe-position', this.handlePymScroll);
+        // }
     }
 
     // maybeLoadMore(el){
@@ -35,72 +36,83 @@ export default class extends React.Component {
 
     renderResult(result, i) {
 
-        return (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={result.link}
-                key={i}>
-                <div
-                    className={`result-item ${result.birth_years.length > 1 ? "multiple" : null}`}>
-                    <div className="testimony-name">
-                        {result.title}
-                    </div>
+        // return class extends React.component {
 
-                    <div className="birth-year">
-                        {
-                            result.birth_years
-                            .filter(yr => yr)
-                            .map(yr => (<li className="sub-item" key={`by-${i}`}>{yr}</li>))
-                            .concat(result.birth_place_cities
-                                .filter((_, i)=> result.birth_place_cities[i] ||  result.birth_place_countries[i])
-                                .map((city, i) => (
-                                    <li className="sub-item" key={`bp-${i}`}>
-                                        {city}{city && result.birth_place_countries[i] ? ", " : ""}{result.birth_place_countries[i]}
-                                    </li>
-                                    )
-                                )
+        //     render() {
 
-                            )
-                            .slice(-2) // don't show more than two items
 
-                        }
+                return (
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={result.link}
+                        key={i}>
+                        <div className="result-item-container">
+                            <div
+                                className={`result-item ${result.birth_years.length > 1 ? "multiple" : ""}`}>
+                                <div className="testimony-name">
+                                    {result.title}
+                                </div>
 
-                    </div>
-                    <div className="affiliate">
-                        {result.programs.map((ref, i) => (<li className="sub-item" key={i}>{this.props.programs[ref].label}</li>))}
-                    </div>
-                    <div className="recording-year">
-                        {getRecordingYear(result)}
-                    </div>
+                                <div className="birth-year">
+                                    {
+                                        result.birth_years
+                                            .filter(yr => yr)
+                                            .map(yr => (<li className="sub-item" key={`by-${i}`}>{yr}</li>))
+                                            .concat(result.birth_place_cities
+                                                .filter((_, i) => result.birth_place_cities[i] || result.birth_place_countries[i])
+                                                .map((city, i) => (
+                                                    <li className="sub-item" key={`bp-${i}`}>
+                                                        {city}{city && result.birth_place_countries[i] ? ", " : ""}{result.birth_place_countries[i]}
+                                                    </li>
+                                                )
+                                                )
 
-                    <div className="big-button-container">
-                        <div className="big-button">View</div>
-                    </div>
-                </div>
-            </a>
-        )
+                                            )
+                                            .slice(-2) // don't show more than two items
+
+                                    }
+
+                                </div>
+                                <div className="affiliate">
+                                    {result.programs.map((ref, i) => (<li className="sub-item" key={i}>{this.props.programs[ref].label}</li>))}
+                                </div>
+                                <div className="recording-year">
+                                    {getRecordingYear(result)}
+                                </div>
+
+                                <div className="big-button-container">
+                                    <div className="big-button">View</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                )
+
+        //     }
+        // }
     }
 
-    handlePymScroll(parentInfo){
-        this.props.pymChild.sendMessage(
-            "console-log", 
-            parentInfo.split(" ").map(x=>Number(x))
-        );
+    handlePymScroll(parentInfo) {
+        // this.props.pymChild.sendMessage(
+        //     "console-log",
+        //     parentInfo.split(" ").map(x => Number(x))
+        // );
         // parentInfo contains in order
         // Viewport width and height.
         // Iframe top, left, bottom and right positions.
 
-        const arr = parentInfo.split(" ").map(x=>Number(x)),
-        vheight = arr[1],
-        ibottom = arr[4],
-        distanceFromBottom = ibottom - vheight;
+        const arr = parentInfo.split(" ").map(x => Number(x)),
+            vheight = arr[1],
+            ibottom = arr[4],
+            distanceFromBottom = ibottom - vheight;
 
         this.decideToIncrement(distanceFromBottom);
     }
 
-    decideToIncrement(distanceFromBottom){
-        this.props.pymChild.sendMessage("console-log", distanceFromBottom);
+    decideToIncrement(distanceFromBottom) {
+        // this.props.pymChild.sendMessage("console-log", distanceFromBottom);
         if (this.props.results.length > this.state.limit
             && distanceFromBottom < 100) {
             this.setState({ limit: this.state.limit + this.state.increment })
@@ -154,10 +166,16 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div
+                    
                     ref={this.resultsRef}
                     className="results-container">
-                    {this.props.results.slice(0, this.state.limit).map(this.renderResult)}
+                    
                 </div>
+                {/* {this.props.results.slice(0, this.state.limit).map(this.renderResult)} */}
+                <ResultList
+                    items={this.props.results.slice(0, this.state.limit).map(this.renderResult)}
+                ></ResultList>
+
             </div>
         );
     }

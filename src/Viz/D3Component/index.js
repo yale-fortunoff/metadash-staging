@@ -47,10 +47,10 @@ export default class extends React.PureComponent {
     }
 
     render() {
-        return (<div className="Viz">
+        return <div className="Viz">
             <div></div>
             <svg ref={(elem) => { this.svg = elem; }}></svg>
-        </div>);
+        </div>;
     }
 
     redrawChart(){

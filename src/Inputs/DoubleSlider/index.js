@@ -1,5 +1,6 @@
 import React from 'react';
-import D3Component from "../../Viz/D3Component"
+//import D3Component from "../../Viz/D3Component"
+import D3Component from "@bit/jakekara.metadash.d3-component";
 import "./style/main.scss";
 import * as d3 from "d3";
 

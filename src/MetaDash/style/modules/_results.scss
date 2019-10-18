@@ -11,6 +11,7 @@
     font-weight: 600;
     margin-bottom: 16px;
   }
+  
   a {
     text-decoration: none;
   }
@@ -26,12 +27,25 @@
     flex: 1;
   }
 
-  .result-item {
-    background-color: white;
-    height: 60px;
+  /**
+   * Why do we have a ResultListItem and a result-item??
+   * result-item was specific to the MetaDash implementation
+   * but ResultList was later generalized out into the FortunoffApp
+   * component so it can be reused as a general container.
+   * result-item still needs to retain its styling within the
+   * MetDash app, so I just left it with a somewhat confusing
+   * and colliding name. -Jake
+   */
+  .ResultListItem {
     border-left: 10px solid $color-robinegg;
-    margin-bottom: 16px;
-    border-radius: 8px;
+  }
+
+  .result-item {
+    // background-color: white;
+    height: 60px;
+    // border-left: 10px solid $color-robinegg;
+    // margin-bottom: 16px;
+    // border-radius: 8px;
     color: $color-textgray;
     font-weight: 600;
 
@@ -81,7 +95,8 @@
     }
   }
 
-  .result-item:hover {
+  // .result-item:hover {
+  .ResultListItem:hover {
     padding: 0px;
     border: 1px solid $color-resultsborder;
     border-left: 10px solid $color-fortunoff;
@@ -95,11 +110,10 @@
 }
 
 @media only screen and (max-width: 800px) {
-  .Results{
+  .Results {
     padding: 0px 16px;
   }
 }
-
 
 @media only screen and (min-width: 1400px) and (max-width: 1900px) {
   .Results {
@@ -114,7 +128,6 @@
 
 @media only screen and (min-width: 900px) and (max-width: 1399px) {
   .Results {
-    
     // .birth-year,
     .affiliate,
     .recording-year,
@@ -126,7 +139,6 @@
 
 @media only screen and (max-width: 899px) {
   .Results {
-
     .result-item {
       .testimony-name {
         font-size: unset;

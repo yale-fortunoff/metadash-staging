@@ -12,8 +12,7 @@ export default class extends React.Component {
         // this.state = {
         //     selections: props.selections
         // }
-
-      
+        
         this.updateRangeFactory = this.updateRangeFactory.bind(this);
 
     }

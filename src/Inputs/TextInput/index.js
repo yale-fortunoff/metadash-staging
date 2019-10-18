@@ -1,8 +1,8 @@
 import React from 'react';
-import GenericInput from "../GenericInput";
+// import GenericInput from "../GenericInput";
 import "./style/main.scss";
 
-export default class extends GenericInput {
+export default class extends React.Component{
 
     constructor(props) {
         super(props);

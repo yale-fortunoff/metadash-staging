@@ -1,54 +1,19 @@
-/* autoprefixer grid: on */
-@import "./colors";
-@import "./typography";
 @import "./module-area";
-@import "./inputs";
-@import "./layout";
-@import "./icons";
-
 @import "./modules/gender";
-@import "./modules/countlist";
 @import "./modules/languages";
 @import "./modules/interviewers";
 @import "./modules/birth-and-recording-years";
-@import "./modules/viz";
 @import "./modules/birth-places";
 @import "./modules/programs";
 @import "./modules/results";
 @import "./modules/subject-headings";
 @import "./modules/text-menu";
-@import "./modules/hover-text";
-
-body {
-  @include typography-body;
-  background: $color-backgroundgray;
-
-  margin: 0px;
-  padding: 0px;
-}
+// @import "./modules/hover-text";
+// @import "./modules/countlist";
+// @import "./modules/viz";
+@import "./layout";
 
 .MetaDash {
-  margin-bottom: 30px;
-
-  section {
-    margin-top: 30px;
-  }
-
-  .prose {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
-    font-family: $font-serif;
-    font-size: 24px;
-    text-align: center;
-    color: $color-darkgray;
-
-    .stat {
-      color: $color-fortunoff;
-    }
-  }
-
   section.headings-area {
     margin-top: 34px;
   }
@@ -158,8 +123,6 @@ body {
           font-family: $font-sans;
           color: $color-textgray;
 
-
-          
           .button {
             border: none;
             color: $color-teal;
@@ -168,7 +131,6 @@ body {
             background-origin: content-box;
             background-position: center center;
             background-size: 1em;
-  
           }
 
           .button:hover {
@@ -181,15 +143,16 @@ body {
 }
 
 @media screen and (max-width: 1000px) {
-  .MetaDash {
-    .headings-area {
-      .TagFilter {
-        .top-area {
-          flex-direction: column;
-          height: unset;
-          padding: 16px 16px;
+    .MetaDash {
+      .headings-area {
+        .TagFilter {
+          .top-area {
+            flex-direction: column;
+            height: unset;
+            padding: 16px 16px;
+          }
         }
       }
     }
   }
-}
+  

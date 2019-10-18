@@ -1,11 +1,11 @@
 import React from 'react';
-import GenericInput from "../GenericInput";
+// import GenericInput from "../GenericInput";
 import TextInput from "../TextInput";
 
 import SelectionPool from "../SelectionPool";
 import TagPool from "./TagPool";
 
-export default class extends GenericInput {
+export default class extends React.Component {
 
     constructor(props) {
 
