@@ -2,7 +2,7 @@
   "name": "metadash",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/metadash",
+  "homepage": "/fortunoff-metadash",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "d3": "^5.9.2",
@@ -16,7 +16,8 @@
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
     "semiotic": "^1.19.7",
-    "unidecode": "^0.1.8"
+    "unidecode": "^0.1.8",
+    "yargs": "^14.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,7 +26,10 @@
     "eject": "react-scripts eject",
     "document": "jsdoc src/Data --destination ./book/data-api",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy-dev": "node publish.js publish --remote origin",
+    "deploy-prod": "node publish.js publish --remote production",
+    "help": "gh-pages --help"
   },
   "eslintConfig": {
     "extends": "react-app"
