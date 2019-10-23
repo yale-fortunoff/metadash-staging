@@ -2,7 +2,7 @@
   "name": "metadash",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/fortunoff-metadash",
+  "homepage": "/metadash",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "d3": "^5.9.2",
