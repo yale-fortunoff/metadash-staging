@@ -4,12 +4,12 @@ const yargs = require('yargs');
 
 function publish(to){
 
-    ghpages.publish('dist', 
+    ghpages.publish('build', 
     {
-        remote:to
+        remote:to,
     },
     function(err) {
-        if (err){ console.error("Error deploying to " + to); process.exit(1)}
+        if (err){ console.error("Error deploying to " + to); console.error(err); process.exit(1)}
         if (!err){ console.log(`Successfully deployed to remote '${to}'!`)}
     });
 }

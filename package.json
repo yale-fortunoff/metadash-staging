@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "/metadash",
   "dependencies": {
+    "@bit/jakekara.metadash.d3-component": "^1.0.2",
     "babel-polyfill": "^6.26.0",
     "d3": "^5.9.2",
     "gh-pages": "^2.0.1",
