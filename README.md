@@ -9,7 +9,7 @@ it.
 
 Most of this data was based on the FVAHT's database of record, ArchiveSpace, but
 the birth place and birth year information was manually entered in two phases,
-the latter of which was conducted in early 2019. 
+the latter of which was conducted in early 2019\.
 
 This project is free and open source, published under the GNU Public License,
 and it can be re-used for any purpose. While it was developed closely around the
@@ -30,4 +30,12 @@ This project is built with React, and the general approach was to abstract
 inputs and visualization types (such as text input and bar graphs) from their
 specific instantiation, so as much of the code is reusable as possible.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React
+App](https://github.com/facebook/create-react-app).
+
+# .bit and .bitmap for component reuse
+
+In an effort to support code resuse of components from this project, I've
+started using [bit](https://bit.dev/jakekara/metadash) to manage them. That's
+what the .bitmap file is about.
+
