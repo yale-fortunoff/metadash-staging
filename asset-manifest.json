@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/metadash/static/css/main.7b0d538b.chunk.css",
+    "main.js": "/metadash/static/js/main.02cc4ec3.chunk.js",
+    "main.js.map": "/metadash/static/js/main.02cc4ec3.chunk.js.map",
+    "runtime~main.js": "/metadash/static/js/runtime~main.2c6ab6d3.js",
+    "runtime~main.js.map": "/metadash/static/js/runtime~main.2c6ab6d3.js.map",
+    "static/js/2.6be35c99.chunk.js": "/metadash/static/js/2.6be35c99.chunk.js",
+    "static/js/2.6be35c99.chunk.js.map": "/metadash/static/js/2.6be35c99.chunk.js.map",
+    "index.html": "/metadash/index.html",
+    "precache-manifest.62b937075503aafc8260df54c44f8bf4.js": "/metadash/precache-manifest.62b937075503aafc8260df54c44f8bf4.js",
+    "service-worker.js": "/metadash/service-worker.js",
+    "static/css/main.7b0d538b.chunk.css.map": "/metadash/static/css/main.7b0d538b.chunk.css.map",
+    "static/media/main.scss": "/metadash/static/media/yalenew-roman-webfont.f2b260ad.woff2"
+  }
+}
