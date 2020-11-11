@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/metadash/static/css/main.7b0d538b.chunk.css",
-    "main.js": "/metadash/static/js/main.2de90a32.chunk.js",
-    "main.js.map": "/metadash/static/js/main.2de90a32.chunk.js.map",
+    "main.css": "/metadash/static/css/main.4efb2183.chunk.css",
+    "main.js": "/metadash/static/js/main.68dee54c.chunk.js",
+    "main.js.map": "/metadash/static/js/main.68dee54c.chunk.js.map",
     "runtime~main.js": "/metadash/static/js/runtime~main.2c6ab6d3.js",
     "runtime~main.js.map": "/metadash/static/js/runtime~main.2c6ab6d3.js.map",
-    "static/js/2.6be35c99.chunk.js": "/metadash/static/js/2.6be35c99.chunk.js",
-    "static/js/2.6be35c99.chunk.js.map": "/metadash/static/js/2.6be35c99.chunk.js.map",
+    "static/js/2.a3e79b9e.chunk.js": "/metadash/static/js/2.a3e79b9e.chunk.js",
+    "static/js/2.a3e79b9e.chunk.js.map": "/metadash/static/js/2.a3e79b9e.chunk.js.map",
     "index.html": "/metadash/index.html",
-    "precache-manifest.94bfd6ba3d1a85cc788364df6b85639b.js": "/metadash/precache-manifest.94bfd6ba3d1a85cc788364df6b85639b.js",
+    "precache-manifest.13d45f9f7d105b047a9b9f8efd7afdb5.js": "/metadash/precache-manifest.13d45f9f7d105b047a9b9f8efd7afdb5.js",
     "service-worker.js": "/metadash/service-worker.js",
-    "static/css/main.7b0d538b.chunk.css.map": "/metadash/static/css/main.7b0d538b.chunk.css.map",
+    "static/css/main.4efb2183.chunk.css.map": "/metadash/static/css/main.4efb2183.chunk.css.map",
     "static/media/main.scss": "/metadash/static/media/yalenew-roman-webfont.f2b260ad.woff2"
   }
 }
