@@ -2,7 +2,7 @@
   "name": "metadash",
   "version": "0.1.0",
   "private": false,
-  "homepage": "/build",
+  "homepage": "/metadash-staging",
   "dependencies": {
     "airtable": "^0.11.6",
     "babel-polyfill": "^6.26.0",
