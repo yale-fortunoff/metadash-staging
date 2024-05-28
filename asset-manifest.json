@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/metadash-staging/static/css/main.83d0dfa9.css",
-    "main.js": "/metadash-staging/static/js/main.5dfefbdf.js",
+    "main.js": "/metadash-staging/static/js/main.c2241036.js",
     "static/media/yalenew-roman-webfont.woff": "/metadash-staging/static/media/yalenew-roman-webfont.dc72385855adfe8187c3.woff",
     "static/media/yalenew-roman-webfont.woff2": "/metadash-staging/static/media/yalenew-roman-webfont.077c9e0f95bf605a4aa8.woff2",
     "index.html": "/metadash-staging/index.html",
@@ -11,10 +11,10 @@
     "static/media/x-field.svg": "/metadash-staging/static/media/x-field.969f699306abc4a0bc88.svg",
     "static/media/dropdown-arrow.svg": "/metadash-staging/static/media/dropdown-arrow.1e266fb2b54355eb942d.svg",
     "main.83d0dfa9.css.map": "/metadash-staging/static/css/main.83d0dfa9.css.map",
-    "main.5dfefbdf.js.map": "/metadash-staging/static/js/main.5dfefbdf.js.map"
+    "main.c2241036.js.map": "/metadash-staging/static/js/main.c2241036.js.map"
   },
   "entrypoints": [
     "static/css/main.83d0dfa9.css",
-    "static/js/main.5dfefbdf.js"
+    "static/js/main.c2241036.js"
   ]
 }
