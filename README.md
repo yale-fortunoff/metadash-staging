@@ -1,3 +1,7 @@
+# METADASH Archive
+
+This project was rebuilt with T3 and is therefore obsolete. Go to fortunoff/metadash for the new version.
+
 # Fortunoff Metadash
 
 This dashboard visualizes metadata from more than 4,000 testimonies in the
@@ -9,7 +13,7 @@ it.
 
 Most of this data was based on the FVAHT's database of record, ArchiveSpace, but
 the birth place and birth year information was manually entered in two phases,
-the latter of which was conducted in early 2019. 
+the latter of which was conducted in early 2019.
 
 This project is free and open source, published under the GNU Public License,
 and it can be re-used for any purpose. While it was developed closely around the
