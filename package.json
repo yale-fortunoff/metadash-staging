@@ -9,7 +9,9 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prebuild": "node ./src/data/download_airtable.cjs"
+    "prebuild": "node ./src/data/download_airtable.cjs",
+    "ci:trigger-staging": "node ./src/ci/trigger_staging_build.mjs",
+    "ci:trigger-production": "node ./src/ci/trigger_production_build.mjs"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.11.1",
