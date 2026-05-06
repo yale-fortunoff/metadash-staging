@@ -21,7 +21,8 @@ filters.resourceContainsAllItems = (itemField, itemFilters) => {
   return (r) => {
     for (let i = 0; i < itemFilters.length; i++) {
       let item = itemFilters[i];
-      if (r[itemField].indexOf(item.id) < 0) return false;
+      if (!r || !r[itemField] || r[itemField].indexOf(item.id) < 0)
+        return false;
     }
     return true;
   };
@@ -37,24 +38,6 @@ filters.resourceContainsAllInterviewers = (interviewers) => {
 
 filters.resourceContainsAllPrograms = (programs) => {
   return filters.resourceContainsAllItems('programs', programs);
-};
-
-filters.resourceContainsOnlyPrograms = (programs) => {
-  return (r) => {
-    if (programs.length < 1) {
-      return true;
-    } // don't filter if it's not set
-    if (!r || !r.programs) {
-      return false;
-    }
-    if (r.programs.length > 1 || r.programs.length < 1) {
-      return false;
-    }
-    if (r.programs[0] === programs[0].id) {
-      return true;
-    }
-    return false;
-  };
 };
 
 // TODO - eventually, I should just make all of the filters into factories
@@ -165,7 +148,7 @@ filters.getResources = (options) => {
     }
 
     // filter by affiliate program
-    if (!filters.resourceContainsOnlyPrograms(options.programs || [])(r)) {
+    if (!filters.resourceContainsAllPrograms(options.programs || [])(r)) {
       return false;
     }
 

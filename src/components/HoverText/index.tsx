@@ -1,20 +1,24 @@
 import { FiX } from 'react-icons/fi';
 
 export default function HoverText(props: any) {
+  const hasSelection = props.selections && props.selections.length >= 1;
+  const hoverText = props.hoverText?.trim().length > 0 ? props.hoverText : '';
+  const isHoveringSelected = hasSelection && hoverText === props.label;
+  const showSelectedAffordance =
+    hasSelection && (!hoverText || isHoveringSelected);
+
   let ret = null;
 
-  if (!props.selections || props.selections.length < 1) {
+  if (!showSelectedAffordance) {
     ret = (
       <div className="flex h-6 items-center justify-center gap-2">
         <div className="flex items-center justify-center rounded-full bg-[#8ec8cc] p-0.5 opacity-0">
           <FiX className="stroke-white" size={12} />
         </div>
-        <div>{props.hoverText || ' '}</div>
+        <div>{hoverText || ' '}</div>
       </div>
     );
   } else {
-    const htext =
-      props.hoverText?.trim().length > 0 ? props.hoverText : props.label || ' ';
     ret = (
       <button
         className="group flex h-6 w-full items-center justify-center gap-2"
@@ -24,7 +28,7 @@ export default function HoverText(props: any) {
         <div className="flex items-center justify-center rounded-full bg-[#8ec8cc] p-0.5 group-hover:opacity-75">
           <FiX className="stroke-white" size={12} />
         </div>
-        <div>{htext}</div>
+        <div>{props.label || ' '}</div>
       </button>
     );
   }
